@@ -7,21 +7,15 @@
 </head>
 <body>
     <div class="app-container">
+        <nav class="navbar">
+            <button onclick="alert('Bosh sahifa')">Bosh sahifa</button>
+            <button onclick="alert('Inventar')">Inventar</button>
+            <button onclick="alert('Profil')">Profil</button>
+        </nav>
         <div class="stats-bar">
-            <div class="balance">
-                <span>💎 50</span>
-                <button class="top-up">To'ldirish</button>
-            </div>
-            <div class="menu-icons">
-                <button>Profil</button>
-            </div>
+            <span>💎 50 Coin</span>
+            <button class="top-up">To'ldirish</button>
         </div>
-
-        <div class="tabs">
-            <button class="active">Keyslar</button>
-            <button>Keys Battllari</button>
-        </div>
-
         <div id="cases-grid" class="cases-grid"></div>
     </div>
     <script src="script.js"></script>
