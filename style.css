@@ -1,15 +1,45 @@
-body { background-color: #0f0f0f; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 80px; }
-.app-container { max-width: 500px; margin: auto; padding: 15px; }
 
-.stats-bar { background: rgba(230, 57, 70, 0.15); backdrop-filter: blur(10px); border: 1px solid rgba(230, 57, 70, 0.4); padding: 15px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+body { background-color: #050505; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 90px; }
+.app-container { max-width: 600px; margin: auto; padding: 20px; }
+
+/* Stats Bar */
+.stats-bar { background: #111; border: 1px solid #222; padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
 .coin-icon { width: 30px; }
-.top-up { background: #e63946; border: none; padding: 8px 15px; color: white; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
-.cases-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-.case-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(230, 57, 70, 0.3); padding: 15px; border-radius: 15px; text-align: center; }
-.case-card img { width: 80px; height: 80px; object-fit: contain; }
-.case-card button { width: 100%; background: #e63946; border: none; padding: 10px; color: white; border-radius: 8px; font-weight: bold; margin-top: 10px; cursor: pointer; }
+/* Keys Grid */
+.cases-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
 
-.bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 65px; background: rgba(0, 0, 0, 0.9); border-top: 1px solid rgba(230, 57, 70, 0.3); display: flex; justify-content: space-around; align-items: center; }
-.nav-item { background: none; border: none; color: #888; font-size: 12px; cursor: pointer; display: flex; flex-direction: column; align-items: center; }
-.nav-item.active { color: #e63946; }
+/* Asosiy o'zgarish shu yerda - Ramkasiz va kattalashtirilgan */
+.case-card { 
+    background: transparent; 
+    border: none; 
+    text-align: center; 
+    transition: transform 0.3s ease; 
+}
+.case-card:hover { transform: scale(1.05); } /* Sichqoncha borganda kattalashadi */
+
+.case-card img { 
+    width: 100%; 
+    height: auto; 
+    filter: drop-shadow(0px 0px 15px rgba(255, 255, 255, 0.1)); /* Yengil porlash */
+    cursor: pointer;
+}
+
+.case-card p { font-size: 18px; font-weight: bold; margin: 10px 0; text-transform: uppercase; }
+
+.case-card button { 
+    width: 100%; 
+    background: #e63946; 
+    border: none; 
+    padding: 12px; 
+    color: white; 
+    border-radius: 6px; 
+    font-weight: bold; 
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
+}
+
+/* Pastki menyu */
+.bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 70px; background: #0a0a0a; border-top: 1px solid #222; display: flex; justify-content: space-around; align-items: center; }
+.nav-item { background: none; border: none; color: #777; cursor: pointer; font-size: 14px; }
+.nav-item.active { color: #fff; }
