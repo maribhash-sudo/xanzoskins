@@ -1,11 +1,9 @@
 body { background-color: #121212; color: #fff; font-family: sans-serif; margin: 0; padding: 10px; }
 .app-container { max-width: 500px; margin: auto; }
-.stats-bar { display: flex; justify-content: space-between; background: #1a1a1a; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
-.top-up { background: #e63946; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
-.tabs { display: flex; gap: 10px; margin-bottom: 20px; }
-.tabs button { background: #252525; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; }
-.tabs button.active { background: #e63946; }
+.navbar { display: flex; justify-content: space-around; margin-bottom: 20px; }
+.navbar button { background: #333; color: white; border: none; padding: 5px 10px; border-radius: 5px; }
+.stats-bar { background: rgba(230, 57, 70, 0.2); border: 1px solid #e63946; padding: 15px; border-radius: 10px; margin-bottom: 20px; display: flex; justify-content: space-between;}
 .cases-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-.case-card { background: #202024; padding: 10px; border-radius: 10px; text-align: center; border: 1px solid #333; }
-.case-card img { width: 80px; }
-.case-card button { width: 100%; background: #e63946; color: white; border: none; padding: 8px; margin-top: 10px; border-radius: 5px; cursor: pointer; }
+.case-card { background: rgba(230, 57, 70, 0.1); border: 1px solid rgba(230, 57, 70, 0.5); padding: 10px; border-radius: 10px; text-align: center; }
+.case-card img { width: 70px; }
+.case-card button { width: 100%; background: #e63946; border: none; padding: 8px; color: white; border-radius: 5px; margin-top: 10px; }
