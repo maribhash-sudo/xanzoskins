@@ -2,9 +2,9 @@ const tg = window.Telegram.WebApp;
 tg.expand();
 
 const cases = [
-    { name: "Budget Case", price: "50", img: "img/case1.png" },
-    { name: "All In", price: "150", img: "img/case2.png" },
-    { name: "Pro Case", price: "300", img: "img/case3.png" }
+    { name: "Budget Case", price: "50", img: "img/case1.png.png" },
+    { name: "All In", price: "150", img: "img/case2.png.webp" },
+    { name: "Pro Case", price: "300", img: "img/case3.png.webp" }
 ];
 
 const grid = document.getElementById('cases-grid');
