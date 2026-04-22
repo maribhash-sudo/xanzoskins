@@ -2,53 +2,59 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Xanzo Skins</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
     <div class="app-container">
-        <div class="stats-bar">
-            <div class="balance">
+        <header class="header">
+            <div class="balance-box">
                 <span id="balance">10000</span> <small>COIN</small>
             </div>
-            <button class="top-up">To'ldirish</button>
-        </div>
+            <button class="btn-topup">To'ldirish</button>
+        </header>
 
-        <div id="section-cases" class="app-section active">
-            <h2 class="title">CASES</h2>
-            <div id="cases-grid" class="cases-grid"></div>
-        </div>
+        <main>
+            <div id="page-cases" class="page active">
+                <h2 class="section-title">CASES</h2>
+                <div id="cases-grid" class="grid"></div>
+            </div>
 
-        <div id="section-bonus" class="app-section">
-            <h2 class="title">BONUS</h2>
-            <div class="card">Kunlik sovg'angizni oling!</div>
-        </div>
+            <div id="page-bonus" class="page">
+                <h2 class="section-title">BONUS</h2>
+                <div class="card">Kundalik bonusni qabul qiling!</div>
+            </div>
 
-        <div id="section-inventory" class="app-section">
-            <h2 class="title">INVENTORY</h2>
-        </div>
+            <div id="page-inventory" class="page">
+                <h2 class="section-title">INVENTORY</h2>
+            </div>
 
-        <div id="section-profile" class="app-section">
-            <h2 class="title">PROFILE</h2>
-        </div>
+            <div id="page-profile" class="page">
+                <h2 class="section-title">PROFILE</h2>
+                <div class="card">
+                    <button onclick="alert('Til: UZ')">Tilni o'zgartirish</button>
+                    <button onclick="window.open('https://t.me/admin')">Support</button>
+                </div>
+            </div>
+        </main>
 
         <nav class="bottom-nav">
-    <button class="nav-item" onclick="showSection('bonus', this)">
-        <img src="img/nav_diamond.png" alt="Bonus">
-        <span>Bonus</span>
-    </button>
-    <button class="nav-item active" onclick="showSection('cases', this)">
-        <img src="img/nav_case.png" alt="Cases">
-        <span>Cases</span>
-    </button>
-    <button class="nav-item" onclick="showSection('inventory', this)">
-        <img src="img/nav_inventory.png" alt="Inv">
-        <span>Inv</span>
-    </button>
-    <button class="nav-item" onclick="showSection('profile', this)">
-        <img src="img/profile.png" alt="Profile">
-        <span>Profile</span>
-    </button>
-</nav>
+            <button class="nav-btn" onclick="showPage('bonus', this)">
+                <img src="img/nav_diamond.png"><span>Bonus</span>
+            </button>
+            <button class="nav-btn active" onclick="showPage('cases', this)">
+                <img src="img/nav_case.png"><span>Cases</span>
+            </button>
+            <button class="nav-btn" onclick="showPage('inventory', this)">
+                <img src="img/nav_inventory.png"><span>Inv</span>
+            </button>
+            <button class="nav-btn" onclick="showPage('profile', this)">
+                <img src="img/profile.png"><span>Profile</span>
+            </button>
+        </nav>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
