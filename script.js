@@ -11,7 +11,7 @@ function showPage(pageId, element) {
     if(element) element.classList.add('active');
 }
 
-// 1. 10 ta Keyslar (Multi-language nomlar bilan)
+// 1. 10 ta Keyslar
 const cases = [
     { name: {uz: "Budget", ru: "Бюджет", en: "Budget"}, price: 500, img: "case1.png" },
     { name: {uz: "Starter", ru: "Стартовый", en: "Starter"}, price: 1500, img: "case2.webp" },
@@ -39,23 +39,24 @@ const translations = {
 
 function setLanguage(lang) {
     localStorage.setItem('lang', lang);
-    // 1. Static matnlarni o'zgartirish
     document.querySelectorAll('[data-lang]').forEach(el => {
         const key = el.getAttribute('data-lang');
         if (translations[lang] && translations[lang][key]) el.innerText = translations[lang][key];
     });
-    // 2. Dinamik elementlarni qayta chizish
     renderCases();
     renderTasks();
 }
 
+// YAQILGAN QISM: Budget tugmasi uchun ruletkani ulash
 function renderCases() {
     const lang = localStorage.getItem('lang') || 'uz';
     const grid = document.getElementById('cases-grid');
     if(!grid) return;
     grid.innerHTML = "";
     cases.forEach(c => {
-        grid.innerHTML += `<div class="case-card"><img src="img/${c.img}"><p>${c.name[lang]}</p><button>${c.price} COIN</button></div>`;
+        // Agar nomi Budget bo'lsa, ruletka ishga tushadi
+        let clickAction = (c.name.uz === "Budget") ? 'onclick="startBudgetRoulette()"' : '';
+        grid.innerHTML += `<div class="case-card"><img src="img/${c.img}"><p>${c.name[lang]}</p><button ${clickAction}>${c.price} COIN</button></div>`;
     });
 }
 
@@ -74,15 +75,6 @@ function renderTasks() {
     });
 }
 
-// Qolgan funksiyalar (showPage, completeTask, saveSteamLink) o'zgarmaydi...
-function showPage(pageId, element) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(`page-${pageId}`).classList.add('active');
-    document.getElementById('main-header').style.display = (pageId === 'cases') ? 'flex' : 'none';
-    document.querySelectorAll('.nav-btn').forEach(n => n.classList.remove('active'));
-    if(element) element.classList.add('active');
-}
-
 function completeTask(id) {
     const t = tasks.find(x => x.id === id);
     if (!t.done) {
@@ -94,9 +86,16 @@ function completeTask(id) {
     }
 }
 
+function saveSteamLink() {
+    const link = document.getElementById('tradeLinkInput').value;
+    localStorage.setItem('tradeLink', link);
+    alert("Saqlandi!");
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     const lang = localStorage.getItem('lang') || 'uz';
     setLanguage(lang);
+    renderCases();
     const tg = window.Telegram.WebApp;
     if (tg.initDataUnsafe?.user) document.getElementById('user-name').innerText = tg.initDataUnsafe.user.first_name;
 });
