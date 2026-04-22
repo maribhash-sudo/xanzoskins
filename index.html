@@ -39,7 +39,7 @@
                 </div>
                 <div class="profile-list">
                     <div class="card">
-                        <p data-lang="lang_select" style="margin-bottom: 10px; font-weight: 600;">Tilni tanlang / Язык / Language:</p>
+                        <p data-lang="lang_select" style="margin-bottom: 10px; font-weight: 600;">Tilni tanlang:</p>
                         <div class="grid-buttons">
                             <button class="lang-btn" onclick="setLanguage('uz')">🇺🇿 UZ</button>
                             <button class="lang-btn" onclick="setLanguage('ru')">🇷🇺 RU</button>
@@ -54,6 +54,15 @@
                 </div>
             </div>
         </main>
+
+        <div id="case-modal" class="modal">
+            <div class="roulette-container">
+                <div class="selector"></div>
+                <div class="roulette-track" id="roulette-track"></div>
+            </div>
+            <div id="win-display" class="win-display"></div>
+            <button id="close-modal-btn" onclick="closeModal()" style="display:none; width: 80%; margin-top: 20px;">Yopish</button>
+        </div>
 
         <nav class="bottom-nav">
             <button class="nav-btn" onclick="showPage('bonus', this)">
