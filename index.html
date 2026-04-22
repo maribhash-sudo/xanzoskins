@@ -17,72 +17,42 @@
         </header>
 
         <main>
-            <div id="page-cases" class="page active">
-                <h2 class="section-title">CASES</h2>
-                <div id="cases-grid" class="grid"></div>
+    <div id="page-cases" class="page active">
+        <h2 class="section-title">CASES</h2>
+        <div id="cases-grid" class="grid">
             </div>
-
-            <div id="page-bonus" class="page">
-                <h2 class="section-title">BONUS</h2>
-                <div class="card">Kundalik bonusni qabul qiling!</div>
-            </div>
-
-            <div id="page-inventory" class="page">
-                <h2 class="section-title">INVENTORY</h2>
-            </div>
-
-            <div id="page-profile" class="page">
-                <h2 class="section-title">PROFILE</h2>
-                
-                <div class="user-info-card">
-                    <div class="avatar-placeholder"></div>
-                    <h3>Dag1sss23</h3>
-                </div>
-
-                <div id="profile-settings-section" class="sf-settings-container">
-                    <div class="sf-menu-item" onclick="toggleLanguage()">
-                        <div class="sf-item-left">
-                            <span class="sf-icon">🌐</span>
-                            <span data-key="change_lang" class="sf-text">Change Language</span>
-                        </div>
-                        <span id="current-lang-display" class="sf-lang-status">EN</span>
-                    </div>
-
-                    <div class="sf-menu-item" onclick="handleTradeLink()">
-                        <div class="sf-item-left">
-                            <span class="sf-icon">🔗</span>
-                            <span data-key="trade_link" class="sf-text">Trade Link</span>
-                        </div>
-                        <span class="sf-arrow">❯</span>
-                    </div>
-
-                    <div class="sf-menu-item" onclick="window.open('https://t.me/your_community', '_blank')">
-                        <div class="sf-item-left">
-                            <span class="sf-icon">👥</span>
-                            <span data-key="community" class="sf-text">Community</span>
-                        </div>
-                        <span class="sf-arrow">❯</span>
-                    </div>
-
-                    <div class="sf-menu-item" onclick="window.open('https://t.me/your_support_bot', '_blank')">
-                        <div class="sf-item-left">
-                            <span class="sf-icon">🎧</span>
-                            <span data-key="support" class="sf-text">Contact Support</span>
-                        </div>
-                        <span class="sf-arrow">❯</span>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <nav class="navbar">
-            <button onclick="showPage('cases')">Cases</button>
-            <button onclick="showPage('bonus')">Bonus</button>
-            <button onclick="showPage('inventory')">Inv</button>
-            <button onclick="showPage('profile')">Profile</button>
-        </nav>
     </div>
 
-    <script src="script.js"></script>
-</body>
-</html>
+    <div id="page-bonus" class="page">
+        <h2 class="section-title">BONUS</h2>
+        <div class="card">Kundalik bonusni qabul qiling!</div>
+    </div>
+
+    <div id="page-inventory" class="page">
+        <h2 class="section-title">INVENTORY</h2>
+        </div>
+
+    <div id="page-profile" class="page">
+        <h2 class="section-title">PROFILE</h2>
+        
+        <div class="user-info-card">
+            <h3>Dag1sss23</h3>
+        </div>
+
+        <div id="profile-settings-section" class="sf-settings-container">
+            <div class="sf-menu-item" onclick="toggleLanguage()">
+                <div class="sf-item-left"><span>🌐</span> <span data-key="change_lang">Change Language</span></div>
+                <span id="current-lang-display">EN</span>
+            </div>
+            <div class="sf-menu-item" onclick="handleTradeLink()">
+                <div class="sf-item-left"><span>🔗</span> <span data-key="trade_link">Trade Link</span></div>
+            </div>
+            <div class="sf-menu-item">
+                <div class="sf-item-left"><span>👥</span> <span data-key="community">Community</span></div>
+            </div>
+            <div class="sf-menu-item">
+                <div class="sf-item-left"><span>🎧</span> <span data-key="support">Contact Support</span></div>
+            </div>
+        </div>
+    </div>
+</main>
