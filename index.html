@@ -25,11 +25,11 @@
 
             <div id="page-bonus" class="page">
                 <h2 class="section-title" data-lang="bonus_title">BONUS</h2>
-                <div class="card" data-lang="bonus_card">Kundalik bonusni qabul qiling!</div>
+                <div class="card" data-lang="bonus_desc">Kunlik bonusni qabul qiling!</div>
             </div>
 
             <div id="page-inventory" class="page">
-                <h2 class="section-title" data-lang="inventory_title">INVENTORY</h2>
+                <h2 class="section-title" data-lang="inv_title">INVENTORY</h2>
             </div>
 
             <div id="page-profile" class="page">
@@ -37,26 +37,19 @@
                     <div class="avatar-circle" id="user-avatar">?</div>
                     <h3 id="user-name">User</h3>
                 </div>
-                
                 <div class="profile-list">
-                    <div class="card lang-card">
-                        <p data-lang="select_lang">Tilni tanlang:</p>
+                    <div class="card">
+                        <p data-lang="lang_select" style="margin-bottom: 10px; font-weight: 600;">Tilni tanlang / Язык / Language:</p>
                         <div class="grid-buttons">
-                            <button onclick="setLanguage('uz')">🇺🇿 UZ</button>
-                            <button onclick="setLanguage('ru')">🇷🇺 RU</button>
-                            <button onclick="setLanguage('en')">🇺🇸 EN</button>
+                            <button class="lang-btn" onclick="setLanguage('uz')">🇺🇿 UZ</button>
+                            <button class="lang-btn" onclick="setLanguage('ru')">🇷🇺 RU</button>
+                            <button class="lang-btn" onclick="setLanguage('en')">🇺🇸 EN</button>
                         </div>
                     </div>
-
-                    <div class="card trade-card">
-                        <p data-lang="trade_link_title">Steam Trade Link:</p>
+                    <div class="card">
+                        <p data-lang="trade_link">Steam Trade Link:</p>
                         <input type="text" id="tradeLinkInput" placeholder="https://steamcommunity.com/tradeoffer/new/...">
                         <button onclick="saveTradeLink()" data-lang="save_btn">Saqlash</button>
-                    </div>
-
-                    <div class="card links-card">
-                        <button class="list-btn" onclick="window.open('https://t.me/community', '_blank')">👥 Community</button>
-                        <button class="list-btn" onclick="window.open('https://t.me/admin', '_blank')">🎧 Support</button>
                     </div>
                 </div>
             </div>
