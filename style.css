@@ -1,0 +1,28 @@
+:root { --fire: #FF4500; --bg: #0d0d0d; }
+body { background: #000; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 80px; }
+
+/* SAHIFALARNI BOSHQARISH */
+.page { display: none !important; }
+.page.active { display: block !important; }
+
+/* PROFIL MENYUSI */
+.sf-settings-container { display: flex; flex-direction: column; gap: 10px; padding: 15px; }
+.sf-menu-item { 
+    background: #1a1a1a; padding: 15px; border-radius: 12px; 
+    display: flex; justify-content: space-between; cursor: pointer;
+    border: 1px solid #333;
+}
+.sf-lang-status { color: #007aff; font-weight: bold; }
+.sf-arrow { color: #555; }
+
+/* NAVIGATSIYA */
+.navbar { 
+    position: fixed; bottom: 0; width: 100%; height: 70px;
+    background: #111; display: flex; justify-content: space-around;
+    align-items: center; border-top: 1px solid #333;
+}
+.nav-btn { background: none; border: none; color: #888; font-weight: bold; cursor: pointer; }
+.nav-btn:active { color: var(--fire); }
+
+/* RASMLAR UCHUN STIL */
+.case-card img { width: 100px; height: auto; border-radius: 8px; }
