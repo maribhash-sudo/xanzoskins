@@ -58,3 +58,36 @@
     <script src="script.js"></script>
 </body>
 </html>
+<div id="profile-settings-section" class="sf-settings-container">
+    <div class="sf-menu-item" onclick="toggleLanguage()">
+        <div class="sf-item-left">
+            <span class="sf-icon">🌐</span>
+            <span data-key="change_lang" class="sf-text">Change Language</span>
+        </div>
+        <span id="current-lang-display" class="sf-lang-status">EN</span>
+    </div>
+
+    <div class="sf-menu-item" onclick="handleTradeLink()">
+        <div class="sf-item-left">
+            <span class="sf-icon">🔗</span>
+            <span data-key="trade_link" class="sf-text">Trade Link</span>
+        </div>
+        <span class="sf-arrow">❯</span>
+    </div>
+
+    <div class="sf-menu-item" onclick="window.open('https://t.me/your_community', '_blank')">
+        <div class="sf-item-left">
+            <span class="sf-icon">👥</span>
+            <span data-key="community" class="sf-text">Community</span>
+        </div>
+        <span class="sf-arrow">❯</span>
+    </div>
+
+    <div class="sf-menu-item" onclick="window.open('https://t.me/your_support_bot', '_blank')">
+        <div class="sf-item-left">
+            <span class="sf-icon">🎧</span>
+            <span data-key="support" class="sf-text">Contact Support</span>
+        </div>
+        <span class="sf-arrow">❯</span>
+    </div>
+</div>
