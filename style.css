@@ -1,36 +1,62 @@
-:root { --fire: #FF4500; --bg: #000; --border: #222; }
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-body { background: radial-gradient(circle at top, #1a0505 0%, #000 100%); color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding-bottom: 100px; overflow-x: hidden; }
+:root { 
+    --fire: #FF4500; 
+    --bg: #050505; 
+    --card-bg: #111;
+    --border: #222;
+}
+
+* { box-sizing: border-box; transition: 0.3s ease; -webkit-tap-highlight-color: transparent; }
+
+body { 
+    background: radial-gradient(circle at top, #1a0505 0%, #000 100%); 
+    color: #fff; 
+    font-family: 'Montserrat', sans-serif; /* Montserrat Shrift */
+    margin: 0; 
+    padding-bottom: 90px; 
+}
 
 .app-container { max-width: 600px; margin: auto; padding: 15px; }
 
-.header { display: flex; justify-content: space-between; align-items: center; background: rgba(20,20,20,0.8); padding: 15px; border-radius: 12px; border-bottom: 2px solid var(--fire); }
-#balance { color: var(--fire); font-size: 20px; font-weight: 800; }
+/* Tugmalar bosilganda "jonli" effekt */
+button:active, .nav-btn:active, .case-card:active { transform: scale(0.96); }
 
-.bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 85px; background: #000; border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index: 1000; }
-.nav-btn { background: none; border: none; color: #888; display: flex; flex-direction: column; align-items: center; cursor: pointer; width: 25%; }
-.nav-btn img { width: 36px; height: 36px; object-fit: contain; margin-bottom: 5px; filter: grayscale(1); transition: 0.3s; }
+/* Header */
+.header { display: flex; justify-content: space-between; align-items: center; background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(5px); padding: 15px; border-radius: 12px; border-bottom: 2px solid var(--fire); }
+#balance { color: var(--fire); font-size: 20px; font-weight: bold; }
+.btn-topup { width: auto; padding: 8px 15px; }
+
+/* Navigation & Icons (Tuzatildi) */
+.bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 75px; background: #000; border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; }
+.nav-btn { background: none; border: none; color: #fff; display: flex; flex-direction: column; align-items: center; cursor: pointer; width: 25%; }
+.nav-btn img { 
+    width: 26px; 
+    height: 26px; 
+    object-fit: contain; /* Deformatsiyadan himoya */
+    margin-bottom: 4px; 
+    filter: grayscale(1); 
+}
 .nav-btn.active { color: var(--fire); }
-.nav-btn.active img { filter: grayscale(0); transform: scale(1.1); }
+.nav-btn.active img { filter: grayscale(0) drop-shadow(0 0 5px var(--fire)); }
 .nav-btn span { font-size: 11px; font-weight: 600; }
 
-.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-.case-card { background: #111; border: 1px solid var(--border); padding: 15px; border-radius: 12px; text-align: center; }
-.case-card img { width: 80%; margin-bottom: 10px; }
-
-.modal { display: none; position: fixed; top:0; left:0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; flex-direction: column; justify-content: center; align-items: center; }
-.roulette-container { width: 100%; height: 130px; background: #111; border-top: 2px solid var(--fire); border-bottom: 2px solid var(--fire); position: relative; overflow: hidden; display: flex; align-items: center; }
-.roulette-track { display: flex; position: absolute; left: 0; transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1); }
-.item { min-width: 120px; height: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-right: 1px solid #222; background: #151515; }
-.item img { width: 70px; height: 70px; object-fit: contain; }
-.selector { position: absolute; left: 50%; top: 0; width: 4px; height: 100%; background: var(--fire); z-index: 10; transform: translateX(-50%); box-shadow: 0 0 15px var(--fire); }
-.win-display { margin-top: 30px; font-size: 22px; font-weight: 800; color: var(--fire); text-align: center; }
-
-button { width: 100%; padding: 12px; background: var(--fire); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; text-transform: uppercase; }
-input { width: 100%; padding: 12px; background: #000; border: 1px solid var(--border); color: #fff; border-radius: 8px; margin-bottom: 10px; }
+/* Pages */
 .page { display: none; }
-.page.active { display: block; }
-.section-title { color: var(--fire); border-bottom: 2px solid var(--fire); padding-bottom: 5px; font-size: 18px; }
-.card { background: #111; padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid var(--border); }
+.page.active { display: block; animation: fadeIn 0.4s; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Grid & Cards */
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+.case-card { background: var(--card-bg); border: 1px solid var(--border); padding: 15px; border-radius: 12px; text-align: center; }
+.case-card img { width: 100%; height: auto; display: block; }
+.section-title { color: var(--fire); border-bottom: 2px solid var(--fire); padding-bottom: 5px; font-weight: 800; }
+button { width: 100%; padding: 12px; background: var(--fire); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+
+/* Profile (Professional List Style) */
+.profile-header { text-align: center; padding: 20px; }
+.avatar-circle { width: 80px; height: 80px; background: #333; border-radius: 50%; margin: 0 auto 10px; border: 2px solid var(--fire); overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 30px; }
+.profile-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+.card { background: var(--card-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border); }
 .grid-buttons { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-.lang-btn { background: #222 !important; }
+input { width: 100%; padding: 12px; background: #000; border: 1px solid var(--border); color: #fff; border-radius: 8px; margin-bottom: 10px; }
+input:focus { border-color: var(--fire); }
+.list-btn { background: #222; text-align: left; margin-bottom: 10px; }
