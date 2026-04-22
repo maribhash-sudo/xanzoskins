@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Xanzo Skins</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
@@ -23,12 +24,8 @@
             </div>
 
             <div id="page-bonus" class="page">
-                <h2 class="section-title">TASKS</h2>
-                <div class="task-list">
-                    <div class="task-card"><span>Kundalik bonus</span><button class="btn-task">+100</button></div>
-                    <div class="task-card"><span>Telegramga obuna</span><button class="btn-task">+250</button></div>
-                    <div class="task-card done"><span>Birinchi depozit</span><span class="status">Bajarildi</span></div>
-                </div>
+                <h2 class="section-title">BONUS</h2>
+                <div class="card">Kundalik bonusni qabul qiling!</div>
             </div>
 
             <div id="page-inventory" class="page">
@@ -37,19 +34,26 @@
 
             <div id="page-profile" class="page">
                 <h2 class="section-title">PROFILE</h2>
-                <div class="profile-list">
-                    <div class="list-item" onclick="changeLang()"><span>Tilni o'zgartirish</span> <span id="lang-val">RU</span></div>
-                    <div class="list-item" onclick="promptTrade()"><span>Trade Link</span> <span>&gt;</span></div>
-                    <div class="list-item" onclick="window.open('https://t.me/admin')"><span>Support</span> <span>&gt;</span></div>
+                <div class="card">
+                    <button onclick="alert('Til: UZ')">Tilni o'zgartirish</button>
+                    <button onclick="window.open('https://t.me/admin')">Support</button>
                 </div>
             </div>
         </main>
 
         <nav class="bottom-nav">
-            <button class="nav-btn" onclick="showPage('bonus', this)"><img src="img/nav_diamond.png"><span>Bonus</span></button>
-            <button class="nav-btn active" onclick="showPage('cases', this)"><img src="img/nav_case.png"><span>Cases</span></button>
-            <button class="nav-btn" onclick="showPage('inventory', this)"><img src="img/nav_inventory.png"><span>Inv</span></button>
-            <button class="nav-btn" onclick="showPage('profile', this)"><img src="img/profile.png"><span>Profile</span></button>
+            <button class="nav-btn" onclick="showPage('bonus', this)">
+                <img src="img/nav_diamond.png"><span>Bonus</span>
+            </button>
+            <button class="nav-btn active" onclick="showPage('cases', this)">
+                <img src="img/nav_case.png"><span>Cases</span>
+            </button>
+            <button class="nav-btn" onclick="showPage('inventory', this)">
+                <img src="img/nav_inventory.png"><span>Inv</span>
+            </button>
+            <button class="nav-btn" onclick="showPage('profile', this)">
+                <img src="img/profile.png"><span>Profile</span>
+            </button>
         </nav>
     </div>
     <script src="script.js"></script>
