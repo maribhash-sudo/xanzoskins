@@ -19,12 +19,7 @@
         <main>
             <div id="page-cases" class="page active">
                 <h2 class="section-title">CASES</h2>
-                <div id="cases-grid" class="grid">
-                    <div class="case-card">
-                        <img src="img/Awp.jpg" alt="AWP">
-                        <p>AWP Case</p>
-                    </div>
-                </div>
+                <div id="cases-grid" class="grid"></div>
             </div>
 
             <div id="page-bonus" class="page">
@@ -34,39 +29,30 @@
 
             <div id="page-inventory" class="page">
                 <h2 class="section-title">INVENTORY</h2>
-                <div class="inventory-grid">
-                    </div>
             </div>
 
             <div id="page-profile" class="page">
                 <h2 class="section-title">PROFILE</h2>
-                <div class="user-card">
-                    <div class="avatar"></div>
-                    <h3>Dag1sss23</h3>
-                </div>
-
-                <div id="profile-settings-section" class="sf-settings-container">
-                    <div class="sf-menu-item" onclick="toggleLanguage()">
-                        <div class="sf-item-left">🌐 <span data-key="change_lang">Change Language</span></div>
-                        <span id="current-lang-display" class="sf-lang-status">EN</span>
-                    </div>
-                    <div class="sf-menu-item" onclick="handleTradeLink()">
-                        <div class="sf-item-left">🔗 <span data-key="trade_link">Trade Link</span></div>
-                        <span class="sf-arrow">❯</span>
-                    </div>
-                    <div class="sf-menu-item" onclick="window.open('https://t.me/community', '_blank')">
-                        <div class="sf-item-left">👥 <span data-key="community">Community</span></div>
-                        <span class="sf-arrow">❯</span>
-                    </div>
+                <div class="card">
+                    <button onclick="alert('Til: UZ')">Tilni o'zgartirish</button>
+                    <button onclick="window.open('https://t.me/admin')">Support</button>
                 </div>
             </div>
         </main>
 
-        <nav class="navbar">
-            <button class="nav-btn" onclick="showPage('cases')">Cases</button>
-            <button class="nav-btn" onclick="showPage('bonus')">Bonus</button>
-            <button class="nav-btn" onclick="showPage('inventory')">Inv</button>
-            <button class="nav-btn" onclick="showPage('profile')">Profile</button>
+        <nav class="bottom-nav">
+            <button class="nav-btn" onclick="showPage('bonus', this)">
+                <img src="img/nav_diamond.png"><span>Bonus</span>
+            </button>
+            <button class="nav-btn active" onclick="showPage('cases', this)">
+                <img src="img/nav_case.png"><span>Cases</span>
+            </button>
+            <button class="nav-btn" onclick="showPage('inventory', this)">
+                <img src="img/nav_inventory.png"><span>Inv</span>
+            </button>
+            <button class="nav-btn" onclick="showPage('profile', this)">
+                <img src="img/profile.png"><span>Profile</span>
+            </button>
         </nav>
     </div>
     <script src="script.js"></script>
