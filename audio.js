@@ -1,14 +1,27 @@
-// audio.js
+// audio.js - Yangilangan va ishonchli
 const sounds = {
-    spin: new Audio('https://actions.google.com/sounds/v1/ui/click.ogg'), // Ishonchliroq havola
-    win: new Audio('https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg')
+    // Ruletka aylanish ovozi (short click)
+    spin: new Audio('https://cdn.pixabay.com/audio/2022/03/15/audio_7306282998.mp3'),
+    // Yutuq ovozi (fanfare/success)
+    win: new Audio('https://cdn.pixabay.com/audio/2021/08/04/audio_0625c1539c.mp3')
 };
 
 function playSound(type) {
-    let s = sounds[type];
+    const s = sounds[type];
+    if (!s) return;
+
+    // Ovozni boshidan boshlash
     s.currentTime = 0;
-    s.play().catch(e => {
-        console.error("Ovoz chiqmayapti! Sababi: " + e.message);
-        // Agar ovoz chiqmasa, konsolga xato yozadi
-    });
+    
+    // Ovoz balandligini sozlash (ixtiyoriy)
+    s.volume = 0.5;
+
+    // Brauzer blokirovkasini chetlab o'tish uchun va'da (promise) bilan ishga tushiramiz
+    const playPromise = s.play();
+
+    if (playPromise !== undefined) {
+        playPromise.catch(error => {
+            console.log("Ovoz bloklandi: Foydalanuvchi hali sahifaga tegmadi.");
+        });
+    }
 }
