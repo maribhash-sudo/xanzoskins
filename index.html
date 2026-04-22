@@ -14,22 +14,24 @@
             <div class="balance-box">
                 <span id="balance">10000</span> <small>COIN</small>
             </div>
-            <button class="btn-topup" data-lang="topup">TO'LDIRISH</button>
+            <button class="btn-topup">TO'LDIRISH</button>
         </header>
 
         <main>
             <div id="page-cases" class="page active">
-                <h2 class="section-title" data-lang="cases_title">CASES</h2>
+                <h2 class="section-title">CASES</h2>
                 <div id="cases-grid" class="grid"></div>
             </div>
 
             <div id="page-bonus" class="page">
-                <h2 class="section-title" data-lang="bonus_title">BONUS</h2>
-                <div class="card" data-lang="bonus_card">Kundalik bonusni qabul qiling!</div>
+                <h2 class="section-title">ACTIVE TASKS</h2>
+                <div id="active-tasks-list" class="task-container"></div>
+                <h2 class="section-title" style="margin-top:30px;">COMPLETED</h2>
+                <div id="done-tasks-list" class="task-container"></div>
             </div>
 
             <div id="page-inventory" class="page">
-                <h2 class="section-title" data-lang="inventory_title">INVENTORY</h2>
+                <h2 class="section-title">INVENTORY</h2>
             </div>
 
             <div id="page-profile" class="page">
@@ -38,7 +40,7 @@
                     <h3 id="user-name">User</h3>
                 </div>
                 <div class="card">
-                    <p data-lang="select_lang" style="margin-bottom:10px;">Tilni tanlang:</p>
+                    <p style="margin-bottom:10px;">Tilni tanlang:</p>
                     <div class="grid-buttons">
                         <button class="lang-btn" onclick="setLanguage('uz')">🇺🇿 UZ</button>
                         <button class="lang-btn" onclick="setLanguage('ru')">🇷🇺 RU</button>
@@ -46,18 +48,18 @@
                     </div>
                 </div>
                 <div class="card">
-                    <p data-lang="trade_link_title">Steam Trade Link:</p>
+                    <p>Steam Trade Link:</p>
                     <input type="text" id="tradeLinkInput" placeholder="https://steamcommunity.com/...">
-                    <button onclick="saveTradeLink()" data-lang="save_btn">SAQLASH</button>
+                    <button onclick="saveSteamLink()">SAQLASH & +150 COIN</button>
                 </div>
             </div>
         </main>
 
         <nav class="bottom-nav">
-            <button class="nav-btn" onclick="showPage('bonus', this)"><img src="img/nav_diamond.png"><span data-lang="nav_bonus">Bonus</span></button>
-            <button class="nav-btn active" onclick="showPage('cases', this)"><img src="img/nav_case.png"><span data-lang="nav_cases">Cases</span></button>
-            <button class="nav-btn" onclick="showPage('inventory', this)"><img src="img/nav_inventory.png"><span data-lang="nav_inv">Inv</span></button>
-            <button class="nav-btn" onclick="showPage('profile', this)"><img src="img/profile.png"><span data-lang="nav_profile">Profile</span></button>
+            <button class="nav-btn" onclick="showPage('bonus', this)"><img src="img/nav_diamond.png"><span>Bonus</span></button>
+            <button class="nav-btn active" onclick="showPage('cases', this)"><img src="img/nav_case.png"><span>Cases</span></button>
+            <button class="nav-btn" onclick="showPage('inventory', this)"><img src="img/nav_inventory.png"><span>Inv</span></button>
+            <button class="nav-btn" onclick="showPage('profile', this)"><img src="img/profile.png"><span>Profile</span></button>
         </nav>
     </div>
     <script src="script.js"></script>
