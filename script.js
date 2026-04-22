@@ -5,7 +5,7 @@ function showPage(pageId, element) {
     element.classList.add('active');
 }
 
-// Mana bu ro'yxatni almashtiring
+// 2. Keyslar ro'yxati
 const cases = [
     { name: "Budget", price: "500", img: "case1.png" },
     { name: "Starter", price: "1500", img: "case2.webp" },
@@ -19,10 +19,12 @@ const cases = [
     { name: "God", price: "10000", img: "case10.png" }
 ];
 
+// 3. Sahifa yuklanganda bajariladigan barcha ishlar
 document.addEventListener("DOMContentLoaded", () => {
+    // A) Keyslarni render qilish
     const grid = document.getElementById('cases-grid');
     if (grid) {
-        grid.innerHTML = ""; // Avvalgi ma'lumotni tozalash
+        grid.innerHTML = ""; 
         cases.forEach(c => {
             grid.innerHTML += `
                 <div class="case-card">
@@ -32,4 +34,27 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>`;
         });
     }
+
+    // B) Telegram User ma'lumotlarini olish
+    const tg = window.Telegram.WebApp;
+    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+        const user = tg.initDataUnsafe.user;
+        document.getElementById('user-name').innerText = user.first_name;
+        if(user.photo_url) {
+            document.getElementById('user-avatar').innerHTML = `<img src="${user.photo_url}" style="width:100%; height:100%; border-radius:50%">`;
+        }
+    }
 });
+
+// 4. Profil funksiyalari
+function promptTrade() {
+    let link = prompt("Steam Trade Linkingizni kiriting:", localStorage.getItem('tradeLink') || "");
+    if(link) localStorage.setItem('tradeLink', link);
+}
+
+function changeLang() {
+    let langEl = document.getElementById('lang-val');
+    let lang = langEl.innerText === "RU" ? "UZ" : "RU";
+    langEl.innerText = lang;
+    localStorage.setItem('lang', lang);
+}
