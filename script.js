@@ -41,24 +41,35 @@ const sfTranslations = {
 
 let sfCurrentLang = 'en';
 
+// --- PROFIL SOZLAMALARI UCHUN FUNKSIYALAR ---
+
 function toggleLanguage() {
     // Tilni almashtirish
     sfCurrentLang = sfCurrentLang === 'en' ? 'ru' : 'en';
     
-    // UI ni yangilash
-    document.getElementById('current-lang-display').innerText = sfCurrentLang.toUpperCase();
+    // UI-dagi belgini yangilash
+    const langDisplay = document.getElementById('current-lang-display');
+    if (langDisplay) {
+        langDisplay.innerText = sfCurrentLang.toUpperCase();
+    }
     
-    document.querySelectorAll('#profile-settings-section [data-key]').forEach(el => {
+    // Barcha matnlarni yangilash
+    const elements = document.querySelectorAll('#profile-settings-section [data-key]');
+    elements.forEach(el => {
         const key = el.getAttribute('data-key');
-        el.innerText = sfTranslations[sfCurrentLang][key];
+        if (sfTranslations[sfCurrentLang][key]) {
+            el.innerText = sfTranslations[sfCurrentLang][key];
+        }
     });
 }
 
 function handleTradeLink() {
-    // Trade link uchun oddiy prompt (keyinchalik modal qilishingiz mumkin)
-    const link = prompt(sfCurrentLang === 'en' ? "Enter your Trade Link:" : "Введите вашу Трейд ссылку:");
+    const promptText = sfCurrentLang === 'en' ? "Enter your Trade Link:" : "Введите вашу Трейд ссылку:";
+    const link = prompt(promptText);
+    
     if (link) {
-        console.log("Saved Link:", link);
-        alert(sfCurrentLang === 'en' ? "Saved!" : "Сохранено!");
+        // Bu yerda linkni saqlash logikasi (masalan, localStorage yoki Telegram Storage)
+        console.log("Link saqlandi:", link);
+        alert(sfCurrentLang === 'en' ? "Trade link saved!" : "Трейд ссылка сохранена!");
     }
 }
