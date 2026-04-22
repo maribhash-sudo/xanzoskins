@@ -14,19 +14,11 @@ const budgetSkins = [
 let currentWinningSkin = null;
 
 function startBudgetRoulette() {
-    // 1. Balansni tekshirish
     let balEl = document.getElementById('balance');
     let bal = parseInt(balEl.innerText);
-    
-    if (bal < 500) { 
-        alert("Balans yetarli emas!"); 
-        return; 
-    }
-    
-    // 2. Keys narxini balansdan ayirish
+    if (bal < 500) { alert("Balans yetarli emas!"); return; }
     balEl.innerText = bal - 500;
     
-    // Ovozni boshlash
     if(typeof playSound === 'function') playSound('spin');
 
     const modal = document.getElementById('roulette-modal');
@@ -40,34 +32,23 @@ function startBudgetRoulette() {
     track.style.transition = "none";
     track.style.top = "0px";
 
-    // 50 ta element yaratish
     for (let i = 0; i < 50; i++) {
         let s = budgetSkins[Math.floor(Math.random() * budgetSkins.length)];
         track.innerHTML += `<div class="roulette-item"><img src="${s.img}"></div>`;
         if (i === 40) currentWinningSkin = s;
     }
 
-    // Animatsiya (Tezlik va masofa CSS orqali boshqariladi)
     setTimeout(() => {
         track.style.transition = "top 5s cubic-bezier(0.15, 0, 0.15, 1)";
-        track.style.top = "-4400px"; 
+        track.style.top = `-${40 * 160 - 80}px`; 
     }, 100);
 
-    // Natija oynasi
     setTimeout(() => {
         document.getElementById('roulette-viewport').style.display = 'none';
         document.getElementById('result-display').style.display = 'block';
-        
-        // Skin nomi va rasmi
         document.getElementById('won-skin-img').src = currentWinningSkin.img;
         document.getElementById('won-skin-name').innerText = currentWinningSkin.name;
-        
-        // QO'SHILGAN: Skin narxini COINda ko'rsatish
-        const priceEl = document.getElementById('won-skin-price');
-        if(priceEl) {
-            priceEl.innerText = currentWinningSkin.price + " COIN";
-        }
-
+        document.getElementById('won-skin-price').innerText = currentWinningSkin.price + " COIN";
         if(typeof playSound === 'function') playSound('win');
     }, 5200);
 }
@@ -78,8 +59,7 @@ function sellWonSkin() {
     document.getElementById('roulette-modal').style.display = 'none';
 }
 
-// Steamga yuborish funksiyasi (Hozircha faqat yopadi)
 function withdrawWonSkin() {
-    alert("Skin Steam profilingizga yuboriladi (Tez orada...)");
+    alert("Steam profilingizga yuborildi!");
     document.getElementById('roulette-modal').style.display = 'none';
 }
