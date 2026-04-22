@@ -65,4 +65,19 @@
     <script src="audio.js"></script>
     <script src="game.js"></script>
 </body>
+    <div id="roulette-modal" class="roulette-modal" style="display: none;">
+    <div id="roulette-viewport" class="roulette-viewport">
+        <div id="roulette-track" class="roulette-track"></div>
+    </div>
+    <div id="result-display" class="result-display" style="display: none;">
+        <h3>YUTUQ!</h3>
+        <img id="won-skin-img" src="" alt="Winner">
+        <p id="won-skin-name"></p>
+        <p id="won-skin-price"></p>
+        <div class="modal-btns">
+            <button onclick="withdrawWonSkin()">STEAMGA YUBORISH</button>
+            <button onclick="sellWonSkin()" style="background:#444;">SOTISH</button>
+        </div>
+    </div>
+</div>
 </html>
