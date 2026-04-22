@@ -54,7 +54,6 @@ function renderCases() {
     if(!grid) return;
     grid.innerHTML = "";
     cases.forEach(c => {
-        // Agar nomi Budget bo'lsa, ruletka ishga tushadi
         let clickAction = (c.name.uz === "Budget") ? 'onclick="startBudgetRoulette()"' : '';
         grid.innerHTML += `<div class="case-card"><img src="img/${c.img}"><p>${c.name[lang]}</p><button ${clickAction}>${c.price} COIN</button></div>`;
     });
