@@ -1,16 +1,33 @@
-// game.js
 function openBudgetCase() {
-    // 1. Ovozni ishga tushirish
+    let balanceEl = document.getElementById('balance');
+    let balance = parseInt(balanceEl.innerText);
+
+    if (balance < 500) {
+        alert("Mablag' yetarli emas!");
+        return;
+    }
+
+    // Balansni ayirish
+    balanceEl.innerText = balance - 500;
+    
+    // Ruletka ovozi
     playSound('spin');
 
-    // 2. Animatsiya (CSS orqali elementni silkitamiz)
+    // Oddiy vizual effekt (ekranni silkitish)
     const grid = document.getElementById('cases-grid');
-    grid.style.transform = "scale(0.95)";
-    
-    // 3. 3 soniyadan keyin natijani ko'rsatish
-    setTimeout(() => {
-        grid.style.transform = "scale(1)";
-        playSound('win');
-        alert("Budget keys ochildi! Sizga nimadir tushdi.");
-    }, 3000);
+    grid.style.transition = "0.1s";
+    let shakes = 0;
+    let interval = setInterval(() => {
+        grid.style.transform = shakes % 2 === 0 ? "translateX(5px)" : "translateX(-5px)";
+        shakes++;
+        if (shakes > 20) {
+            clearInterval(interval);
+            grid.style.transform = "translateX(0)";
+            
+            // Yutuq chiqishi
+            playSound('win');
+            alert("Budget keysidan 650 COIN yutib oldingiz!"); // Test uchun yutuq
+            balanceEl.innerText = parseInt(balanceEl.innerText) + 650;
+        }
+    }, 100);
 }
