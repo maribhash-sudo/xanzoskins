@@ -20,3 +20,53 @@ body { background: radial-gradient(circle, #2a0a0a 0%, #000 100%); color: #fff; 
 .case-card img { width: 100%; height: auto; }
 .section-title { color: var(--fire); border-bottom: 2px solid var(--fire); padding-bottom: 5px; }
 button { width: 100%; padding: 10px; background: var(--fire); color: white; border: none; border-radius: 5px; cursor: pointer; }
+.sf-settings-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 15px;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+.sf-menu-item {
+    background: #1c1c1e; /* To'q rangli blok */
+    border: 1px solid #2c2c2e;
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.sf-menu-item:active {
+    background: #2c2c2e; /* Bosilganda effekt */
+}
+
+.sf-item-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sf-icon {
+    font-size: 18px;
+}
+
+.sf-text {
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.sf-lang-status {
+    color: #007aff; /* Ko'k rangli til indikatori */
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.sf-arrow {
+    color: #8e8e93;
+    font-size: 12px;
+}
