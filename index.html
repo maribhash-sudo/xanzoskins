@@ -20,14 +20,20 @@
         <div id="cases-grid" class="cases-grid"></div>
 
         <nav class="bottom-nav">
-            <button class="nav-item active" onclick="alert('Bosh sahifa')">Bosh sahifa</button>
-            <button class="nav-item" onclick="alert('Inventar')">Inventar</button>
-            <button class="nav-item" onclick="alert('Profil')">
-                <img src="img/profile.png" alt="Profile" style="width: 20px; border-radius: 50%;">
-                Profil
-            </button>
-        </nav>
-    </div>
-    <script src="script.js"></script>
-</body>
-</html>
+    <button class="nav-item active" onclick="showSection('bonus', this)">
+        <img src="img/nav_diamond.png" alt="Bonus">
+        <span>Bonus</span>
+    </button>
+    <button class="nav-item" onclick="showSection('cases', this)">
+        <img src="img/nav_case.png" alt="Cases">
+        <span>Cases</span>
+    </button>
+    <button class="nav-item" onclick="showSection('inventory', this)">
+        <img src="img/nav_inventory.png" alt="Inv">
+        <span>Inv</span>
+    </button>
+    <button class="nav-item" onclick="showSection('profile', this)">
+        <img src="img/nav_profile.png" alt="Profile">
+        <span>Profile</span>
+    </button>
+</nav>
