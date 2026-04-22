@@ -1,23 +1,164 @@
-:root { --fire: #FF4500; --bg: #1a0505; }
-body { background: #000; color: #fff; font-family: sans-serif; margin: 0; padding-bottom: 90px; }
-.app-container { max-width: 600px; margin: auto; padding: 15px; }
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap');
 
-.header { display: flex; justify-content: space-between; align-items: center; background: #1a0505; padding: 15px; border-radius: 10px; border-bottom: 2px solid var(--fire); margin-bottom: 20px; }
-.bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 70px; background: #0a0a0a; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #333; }
-.nav-btn { background: none; border: none; color: #fff; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
-.nav-btn img { width: 28px; height: 28px; }
+:root { 
+    --fire: #FF4500; 
+    --bg: #0a0a0a; 
+    --card-bg: #151515;
+    --border: #252525;
+}
 
-.page { display: none; }
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body { 
+    background: radial-gradient(circle at top, #1a0505 0%, #000 100%); 
+    color: #fff; 
+    font-family: 'Montserrat', sans-serif; /* Professional shrift */
+    margin: 0; 
+    padding-bottom: 90px; 
+    overflow-x: hidden;
+}
+
+.app-container { max-width: 500px; margin: auto; padding: 15px; }
+
+/* Header */
+.header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    background: rgba(20, 20, 20, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 12px 20px; 
+    border-radius: 15px; 
+    border: 1px solid var(--border);
+    border-bottom: 2px solid var(--fire);
+    position: sticky;
+    top: 10px;
+    z-index: 100;
+}
+
+#balance { color: var(--fire); font-size: 20px; font-weight: 800; }
+
+.btn-topup {
+    width: auto !important;
+    padding: 8px 15px !important;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Navigation */
+.bottom-nav { 
+    position: fixed; 
+    bottom: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 75px; 
+    background: #050505; 
+    border-top: 1px solid var(--border); 
+    display: flex; 
+    justify-content: space-around; 
+    align-items: center; 
+    z-index: 1000;
+}
+
+.nav-btn { 
+    background: none; 
+    border: none; 
+    color: #666; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    cursor: pointer; 
+    transition: 0.3s;
+}
+
+.nav-btn img { 
+    width: 24px; 
+    height: 24px; 
+    object-fit: contain; 
+    margin-bottom: 5px;
+    filter: grayscale(1);
+    transition: 0.3s;
+}
+
+.nav-btn.active { color: var(--fire); }
+.nav-btn.active img { filter: grayscale(0) drop-shadow(0 0 5px var(--fire)); }
+.nav-btn span { font-size: 10px; font-weight: 600; }
+
+/* Sahifa animatsiyasi */
+.page { 
+    display: none; 
+    animation: fadeIn 0.4s ease-out;
+}
 .page.active { display: block; }
-.section-title { color: var(--fire); margin-bottom: 15px; }
 
-/* Profil va Vazifalar */
-.list-item, .task-card { background: #111; padding: 15px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #222; margin-bottom: 10px; cursor: pointer; }
-.btn-task { background: var(--fire); color: white; border: none; padding: 5px 10px; border-radius: 5px; }
-.done { opacity: 0.6; }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-/* Grid */
-.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-.case-card { background: #111; border: 1px solid #222; padding: 10px; border-radius: 10px; text-align: center; }
-.case-card img { width: 100%; height: auto; }
-button { width: 100%; padding: 10px; background: var(--fire); color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 5px; }
+/* Grid & Cards */
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+
+.case-card { 
+    background: var(--card-bg); 
+    border: 1px solid var(--border); 
+    padding: 15px; 
+    border-radius: 15px; 
+    text-align: center; 
+    transition: 0.2s;
+}
+
+.case-card:active { transform: scale(0.95); border-color: var(--fire); }
+
+.case-card img { 
+    width: 80%; 
+    height: auto; 
+    margin-bottom: 10px;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+}
+
+.case-card p { margin: 5px 0; font-weight: 600; font-size: 14px; }
+
+.section-title { 
+    color: #fff; 
+    font-size: 18px;
+    font-weight: 800;
+    margin-top: 25px;
+    padding-left: 5px;
+    border-left: 4px solid var(--fire);
+}
+
+/* Profil List (SkinFights Style) */
+.list-item { 
+    background: var(--card-bg); 
+    padding: 18px; 
+    border-radius: 12px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    border: 1px solid var(--border); 
+    margin-bottom: 10px; 
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.list-item:active { background: #1a1a1a; }
+
+/* Buttons */
+button { 
+    width: 100%; 
+    padding: 12px; 
+    background: linear-gradient(45deg, #FF4500, #FF6347); 
+    color: white; 
+    border: none; 
+    border-radius: 10px; 
+    font-weight: 700;
+    cursor: pointer; 
+    box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
+}
+
+button:active { transform: scale(0.98); box-shadow: none; }
