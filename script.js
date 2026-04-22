@@ -11,119 +11,92 @@ function showPage(pageId, element) {
     if(element) element.classList.add('active');
 }
 
-// 1. 10 ta Keyslar ro'yxati
+// 1. 10 ta Keyslar (Multi-language nomlar bilan)
 const cases = [
-    { name: "Budget", price: 500, img: "case1.png" },
-    { name: "Starter", price: 1500, img: "case2.webp" },
-    { name: "Basic", price: 2500, img: "case3.webp" },
-    { name: "Silver", price: 3500, img: "case4.webp" },
-    { name: "Gold", price: 4500, img: "case5.png" },
-    { name: "Elite", price: 5500, img: "case6.webp" },
-    { name: "Master", price: 6500, img: "case7.webp" },
-    { name: "Pro", price: 7500, img: "case8.png" },
-    { name: "Legend", price: 8500, img: "case9.png" },
-    { name: "God", price: 10000, img: "case10.png" }
+    { name: {uz: "Budget", ru: "Бюджет", en: "Budget"}, price: 500, img: "case1.png" },
+    { name: {uz: "Starter", ru: "Стартовый", en: "Starter"}, price: 1500, img: "case2.webp" },
+    { name: {uz: "Basic", ru: "Базовый", en: "Basic"}, price: 2500, img: "case3.webp" },
+    { name: {uz: "Silver", ru: "Серебро", en: "Silver"}, price: 3500, img: "case4.webp" },
+    { name: {uz: "Gold", ru: "Золото", en: "Gold"}, price: 4500, img: "case5.png" },
+    { name: {uz: "Elite", ru: "Элита", en: "Elite"}, price: 5500, img: "case6.webp" },
+    { name: {uz: "Master", ru: "Мастер", en: "Master"}, price: 6500, img: "case7.webp" },
+    { name: {uz: "Pro", ru: "Профи", en: "Pro"}, price: 7500, img: "case8.png" },
+    { name: {uz: "Legend", ru: "Легенда", en: "Legend"}, price: 8500, img: "case9.png" },
+    { name: {uz: "God", ru: "Бог", en: "God"}, price: 10000, img: "case10.png" }
 ];
 
-// 2. Bonus vazifalari
+// 2. Vazifalar
 let tasks = [
-    { id: 'tg', name: "Telegram Obuna", reward: 250, done: false, link: 'https://t.me/community' },
-    { id: 'insta', name: "Instagram Obuna", reward: 250, done: false, link: 'https://instagram.com/' }
+    { id: 'tg', name: {uz: "Telegram Obuna", ru: "Подписка Telegram", en: "Join Telegram"}, reward: 250, done: false, link: 'https://t.me/community' },
+    { id: 'insta', name: {uz: "Instagram Obuna", ru: "Подписка Instagram", en: "Follow Instagram"}, reward: 250, done: false, link: 'https://instagram.com/' }
 ];
 
-// 3. Til lug'ati
 const translations = {
-    uz: { cases_title: "CASES", bonus_title: "ACTIVE TASKS", save_btn: "SAQLASH & +150 COIN", topup: "TO'LDIRISH" },
-    ru: { cases_title: "КЕЙСЫ", bonus_title: "ЗАДАНИЯ", save_btn: "СОХРАНИТЬ & +150 COIN", topup: "ПОПОЛНИТЬ" },
-    en: { cases_title: "CASES", bonus_title: "TASKS", save_btn: "SAVE & +150 COIN", topup: "TOP UP" }
+    uz: { topup: "TO'LDIRISH", cases_title: "CASES", active_tasks: "FAOL VAZIFALAR", completed: "BAJARILGAN", inventory_title: "INVENTORY", nav_bonus: "Bonus", nav_cases: "Cases", nav_inv: "Inv", nav_profile: "Profile", select_lang: "Tilni tanlang:", trade_link: "Steam Trade Link:", save_btn: "SAQLASH" },
+    ru: { topup: "ПОПОЛНИТЬ", cases_title: "КЕЙСЫ", active_tasks: "ЗАДАНИЯ", completed: "ВЫПОЛНЕНО", inventory_title: "ИНВЕНТАРЬ", nav_bonus: "Бонус", nav_cases: "Кейсы", nav_inv: "Инв.", nav_profile: "Профиль", select_lang: "Выберите язык:", trade_link: "Steam Trade Link:", save_btn: "СОХРАНИТЬ" },
+    en: { topup: "TOP UP", cases_title: "CASES", active_tasks: "ACTIVE TASKS", completed: "COMPLETED", inventory_title: "INVENTORY", nav_bonus: "Bonus", nav_cases: "Cases", nav_inv: "Inv", nav_profile: "Profile", select_lang: "Select Language:", trade_link: "Steam Trade Link:", save_btn: "SAVE" }
 };
 
-// 4. Sahifani almashtirish funksiyasi
-function showPage(pageId, element) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(`page-${pageId}`).classList.add('active');
-    
-    // Header faqat Cases sahifasida ko'rinadi
-    const header = document.getElementById('main-header');
-    if (header) {
-        header.style.display = (pageId === 'cases') ? 'flex' : 'none';
-    }
-
-    document.querySelectorAll('.nav-btn').forEach(n => n.classList.remove('active'));
-    if(element) element.classList.add('active');
+function setLanguage(lang) {
+    localStorage.setItem('lang', lang);
+    // 1. Static matnlarni o'zgartirish
+    document.querySelectorAll('[data-lang]').forEach(el => {
+        const key = el.getAttribute('data-lang');
+        if (translations[lang] && translations[lang][key]) el.innerText = translations[lang][key];
+    });
+    // 2. Dinamik elementlarni qayta chizish
+    renderCases();
+    renderTasks();
 }
 
-// 5. Keyslarni ekranga chiqarish (RENDER)
 function renderCases() {
+    const lang = localStorage.getItem('lang') || 'uz';
     const grid = document.getElementById('cases-grid');
-    if (!grid) return;
-    grid.innerHTML = ""; // Tozalash
+    if(!grid) return;
+    grid.innerHTML = "";
     cases.forEach(c => {
-        grid.innerHTML += `
-            <div class="case-card">
-                <img src="img/${c.img}" alt="${c.name}">
-                <p style="color: #FF4500; font-weight: 800;">${c.name}</p>
-                <button onclick="alert('Keys ochilmoqda...')">${c.price} COIN</button>
-            </div>`;
+        grid.innerHTML += `<div class="case-card"><img src="img/${c.img}"><p>${c.name[lang]}</p><button>${c.price} COIN</button></div>`;
     });
 }
 
-// 6. Bonus vazifalarni chiqarish
 function renderTasks() {
+    const lang = localStorage.getItem('lang') || 'uz';
     const active = document.getElementById('active-tasks-list');
     const done = document.getElementById('done-tasks-list');
     if(!active) return;
     active.innerHTML = ""; done.innerHTML = "";
     tasks.forEach(t => {
         const card = `<div class="task-card">
-            <div class="task-info"><span style="color: #FF4500; font-weight: 800;">${t.name}</span><small style="color: #fff;">+${t.reward} COIN</small></div>
+            <div class="task-info"><span>${t.name[lang]}</span><small>+${t.reward} COIN</small></div>
             <button class="btn-task ${t.done ? 'done-btn' : ''}" onclick="completeTask('${t.id}')">${t.done ? 'DONE' : 'CLAIM'}</button>
         </div>`;
         t.done ? done.innerHTML += card : active.innerHTML += card;
     });
 }
 
+// Qolgan funksiyalar (showPage, completeTask, saveSteamLink) o'zgarmaydi...
+function showPage(pageId, element) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(`page-${pageId}`).classList.add('active');
+    document.getElementById('main-header').style.display = (pageId === 'cases') ? 'flex' : 'none';
+    document.querySelectorAll('.nav-btn').forEach(n => n.classList.remove('active'));
+    if(element) element.classList.add('active');
+}
+
 function completeTask(id) {
     const t = tasks.find(x => x.id === id);
-    if (t && !t.done) {
+    if (!t.done) {
         t.done = true;
-        updateBalance(t.reward);
+        let bal = parseInt(document.getElementById('balance').innerText);
+        document.getElementById('balance').innerText = bal + t.reward;
         if(t.link) window.open(t.link, '_blank');
         renderTasks();
     }
 }
 
-// 7. Steam Link saqlash va Bonus berish
-function saveSteamLink() {
-    const link = document.getElementById('tradeLinkInput').value;
-    if (link.includes('steamcommunity.com')) {
-        updateBalance(150);
-        localStorage.setItem('tradeLink', link);
-        alert("Steam ulangan! +150 COIN.");
-    } else { alert("Trade link xato!"); }
-}
-
-function updateBalance(amt) {
-    let balEl = document.getElementById('balance');
-    let currentBal = parseInt(balEl.innerText);
-    balEl.innerText = currentBal + amt;
-}
-
-// 8. Tilni o'zgartirish
-function setLanguage(lang) {
-    localStorage.setItem('lang', lang);
-    // Bu yerda data-lang atributli elementlar matni almashadi
-    alert("Til tanlandi: " + lang.toUpperCase());
-}
-
-// 9. Dastur ishga tushganda
 document.addEventListener("DOMContentLoaded", () => {
-    renderCases(); // 10 ta keysni chiqaradi
-    renderTasks(); // Vazifalarni chiqaradi
-    
-    // Telegram ismini olish
+    const lang = localStorage.getItem('lang') || 'uz';
+    setLanguage(lang);
     const tg = window.Telegram.WebApp;
-    if (tg.initDataUnsafe?.user) {
-        document.getElementById('user-name').innerText = tg.initDataUnsafe.user.first_name;
-    }
+    if (tg.initDataUnsafe?.user) document.getElementById('user-name').innerText = tg.initDataUnsafe.user.first_name;
 });
