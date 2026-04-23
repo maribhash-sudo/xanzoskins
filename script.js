@@ -10,7 +10,6 @@ function showPage(pageId, element) {
     if(element) element.classList.add('active');
 
     if(pageId === 'inventory') renderInventory();
-    // Sahifa almashganda balansni har doim yangilash
     updateUIBalance();
 }
 
@@ -40,7 +39,6 @@ const translations = {
     en: { topup: "TOP UP", cases_title: "CASES", active_tasks: "ACTIVE TASKS", completed: "COMPLETED", inventory_title: "INVENTORY", nav_bonus: "Bonus", nav_cases: "Cases", nav_inv: "Inv", nav_profile: "Profile", select_lang: "Select Language:", trade_link: "Steam Trade Link:", save_btn: "SAVE" }
 };
 
-// Balansni barcha sahifalarda yangilovchi yordamchi funksiya
 function updateUIBalance() {
     let bal = document.getElementById('balance').innerText;
     let largeBal = document.getElementById('balance-large');
@@ -68,7 +66,7 @@ function renderCases() {
             <div class="case-card">
                 <img src="img/${c.img}">
                 <p>${c.name[lang]}</p>
-                <button ${clickAction}>${c.price} <img src="img/coin.png" style="width:14px; vertical-align:middle;"></button>
+                <button ${clickAction}>${c.price} <img src="img/nav_diamond.png" style="width:14px; vertical-align:middle;"></button>
             </div>`;
     });
 }
@@ -86,7 +84,7 @@ function renderTasks() {
                 <div class="task-icon-circle">📱</div>
                 <div class="task-text-content">
                     <h4>${t.name[lang]}</h4>
-                    <p>+${t.reward} COIN</p>
+                    <p style="display:flex; align-items:center; gap:5px;"><img src="img/nav_diamond.png" style="width:12px;"> +${t.reward}</p>
                 </div>
             </div>
             <button class="btn-action-pro ${t.done ? 'done-btn' : ''}" onclick="completeTask('${t.id}')">${t.done ? 'DONE' : 'CLAIM'}</button>
@@ -125,7 +123,7 @@ function renderInventory() {
                 <img src="${item.img}" style="width:60px">
                 <p>${item.name}</p>
                 <small style="display:flex; justify-content:center; align-items:center; gap:3px;">
-                    <img src="img/coin.png" style="width:12px;"> ${item.price}
+                    <img src="img/nav_diamond.png" style="width:12px;"> ${item.price}
                 </small>
                 <button onclick="withdrawItem(${index})" style="font-size:10px;">Steam</button>
             </div>`;
@@ -183,7 +181,7 @@ function claimDailyBonus() {
 
 function copyRefLink() {
     const refInput = document.getElementById('ref-link');
-    refInput.style.display = 'block'; // Nusxalash uchun vaqtinchalik ochish
+    refInput.style.display = 'block';
     refInput.select();
     document.execCommand('copy');
     refInput.style.display = 'none';
