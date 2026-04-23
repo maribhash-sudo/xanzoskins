@@ -9,6 +9,9 @@ function showPage(pageId, element) {
 
     document.querySelectorAll('.nav-btn').forEach(n => n.classList.remove('active'));
     if(element) element.classList.add('active');
+
+    // Inventar ochilganda uni yangilash
+    if(pageId === 'inventory') renderInventory();
 }
 
 // 1. 10 ta Keyslar
@@ -47,7 +50,6 @@ function setLanguage(lang) {
     renderTasks();
 }
 
-// YAQILGAN QISM: Budget tugmasi uchun ruletkani ulash
 function renderCases() {
     const lang = localStorage.getItem('lang') || 'uz';
     const grid = document.getElementById('cases-grid');
@@ -89,6 +91,43 @@ function saveSteamLink() {
     const link = document.getElementById('tradeLinkInput').value;
     localStorage.setItem('tradeLink', link);
     alert("Saqlandi!");
+}
+
+// YAQILGAN YANGI FUNKSIYALAR
+function renderInventory() {
+    const grid = document.getElementById('inventory-grid');
+    if(!grid) return;
+    grid.innerHTML = "";
+    let inv = JSON.parse(localStorage.getItem('inventory') || '[]');
+    inv.forEach((item, index) => {
+        grid.innerHTML += `
+            <div class="case-card">
+                <img src="${item.img}" style="width:60px">
+                <p>${item.name}</p>
+                <small>${item.price} COIN</small>
+                <button onclick="withdrawItem(${index})" style="font-size:10px;">Steam</button>
+            </div>`;
+    });
+}
+
+function sellAllInventory() {
+    let inv = JSON.parse(localStorage.getItem('inventory') || '[]');
+    if(inv.length === 0) { alert("Inventar bo'sh!"); return; }
+    let total = 0;
+    inv.forEach(i => total += i.price);
+    let balEl = document.getElementById('balance');
+    balEl.innerText = parseInt(balEl.innerText) + total;
+    localStorage.setItem('inventory', '[]');
+    renderInventory();
+    alert("Barchasi sotildi! +" + total + " COIN");
+}
+
+function withdrawItem(index) {
+    alert("Steamga yuborildi!");
+    let inv = JSON.parse(localStorage.getItem('inventory') || '[]');
+    inv.splice(index, 1);
+    localStorage.setItem('inventory', JSON.stringify(inv));
+    renderInventory();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
