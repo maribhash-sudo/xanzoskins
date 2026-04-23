@@ -13,7 +13,8 @@
     <div class="app-container">
         <header class="header" id="main-header">
             <div class="balance-box">
-                <span id="balance">10000</span> <small>COIN</small>
+                <img src="img/coin.png" alt="coin" style="width:20px; vertical-align:middle; margin-right:5px;">
+                <span id="balance">10000</span>
             </div>
             <button class="btn-topup" data-lang="topup">TO'LDIRISH</button>
         </header>
@@ -25,27 +26,52 @@
             </div>
 
             <div id="page-bonus" class="page">
-                <h2 class="section-title">DAILY BONUS</h2>
-                <div class="card" style="text-align: center;">
-                    <button id="bonus-btn" onclick="claimDailyBonus()" style="padding:15px; width:100%; background: #FFD700; border:none; border-radius:5px; font-weight:bold;">KUNLIK BONUSNI OLISH</button>
-                    <p id="bonus-message" style="margin-top:10px;"></p>
+                <div class="bonus-hero" style="text-align: center; padding: 20px 0;">
+                    <img src="img/coin.png" alt="coin" style="width:60px; margin-bottom:10px;">
+                    <h2 id="balance-large" style="font-size: 32px; margin: 0;">10000</h2>
+                    <p style="color: #777; font-size: 14px; margin-top: 5px;">Sizning balansingiz</p>
                 </div>
 
-                <h2 class="section-title">REFERRAL</h2>
-                <div class="card">
-                    <p>Do'stlarni taklif qiling:</p>
-                    <input type="text" id="ref-link" readonly style="width:100%; padding:10px; margin-bottom:10px; background:#222; color:white; border:none;">
-                    <button onclick="copyRefLink()" style="width:100%;">HAVOLANI NUSXALASH</button>
-                </div>
+                <h2 class="section-title">DOIMIY BONUSLAR</h2>
 
-                <h2 class="section-title">NICKNAME BONUS</h2>
-                <div class="card">
-                    <p>Ismingizga @xanzoskins_bot qo'shing (+50 COIN):</p>
-                    <button onclick="checkNickName()" style="width:100%; padding:10px; background:#2ecc71; border:none; border-radius:5px; font-weight:bold; color:white;">TEKSHIRISH</button>
+                <div class="task-card-pro">
+                    <div class="task-info-main">
+                        <div class="task-icon-circle">🎁</div>
+                        <div class="task-text-content">
+                            <h4>Kunlik mukofot</h4>
+                            <p>+50 dan 5000 COINgacha</p>
+                        </div>
+                    </div>
+                    <button id="bonus-btn" onclick="claimDailyBonus()" class="btn-action-pro">OLISH</button>
+                </div>
+                <p id="bonus-message" style="text-align:center; font-size: 12px; margin-top: -5px; margin-bottom: 15px;"></p>
+
+                <div class="task-card-pro">
+                    <div class="task-info-main">
+                        <div class="task-icon-circle">👥</div>
+                        <div class="task-text-content">
+                            <h4>Do'stlarni taklif qilish</h4>
+                            <p>Har bir do'st uchun +500 COIN</p>
+                        </div>
+                    </div>
+                    <button onclick="copyRefLink()" class="btn-action-pro">LINK</button>
+                </div>
+                <input type="text" id="ref-link" readonly style="display:none;">
+
+                <div class="task-card-pro">
+                    <div class="task-info-main">
+                        <div class="task-icon-circle">🏷️</div>
+                        <div class="task-text-content">
+                            <h4>Nikga bot nomini qo'shish</h4>
+                            <p>Har 24 soatda +50 COIN</p>
+                        </div>
+                    </div>
+                    <button onclick="checkNickName()" class="btn-action-pro">TEKSHIRISH</button>
                 </div>
 
                 <h2 class="section-title" data-lang="active_tasks">ACTIVE TASKS</h2>
                 <div id="active-tasks-list" class="task-container"></div>
+                
                 <h2 class="section-title" style="margin-top:30px;" data-lang="completed">COMPLETED</h2>
                 <div id="done-tasks-list" class="task-container"></div>
             </div>
