@@ -46,17 +46,20 @@ body {
 }
 .case-card img { width: 80%; margin-bottom: 10px; }
 
-/* --- KEYS QISMI KOINNI KATTALASHTIRISH (Yangi qoshildi) --- */
+/* --- KEYS QISMI KOINNI KATTALASHTIRISH VA DUMALOQ QILISH --- */
 .case-card button {
     display: flex !important;
     justify-content: center;
     align-items: center;
-    gap: 8px; /* Matn va koin orasidagi joy */
+    gap: 8px; 
     font-size: 14px !important;
 }
+
 .case-card button img {
-    width: 22px !important; /* Koinni kattalashtirdik */
-    height: 22px !important;
+    width: 24px !important;    /* O'lcham */
+    height: 24px !important;   /* O'lcham */
+    object-fit: contain !important; /* Rasm cho'zilmasligi uchun */
+    aspect-ratio: 1 / 1 !important; /* Mukammal kvadrat/dumaloq shakl uchun */
     margin-bottom: 0 !important;
     vertical-align: middle;
 }
