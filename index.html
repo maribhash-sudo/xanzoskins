@@ -25,6 +25,19 @@
             </div>
 
             <div id="page-bonus" class="page">
+                <h2 class="section-title">DAILY BONUS</h2>
+                <div class="card" style="text-align: center;">
+                    <button id="bonus-btn" onclick="claimDailyBonus()" style="padding:15px; width:100%; background: #FFD700; border:none; border-radius:5px; font-weight:bold;">KUNLIK BONUSNI OLISH</button>
+                    <p id="bonus-message" style="margin-top:10px;"></p>
+                </div>
+
+                <h2 class="section-title">REFERRAL</h2>
+                <div class="card">
+                    <p>Do'stlarni taklif qiling:</p>
+                    <input type="text" id="ref-link" readonly style="width:100%; padding:10px; margin-bottom:10px; background:#222; color:white; border:none;">
+                    <button onclick="copyRefLink()" style="width:100%;">HAVOLANI NUSXALASH</button>
+                </div>
+
                 <h2 class="section-title" data-lang="active_tasks">ACTIVE TASKS</h2>
                 <div id="active-tasks-list" class="task-container"></div>
                 <h2 class="section-title" style="margin-top:30px;" data-lang="completed">COMPLETED</h2>
