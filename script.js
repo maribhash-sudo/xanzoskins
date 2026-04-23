@@ -64,13 +64,15 @@ function renderCases() {
         let clickAction = (c.name.uz === "Budget") ? 'onclick="startBudgetRoulette()"' : '';
         grid.innerHTML += `
             <div class="case-card">
-                <img src="img/${c.img}">
-                <p>${c.name[lang]}</p>
-                <button ${clickAction}>${c.price} <img src="img/nav_diamond.png" style="width:14px; vertical-align:middle;"></button>
+                <img src="img/${c.img}" class="case-img">
+                <p class="case-name">${c.name[lang]}</p>
+                <button class="case-buy-btn" ${clickAction}>
+                    <span>${c.price}</span>
+                    <img src="img/nav_diamond.png" class="btn-coin-icon">
+                </button>
             </div>`;
     });
 }
-
 function renderTasks() {
     const lang = localStorage.getItem('lang') || 'uz';
     const active = document.getElementById('active-tasks-list');
