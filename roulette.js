@@ -19,6 +19,9 @@ function startBudgetRoulette() {
     if (bal < 500) { alert("Balans yetarli emas!"); return; }
     
     balEl.innerText = bal - 500;
+    // Balans o'zgargani uchun yangilash
+    if(typeof updateUIBalance === 'function') updateUIBalance();
+    
     if(typeof playSound === 'function') playSound('spin');
 
     const modal = document.getElementById('roulette-modal');
@@ -43,16 +46,15 @@ function startBudgetRoulette() {
         track.style.top = `-${40 * 160 - 80}px`; 
     }, 100);
 
-    // BU YERGA QO'SHASIZ:
     setTimeout(() => {
         document.getElementById('roulette-viewport').style.display = 'none';
         document.getElementById('result-display').style.display = 'block';
         document.getElementById('won-skin-img').src = currentWinningSkin.img;
         document.getElementById('won-skin-name').innerText = currentWinningSkin.name;
         
-        // Coin rasmi bilan narxni chiqarish
+        // TUZATILDI: nav_diamond.png ishlatildi
         document.getElementById('won-skin-price').innerHTML = 
-            `<img src="img/coin.png" style="width:16px; vertical-align:middle;"> ${currentWinningSkin.price} COIN`;
+            `<img src="img/nav_diamond.png" style="width:16px; vertical-align:middle;"> ${currentWinningSkin.price} COIN`;
         
         // Inventarga qo'shish
         let inv = JSON.parse(localStorage.getItem('inventory') || '[]');
@@ -66,6 +68,10 @@ function startBudgetRoulette() {
 function sellWonSkin() {
     let balEl = document.getElementById('balance');
     balEl.innerText = parseInt(balEl.innerText) + currentWinningSkin.price;
+    
+    // Yutuq sotilganda tepadagi balansni yangilash
+    if(typeof updateUIBalance === 'function') updateUIBalance();
+
     // Inventardan o'chirish (oxirgi qo'shilgani)
     let inv = JSON.parse(localStorage.getItem('inventory') || '[]');
     inv.pop();
