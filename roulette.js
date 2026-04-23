@@ -43,12 +43,16 @@ function startBudgetRoulette() {
         track.style.top = `-${40 * 160 - 80}px`; 
     }, 100);
 
+    // BU YERGA QO'SHASIZ:
     setTimeout(() => {
         document.getElementById('roulette-viewport').style.display = 'none';
         document.getElementById('result-display').style.display = 'block';
         document.getElementById('won-skin-img').src = currentWinningSkin.img;
         document.getElementById('won-skin-name').innerText = currentWinningSkin.name;
-        document.getElementById('won-skin-price').innerText = currentWinningSkin.price + " COIN";
+        
+        // Coin rasmi bilan narxni chiqarish
+        document.getElementById('won-skin-price').innerHTML = 
+            `<img src="img/coin.png" style="width:16px; vertical-align:middle;"> ${currentWinningSkin.price} COIN`;
         
         // Inventarga qo'shish
         let inv = JSON.parse(localStorage.getItem('inventory') || '[]');
