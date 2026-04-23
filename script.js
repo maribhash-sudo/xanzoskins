@@ -57,7 +57,7 @@ function renderCases() {
     grid.innerHTML = "";
     cases.forEach(c => {
         let clickAction = (c.name.uz === "Budget") ? 'onclick="startBudgetRoulette()"' : '';
-        grid.innerHTML += `<div class="case-card"><img src="img/${c.img}"><p>${c.name[lang]}</p><button ${clickAction}>${c.price} COIN</button></div>`;
+        grid.innerHTML += `<div class="case-card"><img src="img/${c.img}"><p>${c.name[lang]}</p><button ${clickAction}>${c.price} <img src="img/coin.png" style="width:12px"></button></div>`;
     });
 }
 
@@ -69,7 +69,7 @@ function renderTasks() {
     active.innerHTML = ""; done.innerHTML = "";
     tasks.forEach(t => {
         const card = `<div class="task-card">
-            <div class="task-info"><span>${t.name[lang]}</span><small>+${t.reward} COIN</small></div>
+            <div class="task-info"><span>${t.name[lang]}</span><small style="display:flex;align-items:center;gap:3px;"><img src="img/coin.png" style="width:12px"> +${t.reward}</small></div>
             <button class="btn-task ${t.done ? 'done-btn' : ''}" onclick="completeTask('${t.id}')">${t.done ? 'DONE' : 'CLAIM'}</button>
         </div>`;
         t.done ? done.innerHTML += card : active.innerHTML += card;
@@ -103,7 +103,7 @@ function renderInventory() {
             <div class="case-card">
                 <img src="${item.img}" style="width:60px">
                 <p>${item.name}</p>
-                <small>${item.price} COIN</small>
+                <small style="display:flex;justify-content:center;align-items:center;gap:3px;"><img src="img/coin.png" style="width:12px">${item.price}</small>
                 <button onclick="withdrawItem(${index})" style="font-size:10px;">Steam</button>
             </div>`;
     });
@@ -153,34 +153,31 @@ function claimDailyBonus() {
 }
 
 function copyRefLink() {
-    const tg = window.Telegram.WebApp;
-    const userId = tg.initDataUnsafe?.user?.id || '000000';
-    const botUrl = "https://t.me/Xanzo_skins_bot?start=" + userId;
-    navigator.clipboard.writeText(botUrl).then(() => {
-        alert("Havola nusxalandi: " + botUrl);
-    });
+    const refInput = document.getElementById('ref-link');
+    refInput.select();
+    document.execCommand('copy');
+    alert("Havola nusxalandi!");
 }
 
-// NICKNAME TEKSHIRISH FUNKSIYASI
 function checkNickName() {
     const tg = window.Telegram.WebApp;
     const user = tg.initDataUnsafe?.user;
-    if (!user) { alert("Foydalanuvchi ma'lumotlari topilmadi!"); return; }
+    if (!user) { alert("Foydalanuvchi topilmadi!"); return; }
     const fullName = ((user.first_name || "") + " " + (user.last_name || "")).toLowerCase();
     const requiredNick = "@xanzoskins_bot";
     let lastNickCheck = localStorage.getItem('lastNickCheck');
     let now = Date.now();
     if (lastNickCheck && (now - lastNickCheck < 24 * 60 * 60 * 1000)) {
-        alert("Siz bugun tekshirib bo'ldingiz! Ertaga qaytib ko'ring.");
+        alert("Siz bugun tekshirib bo'ldingiz!");
         return;
     }
     if (fullName.includes(requiredNick.toLowerCase())) {
         let balEl = document.getElementById('balance');
         balEl.innerText = parseInt(balEl.innerText) + 50;
         localStorage.setItem('lastNickCheck', now);
-        alert("Tabriklaymiz! +50 COIN balansga qo'shildi.");
+        alert("Tabriklaymiz! +50 COIN.");
     } else {
-        alert("Ismingizda " + requiredNick + " topilmadi. Iltimos, ismingizga buni qo'shing va qayta urunib ko'ring.");
+        alert("Ismingizda " + requiredNick + " topilmadi.");
     }
 }
 
@@ -191,15 +188,10 @@ document.addEventListener("DOMContentLoaded", () => {
     
     const tg = window.Telegram.WebApp;
     if (tg.initDataUnsafe?.user) {
-        let userNameEl = document.getElementById('user-name');
-        if(userNameEl) userNameEl.innerText = tg.initDataUnsafe.user.first_name;
-        
-        // Referral link qo'yish
         let refInput = document.getElementById('ref-link');
         if(refInput) refInput.value = "https://t.me/Xanzo_skins_bot?start=" + tg.initDataUnsafe.user.id;
     }
 
-    // Bonus holatini tekshirish
     let lastClaim = localStorage.getItem('lastClaimDate');
     let btn = document.getElementById('bonus-btn');
     let msg = document.getElementById('bonus-message');
