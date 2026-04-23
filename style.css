@@ -1,9 +1,9 @@
 :root { 
     --fire: #FF4500; 
     --bg: #000; 
-    --card: #111; 
-    --border: #222; 
-    --green: #2ecc71; /* Yangi bonuslar uchun yashil rang */
+    --card: rgba(20, 20, 20, 0.6); /* Shaffof kartalar */
+    --border: rgba(255, 69, 0, 0.3); /* Olov rangli shaffof chegara */
+    --green: #2ecc71; 
 }
 
 * { box-sizing: border-box; }
@@ -18,74 +18,69 @@ body {
 
 .app-container { max-width: 600px; margin: auto; padding: 15px; }
 
-.header { display: flex; justify-content: space-between; align-items: center; background: rgba(20,20,20,0.8); padding: 15px; border-radius: 12px; border-bottom: 2px solid var(--fire); }
+/* HEADER */
+.header { 
+    display: flex; justify-content: space-between; align-items: center; 
+    background: rgba(20,20,20,0.8); padding: 15px; border-radius: 12px; 
+    border-bottom: 2px solid var(--fire); 
+    box-shadow: 0 0 10px rgba(255, 69, 0, 0.2);
+}
 #balance { color: var(--fire); font-size: 22px; font-weight: 800; }
 
+/* NAVIGATSIYA */
 .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 85px; background: #000; border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index: 1000; }
 .nav-btn { background: none; border: none; color: #777; display: flex; flex-direction: column; align-items: center; width: 25%; gap: 5px; cursor: pointer; }
 .nav-btn img { width: 36px; height: 36px; object-fit: contain; }
 .nav-btn.active { color: var(--fire); }
 
+/* GRID VA KARTALAR (Shaffof va Nurlanuvchi) */
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-.case-card { background: var(--card); border: 1px solid var(--border); padding: 15px; border-radius: 12px; text-align: center; }
+.case-card, .card, .task-card, .task-card-pro { 
+    background: var(--card); 
+    border: 1px solid var(--border); 
+    padding: 15px; 
+    border-radius: 15px; 
+    text-align: center;
+    backdrop-filter: blur(10px); /* Orqasidan nurlanish effekti uchun */
+    box-shadow: 0 0 15px rgba(255, 69, 0, 0.1);
+}
 .case-card img { width: 80%; margin-bottom: 10px; }
 
-.task-container { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
-.task-card { background: var(--card); padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); }
-.task-info span { display: block; font-weight: 800; font-size: 15px; color: var(--fire); }
-.btn-task { width: auto; padding: 8px 18px; background: var(--fire); border-radius: 6px; font-size: 12px; color: white; border: none; font-weight: 800; cursor: pointer; }
-.done-btn { background: #333; color: #777; }
+/* TASK CARD PRO (Bonus sahifasi uchun) */
+.task-card-pro {
+    display: flex; justify-content: space-between; align-items: center;
+    text-align: left; margin-bottom: 15px;
+}
+.task-info-main { display: flex; align-items: center; gap: 15px; }
+.task-icon-circle {
+    width: 40px; height: 40px;
+    background: rgba(255, 69, 0, 0.1);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; border: 1px solid var(--border);
+}
+.task-text-content h4 { margin: 0; font-size: 14px; color: #fff; }
+.task-text-content p { margin: 3px 0 0; font-size: 12px; color: #ff8c00; font-weight: 600; }
 
+/* KICHIKROQ TUGMALAR */
+.btn-action-pro {
+    background: var(--fire) !important;
+    color: white !important;
+    border: none !important;
+    padding: 6px 14px !important;
+    font-size: 11px !important;
+    border-radius: 6px !important;
+    text-transform: uppercase;
+    font-weight: 800 !important;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255, 69, 0, 0.4);
+}
+.btn-action-pro:active { transform: scale(0.95); }
+
+/* QOLGAN ELEMENTLAR */
 button { width: 100%; padding: 12px; background: var(--fire); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
 input { width: 100%; padding: 12px; background: #000; border: 1px solid var(--border); color: #fff; border-radius: 8px; margin-bottom: 10px; }
-
 .page { display: none; }
 .page.active { display: block; }
 .section-title { color: var(--fire); border-bottom: 2px solid var(--fire); padding-bottom: 5px; font-size: 16px; font-weight: 800; margin-top: 20px; text-transform: uppercase; }
-.card { background: var(--card); padding: 15px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 15px; }
 .lang-btn { background: #222 !important; }
-
-/* --- BONUS VA NICKNAME QISMI UCHUN YANGI QOSHILGAN STILLAR --- */
-
-.bonus-card-new {
-    background: var(--card);
-    border: 1px solid var(--border);
-    padding: 15px;
-    border-radius: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.bonus-info-text h4 {
-    margin: 0;
-    color: #fff;
-    font-size: 14px;
-}
-
-.bonus-info-text p {
-    margin: 5px 0 0;
-    color: var(--green);
-    font-weight: bold;
-    font-size: 14px;
-}
-
-.btn-bonus-green {
-    background: #1a2c33;
-    color: var(--green);
-    border: 1px solid var(--border);
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    font-size: 12px;
-    width: auto; /* Avtomatik kenglik */
-}
-
-#ref-link {
-    background: #000;
-    border: 1px solid #333;
-    color: #888;
-    font-size: 12px;
-    margin-top: 10px;
-}
