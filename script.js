@@ -129,7 +129,6 @@ function withdrawItem(index) {
     renderInventory();
 }
 
-// YANGI QO'SHILGAN FUNKSIYALAR:
 function claimDailyBonus() {
     let lastClaim = localStorage.getItem('lastClaimDate');
     let today = new Date().toDateString();
@@ -160,6 +159,29 @@ function copyRefLink() {
     navigator.clipboard.writeText(botUrl).then(() => {
         alert("Havola nusxalandi: " + botUrl);
     });
+}
+
+// NICKNAME TEKSHIRISH FUNKSIYASI
+function checkNickName() {
+    const tg = window.Telegram.WebApp;
+    const user = tg.initDataUnsafe?.user;
+    if (!user) { alert("Foydalanuvchi ma'lumotlari topilmadi!"); return; }
+    const fullName = ((user.first_name || "") + " " + (user.last_name || "")).toLowerCase();
+    const requiredNick = "@xanzoskins_bot";
+    let lastNickCheck = localStorage.getItem('lastNickCheck');
+    let now = Date.now();
+    if (lastNickCheck && (now - lastNickCheck < 24 * 60 * 60 * 1000)) {
+        alert("Siz bugun tekshirib bo'ldingiz! Ertaga qaytib ko'ring.");
+        return;
+    }
+    if (fullName.includes(requiredNick.toLowerCase())) {
+        let balEl = document.getElementById('balance');
+        balEl.innerText = parseInt(balEl.innerText) + 50;
+        localStorage.setItem('lastNickCheck', now);
+        alert("Tabriklaymiz! +50 COIN balansga qo'shildi.");
+    } else {
+        alert("Ismingizda " + requiredNick + " topilmadi. Iltimos, ismingizga buni qo'shing va qayta urunib ko'ring.");
+    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
