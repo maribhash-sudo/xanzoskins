@@ -18,22 +18,71 @@ body {
 
 .app-container { max-width: 600px; margin: auto; padding: 15px; }
 
-/* HEADER */
+/* HEADER - Balans qismi markazlashtirildi va kattalashtirildi */
 .header { 
-    display: flex; justify-content: space-between; align-items: center; 
-    background: rgba(20,20,20,0.8); padding: 15px; border-radius: 12px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    background: rgba(20,20,20,0.8); 
+    padding: 15px; 
+    border-radius: 12px; 
     border-bottom: 2px solid var(--fire); 
     box-shadow: 0 0 10px rgba(255, 69, 0, 0.2);
 }
-#balance { color: var(--fire); font-size: 22px; font-weight: 800; }
+
+.balance-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Headerdagi asosiy koin rasmi */
+.balance-box img {
+    width: 60px !important; /* Koin kattaligi */
+    height: 60px !important;
+    filter: drop-shadow(0 0 15px rgba(255, 69, 0, 0.8)); /* Olovli nur */
+    object-fit: contain;
+}
+
+#balance { 
+    color: #fff; /* Raqam oq rangda yaxshi ko'rinadi */
+    font-size: 24px; 
+    font-weight: 800; 
+    text-shadow: 0 0 10px var(--fire);
+}
+
+/* BONUS SAHIFASIDAGI KATTA KOIN */
+.bonus-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 0;
+    text-align: center;
+}
+
+.bonus-hero img {
+    width: 100px !important; /* Bonusda yanada kattaroq */
+    height: 100px !important;
+    filter: drop-shadow(0 0 20px var(--fire));
+    margin-bottom: 10px;
+}
+
+#balance-large {
+    font-size: 42px !important;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 0 15px var(--fire);
+}
 
 /* NAVIGATSIYA */
 .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 85px; background: #000; border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index: 1000; }
 .nav-btn { background: none; border: none; color: #777; display: flex; flex-direction: column; align-items: center; width: 25%; gap: 5px; cursor: pointer; }
-.nav-btn img { width: 36px; height: 36px; object-fit: contain; }
+.nav-btn img { width: 32px; height: 32px; object-fit: contain; }
 .nav-btn.active { color: var(--fire); }
+.nav-btn.active img { filter: drop-shadow(0 0 8px var(--fire)); }
 
-/* GRID VA KARTALAR (Shaffof va Nurlanuvchi) */
+/* GRID VA KARTALAR */
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
 .case-card, .card, .task-card, .task-card-pro { 
     background: var(--card); 
@@ -41,35 +90,45 @@ body {
     padding: 15px; 
     border-radius: 15px; 
     text-align: center;
-    backdrop-filter: blur(10px); /* Orqasidan nurlanish effekti uchun */
+    backdrop-filter: blur(10px); 
     box-shadow: 0 0 15px rgba(255, 69, 0, 0.1);
+    transition: 0.3s;
 }
+.case-card:active { transform: scale(0.98); border-color: var(--fire); }
 .case-card img { width: 80%; margin-bottom: 10px; }
 
-/* TASK CARD PRO (Bonus sahifasi uchun) */
+/* Keys va Vazifalar ichidagi kichik koinchalar */
+.case-card button img, .task-text-content p img {
+    width: 14px !important;
+    height: 14px !important;
+    vertical-align: middle;
+    filter: drop-shadow(0 0 3px var(--fire));
+}
+
+/* TASK CARD PRO */
 .task-card-pro {
     display: flex; justify-content: space-between; align-items: center;
     text-align: left; margin-bottom: 15px;
 }
-.task-info-main { display: flex; align-items: center; gap: 15px; }
+.task-info-main { display: flex; align-items: center; gap: 12px; }
 .task-icon-circle {
-    width: 40px; height: 40px;
+    width: 45px; height: 45px;
     background: rgba(255, 69, 0, 0.1);
     border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 18px; border: 1px solid var(--border);
+    font-size: 20px; border: 1px solid var(--border);
 }
 .task-text-content h4 { margin: 0; font-size: 14px; color: #fff; }
 .task-text-content p { margin: 3px 0 0; font-size: 12px; color: #ff8c00; font-weight: 600; }
 
-/* KICHIKROQ TUGMALAR */
+/* TUGMALAR */
 .btn-action-pro {
     background: var(--fire) !important;
     color: white !important;
     border: none !important;
-    padding: 6px 14px !important;
-    font-size: 11px !important;
-    border-radius: 6px !important;
+    padding: 8px 16px !important;
+    font-size: 12px !important;
+    border-radius: 8px !important;
     text-transform: uppercase;
     font-weight: 800 !important;
     cursor: pointer;
@@ -77,10 +136,24 @@ body {
 }
 .btn-action-pro:active { transform: scale(0.95); }
 
-/* QOLGAN ELEMENTLAR */
-button { width: 100%; padding: 12px; background: var(--fire); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
-input { width: 100%; padding: 12px; background: #000; border: 1px solid var(--border); color: #fff; border-radius: 8px; margin-bottom: 10px; }
+button { width: 100%; padding: 12px; background: var(--fire); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: 0.2s; }
+button:active { opacity: 0.8; }
+
+input { width: 100%; padding: 12px; background: #000; border: 1px solid var(--border); color: #fff; border-radius: 8px; margin-bottom: 10px; outline: none; }
+input:focus { border-color: var(--fire); }
+
 .page { display: none; }
 .page.active { display: block; }
-.section-title { color: var(--fire); border-bottom: 2px solid var(--fire); padding-bottom: 5px; font-size: 16px; font-weight: 800; margin-top: 20px; text-transform: uppercase; }
-.lang-btn { background: #222 !important; }
+
+.section-title { 
+    color: var(--fire); 
+    border-left: 4px solid var(--fire); 
+    padding-left: 10px; 
+    font-size: 16px; 
+    font-weight: 800; 
+    margin: 25px 0 15px 0; 
+    text-transform: uppercase; 
+}
+
+.lang-btn { background: #222 !important; border: 1px solid #444 !important; }
+.lang-btn:active { border-color: var(--fire); }
