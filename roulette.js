@@ -17,8 +17,8 @@ function startBudgetRoulette() {
     let balEl = document.getElementById('balance');
     let bal = parseInt(balEl.innerText);
     if (bal < 500) { alert("Balans yetarli emas!"); return; }
-    balEl.innerText = bal - 500;
     
+    balEl.innerText = bal - 500;
     if(typeof playSound === 'function') playSound('spin');
 
     const modal = document.getElementById('roulette-modal');
@@ -49,6 +49,12 @@ function startBudgetRoulette() {
         document.getElementById('won-skin-img').src = currentWinningSkin.img;
         document.getElementById('won-skin-name').innerText = currentWinningSkin.name;
         document.getElementById('won-skin-price').innerText = currentWinningSkin.price + " COIN";
+        
+        // Inventarga qo'shish
+        let inv = JSON.parse(localStorage.getItem('inventory') || '[]');
+        inv.push(currentWinningSkin);
+        localStorage.setItem('inventory', JSON.stringify(inv));
+        
         if(typeof playSound === 'function') playSound('win');
     }, 5200);
 }
@@ -56,6 +62,10 @@ function startBudgetRoulette() {
 function sellWonSkin() {
     let balEl = document.getElementById('balance');
     balEl.innerText = parseInt(balEl.innerText) + currentWinningSkin.price;
+    // Inventardan o'chirish (oxirgi qo'shilgani)
+    let inv = JSON.parse(localStorage.getItem('inventory') || '[]');
+    inv.pop();
+    localStorage.setItem('inventory', JSON.stringify(inv));
     document.getElementById('roulette-modal').style.display = 'none';
 }
 
