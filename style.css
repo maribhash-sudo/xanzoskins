@@ -46,6 +46,21 @@ body {
 }
 .case-card img { width: 80%; margin-bottom: 10px; }
 
+/* --- KEYS QISMI KOINNI KATTALASHTIRISH (Yangi qoshildi) --- */
+.case-card button {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    gap: 8px; /* Matn va koin orasidagi joy */
+    font-size: 14px !important;
+}
+.case-card button img {
+    width: 22px !important; /* Koinni kattalashtirdik */
+    height: 22px !important;
+    margin-bottom: 0 !important;
+    vertical-align: middle;
+}
+
 /* TASK CARD PRO (Bonus sahifasi uchun) */
 .task-card-pro {
     display: flex; justify-content: space-between; align-items: center;
@@ -74,6 +89,7 @@ body {
     font-weight: 800 !important;
     cursor: pointer;
     box-shadow: 0 0 10px rgba(255, 69, 0, 0.4);
+    width: auto !important; /* Tugma kartani yirtmasligi uchun */
 }
 .btn-action-pro:active { transform: scale(0.95); }
 
