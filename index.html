@@ -13,7 +13,7 @@
     <div class="app-container">
         <header class="header" id="main-header">
             <div class="balance-box">
-                <img src="img/coin.png" alt="coin" style="width:20px; vertical-align:middle; margin-right:5px;">
+                <img src="img/nav_diamond.png" alt="coin" style="width:20px; vertical-align:middle; margin-right:5px;">
                 <span id="balance">10000</span>
             </div>
             <button class="btn-topup" data-lang="topup">TO'LDIRISH</button>
@@ -27,7 +27,7 @@
 
             <div id="page-bonus" class="page">
                 <div class="bonus-hero" style="text-align: center; padding: 20px 0;">
-                    <img src="img/coin.png" alt="coin" style="width:60px; margin-bottom:10px;">
+                    <img src="img/nav_diamond.png" alt="coin" style="width:60px; margin-bottom:10px; filter: drop-shadow(0 0 10px rgba(255, 69, 0, 0.5));">
                     <h2 id="balance-large" style="font-size: 32px; margin: 0;">10000</h2>
                     <p style="color: #777; font-size: 14px; margin-top: 5px;">Sizning balansingiz</p>
                 </div>
@@ -78,7 +78,7 @@
 
             <div id="page-inventory" class="page">
                 <h2 class="section-title" data-lang="inventory_title">INVENTORY</h2>
-                <button onclick="sellAllInventory()" style="margin: 10px; padding: 10px; background: #e74c3c; color: white; border: none; width: 90%; border-radius: 5px;">BARCHASINI SOTISH</button>
+                <button onclick="sellAllInventory()" style="margin: 10px; padding: 10px; background: #e74c3c; color: white; border: none; width: 90%; border-radius: 5px; font-weight: bold;">BARCHASINI SOTISH</button>
                 <div id="inventory-grid" class="grid"></div>
             </div>
 
@@ -94,7 +94,7 @@
                 <div class="card">
                     <p data-lang="trade_link">Steam Trade Link:</p>
                     <input type="text" id="tradeLinkInput" placeholder="https://steamcommunity.com/...">
-                    <button onclick="saveSteamLink()" data-lang="save_btn">SAQLASH</button>
+                    <button onclick="saveSteamLink()" data-lang="save_btn" class="btn-action-pro" style="width: 100%; margin-top: 10px;">SAQLASH</button>
                 </div>
             </div>
         </main>
@@ -119,7 +119,7 @@
             <div class="modal-btns">
                 <button onclick="withdrawWonSkin()">STEAMGA YUBORISH</button>
                 <button onclick="sellWonSkin()" style="background:#444;">SOTISH</button>
-                <button onclick="startBudgetRoulette()" style="background:green;">YANA AYLANTIRISH</button>
+                <button onclick="startBudgetRoulette()" style="background:linear-gradient(to bottom, #ff8c00, #ff4500);">YANA AYLANTIRISH</button>
             </div>
         </div>
     </div>
