@@ -93,7 +93,6 @@ function saveSteamLink() {
     alert("Saqlandi!");
 }
 
-// YAQILGAN YANGI FUNKSIYALAR
 function renderInventory() {
     const grid = document.getElementById('inventory-grid');
     if(!grid) return;
@@ -130,10 +129,60 @@ function withdrawItem(index) {
     renderInventory();
 }
 
+// YANGI QO'SHILGAN FUNKSIYALAR:
+function claimDailyBonus() {
+    let lastClaim = localStorage.getItem('lastClaimDate');
+    let today = new Date().toDateString();
+    if (lastClaim === today) {
+        alert("Bugun bonusni olib bo'ldingiz! Ertaga qayting.");
+        return;
+    }
+    let dayCount = parseInt(localStorage.getItem('streakDay') || '0');
+    dayCount++;
+    if (dayCount > 30) dayCount = 1;
+    let reward = 50 + (dayCount - 1) * 163;
+    if (dayCount === 30) reward = 5000;
+    let balEl = document.getElementById('balance');
+    balEl.innerText = parseInt(balEl.innerText) + Math.round(reward);
+    localStorage.setItem('lastClaimDate', today);
+    localStorage.setItem('streakDay', dayCount);
+    let msgEl = document.getElementById('bonus-message');
+    if(msgEl) msgEl.innerText = dayCount + "-kunlik bonus: " + Math.round(reward) + " COIN olindi!";
+    alert("Tabriklaymiz! " + Math.round(reward) + " COIN qo'shildi.");
+    let btn = document.getElementById('bonus-btn');
+    if(btn) btn.disabled = true;
+}
+
+function copyRefLink() {
+    const tg = window.Telegram.WebApp;
+    const userId = tg.initDataUnsafe?.user?.id || '000000';
+    const botUrl = "https://t.me/Xanzo_skins_bot?start=" + userId;
+    navigator.clipboard.writeText(botUrl).then(() => {
+        alert("Havola nusxalandi: " + botUrl);
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     const lang = localStorage.getItem('lang') || 'uz';
     setLanguage(lang);
     renderCases();
+    
     const tg = window.Telegram.WebApp;
-    if (tg.initDataUnsafe?.user) document.getElementById('user-name').innerText = tg.initDataUnsafe.user.first_name;
+    if (tg.initDataUnsafe?.user) {
+        let userNameEl = document.getElementById('user-name');
+        if(userNameEl) userNameEl.innerText = tg.initDataUnsafe.user.first_name;
+        
+        // Referral link qo'yish
+        let refInput = document.getElementById('ref-link');
+        if(refInput) refInput.value = "https://t.me/Xanzo_skins_bot?start=" + tg.initDataUnsafe.user.id;
+    }
+
+    // Bonus holatini tekshirish
+    let lastClaim = localStorage.getItem('lastClaimDate');
+    let btn = document.getElementById('bonus-btn');
+    let msg = document.getElementById('bonus-message');
+    if (lastClaim === new Date().toDateString() && btn) {
+        btn.disabled = true;
+        if(msg) msg.innerText = "Bugungi bonus olindi!";
+    }
 });
