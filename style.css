@@ -1,17 +1,87 @@
-:root { --bg: #050505; --accent: #FF4500; }
-body { background: var(--bg); color: #fff; font-family: sans-serif; margin: 0; }
+:root {
+    /* Tiffany/Neon rangi - Asosiy neon cyan */
+    --bg: #060b13;            /* Juda to'q, deyarli qora ko'k fon */
+    --card: #0f1724;          /* Kartalar uchun to'q fon */
+    --neon: #00f2ff;          /* Tiffany/Cyan neon rangi */
+    --glow: 0 0 15px rgba(0, 242, 255, 0.4); /* Neon nur effekti */
+    --text: #ffffff;
+}
 
-.header { padding: 20px; display: flex; justify-content: center; }
-.balance-box { background: #111; padding: 10px 20px; border-radius: 20px; display: flex; align-items: center; gap: 10px; border: 1px solid #222; }
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding-bottom: 90px;
+}
 
-.page { display: none; }
-.page.active { display: block; }
-.title { text-align: center; color: var(--accent); }
+/* 1. BALANS VA HEADER */
+.balance-box {
+    background: var(--card);
+    border: 1px solid rgba(0, 242, 255, 0.3);
+    box-shadow: 0 0 10px rgba(0, 242, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
+/* 2. CASE KARTALARI (Neon effekt) */
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; }
-.case-item { background: #111; border-radius: 10px; padding: 10px; text-align: center; border: 1px solid #222; }
-.case-item img { width: 100%; }
 
-.bottom-nav { position: fixed; bottom: 0; width: 100%; display: flex; background: #000; border-top: 1px solid #222; padding: 10px 0; }
-.nav-btn { flex: 1; background: none; border: none; color: #666; }
-.nav-btn.active { color: var(--accent); }
+.case-item {
+    background: var(--card);
+    border: 1px solid rgba(0, 242, 255, 0.2);
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    transition: 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover bo'lganda yaltirash */
+.case-item:hover {
+    border-color: var(--neon);
+    box-shadow: var(--glow);
+    transform: translateY(-5px);
+}
+
+.case-item img { width: 90%; margin-bottom: 10px; }
+
+/* 3. TUGMALAR (Tiffany uslubida) */
+button {
+    background: transparent;
+    border: 1px solid var(--neon);
+    color: var(--neon);
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:active { background: var(--neon); color: #000; }
+
+/* 4. NAVIGATSIYA (Glow) */
+.bottom-nav {
+    position: fixed; bottom: 0; width: 100%;
+    background: #0a111a;
+    border-top: 2px solid rgba(0, 242, 255, 0.2);
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.nav-btn { color: #556c8a; border: none; }
+.nav-btn.active { color: var(--neon); text-shadow: 0 0 10px var(--neon); }
+
+/* Bonus sahifasi kartalari */
+.bonus-list .card-item {
+    margin: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 3px solid var(--neon);
+}
