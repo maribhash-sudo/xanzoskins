@@ -34,9 +34,9 @@ let tasks = [
 ];
 
 const translations = {
-    uz: { topup: "TO'LDIRISH", cases_title: "CASES", active_tasks: "FAOL VAZIFALAR", completed: "BAJARILGAN", inventory_title: "INVENTORY", nav_bonus: "Bonus", nav_cases: "Cases", nav_inv: "Inv", nav_profile: "Profile", select_lang: "Tilni tanlang:", trade_link: "Steam Trade Link:", save_btn: "SAQLASH" },
-    ru: { topup: "ПОПОЛНИТЬ", cases_title: "КЕЙСЫ", active_tasks: "ЗАДАНИЯ", completed: "ВЫПОЛНЕНО", inventory_title: "ИНВЕНТАРЬ", nav_bonus: "Бонус", nav_cases: "Кейсы", nav_inv: "Инв.", nav_profile: "Профиль", select_lang: "Выберите язык:", trade_link: "Steam Trade Link:", save_btn: "СОХРАНИТЬ" },
-    en: { topup: "TOP UP", cases_title: "CASES", active_tasks: "ACTIVE TASKS", completed: "COMPLETED", inventory_title: "INVENTORY", nav_bonus: "Bonus", nav_cases: "Cases", nav_inv: "Inv", nav_profile: "Profile", select_lang: "Select Language:", trade_link: "Steam Trade Link:", save_btn: "SAVE" }
+    uz: { topup: "TO'LDIRISH", cases_title: "CASES", active_tasks: "FAOL VAZIFALAR", completed: "BAJARILGAN", inventory_title: "INVENTORY", nav_bonus: "Bonus", nav_cases: "Cases", nav_inv: "Inv", nav_profile: "Profile", select_lang: "Tilni tanlang:", trade_link: "Steam Trade Link:", save_btn: "SAQLASH", claim_btn: "OLISH", done_btn: "BAJARILDI" },
+    ru: { topup: "ПОПОЛНИТЬ", cases_title: "КЕЙСЫ", active_tasks: "ЗАДАНИЯ", completed: "ВЫПОЛНЕНО", inventory_title: "ИНВЕНТАРЬ", nav_bonus: "Бонус", nav_cases: "Кейсы", nav_inv: "Инв.", nav_profile: "Профиль", select_lang: "Выберите язык:", trade_link: "Steam Trade Link:", save_btn: "СОХРАНИТЬ", claim_btn: "ПОЛУЧИТЬ", done_btn: "ВЫПОЛНЕНО" },
+    en: { topup: "TOP UP", cases_title: "CASES", active_tasks: "ACTIVE TASKS", completed: "COMPLETED", inventory_title: "INVENTORY", nav_bonus: "Bonus", nav_cases: "Cases", nav_inv: "Inv", nav_profile: "Profile", select_lang: "Select Language:", trade_link: "Steam Trade Link:", save_btn: "SAVE", claim_btn: "CLAIM", done_btn: "DONE" }
 };
 
 function updateUIBalance() {
@@ -62,17 +62,19 @@ function renderCases() {
     grid.innerHTML = "";
     cases.forEach(c => {
         let clickAction = (c.name.uz === "Budget") ? 'onclick="startBudgetRoulette()"' : '';
+        // Koin rasmi kattalashtirildi va dumaloq qilinishi uchun stil berildi
         grid.innerHTML += `
             <div class="case-card">
                 <img src="img/${c.img}" class="case-img">
                 <p class="case-name">${c.name[lang]}</p>
                 <button class="case-buy-btn" ${clickAction}>
                     <span>${c.price}</span>
-                    <img src="img/nav_diamond.png" class="btn-coin-icon">
+                    <img src="img/nav_diamond.png" style="width:24px; height:24px; object-fit:contain; aspect-ratio:1/1; vertical-align:middle;">
                 </button>
             </div>`;
     });
 }
+
 function renderTasks() {
     const lang = localStorage.getItem('lang') || 'uz';
     const active = document.getElementById('active-tasks-list');
@@ -80,16 +82,17 @@ function renderTasks() {
     if(!active) return;
     active.innerHTML = ""; done.innerHTML = "";
     tasks.forEach(t => {
+        const btnText = t.done ? translations[lang].done_btn : translations[lang].claim_btn;
         const card = `
         <div class="task-card-pro">
             <div class="task-info-main">
                 <div class="task-icon-circle">📱</div>
                 <div class="task-text-content">
                     <h4>${t.name[lang]}</h4>
-                    <p style="display:flex; align-items:center; gap:5px;"><img src="img/nav_diamond.png" style="width:12px;"> +${t.reward}</p>
+                    <p style="display:flex; align-items:center; gap:5px;"><img src="img/nav_diamond.png" style="width:14px;"> +${t.reward}</p>
                 </div>
             </div>
-            <button class="btn-action-pro ${t.done ? 'done-btn' : ''}" onclick="completeTask('${t.id}')">${t.done ? 'DONE' : 'CLAIM'}</button>
+            <button class="btn-action-pro" onclick="completeTask('${t.id}')">${btnText}</button>
         </div>`;
         t.done ? done.innerHTML += card : active.innerHTML += card;
     });
@@ -219,6 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const lang = localStorage.getItem('lang') || 'uz';
     setLanguage(lang);
     renderCases();
+    renderTasks();
     
     const tg = window.Telegram.WebApp;
     if (tg.initDataUnsafe?.user) {
