@@ -26,6 +26,23 @@ function updateBalance(amount) {
     });
 }
 
+// TO'LDIRISH FUNKSIYASI
+function topUpBalance() {
+    const tg = window.Telegram.WebApp;
+    const newBalance = 10000;
+    
+    tg.CloudStorage.setItem('userBalance', newBalance.toString(), (err, success) => {
+        if (success) {
+            let balEl = document.getElementById('balance');
+            if(balEl) balEl.innerText = newBalance;
+            updateUIBalance();
+            alert("Balans 10 000 COIN ga to'ldirildi!");
+        } else {
+            alert("Xatolik yuz berdi!");
+        }
+    });
+}
+
 // 1. 10 ta Keyslar
 const cases = [
     { name: {uz: "Budget", ru: "Бюджет", en: "Budget"}, price: 500, img: "case1.png" },
@@ -204,18 +221,34 @@ function saveSteamLink() {
 function renderInventory() {
     const grid = document.getElementById('inventory-grid');
     if(!grid) return;
-    grid.innerHTML = "";
-    window.Telegram.WebApp.CloudStorage.getItem('inventory', (err, val) => {
-        let inv = val ? JSON.parse(val) : [];
+    grid.innerHTML = '<div class="loading-text">Yuklanmoqda...</div>';
+    
+    const tg = window.Telegram.WebApp;
+    tg.CloudStorage.getItem('inventory', (err, val) => {
+        grid.innerHTML = "";
+        let inv = [];
+        try { inv = val ? JSON.parse(val) : []; } catch(e) { inv = []; }
+        
+        if(inv.length === 0) {
+            grid.innerHTML = '<div class="empty-text" style="color:white; text-align:center; padding:20px;">Inventar bo\'sh</div>';
+            return;
+        }
+        
         inv.forEach((item, index) => {
             grid.innerHTML += `
-                <div class="case-card">
-                    <img src="${item.img}" style="width:60px">
-                    <p>${item.name}</p>
-                    <small style="display:flex; justify-content:center; align-items:center; gap:3px;">
-                        <img src="img/nav_diamond.png" style="width:12px;"> ${item.price}
-                    </small>
-                    <button onclick="withdrawItem(${index})" style="font-size:10px;">Steam</button>
+                <div class="inventory-card rarity-${item.rarity || 'milspec'}" onclick="withdrawItem(${index})">
+                    <div class="card-header">
+                        <span class="quality-badge">${item.quality || 'FN'}</span>
+                        <span class="heart-icon">♥</span>
+                    </div>
+                    <img src="${item.img}" class="skin-thumb">
+                    <div class="card-footer">
+                        <p class="skin-name">${item.name}</p>
+                        <p class="skin-price">
+                            <img src="img/nav_diamond.png" class="coin-icon-small" style="width:12px;">
+                            ${item.price}
+                        </p>
+                    </div>
                 </div>`;
         });
     });
@@ -248,10 +281,7 @@ function claimDailyBonus() {
     const tg = window.Telegram.WebApp;
     tg.CloudStorage.getItem('lastClaimDate', (err, lastClaim) => {
         let today = new Date().toDateString();
-        if (lastClaim === today) {
-            alert("Bugun bonusni olib bo'ldingiz!");
-            return;
-        }
+        if (lastClaim === today) { alert("Bugun bonusni olib bo'ldingiz!"); return; }
         tg.CloudStorage.getItem('streakDay', (err, streak) => {
             let dayCount = streak ? parseInt(streak) : 0;
             dayCount++;
@@ -261,8 +291,6 @@ function claimDailyBonus() {
             updateBalance(Math.round(reward));
             tg.CloudStorage.setItem('lastClaimDate', today);
             tg.CloudStorage.setItem('streakDay', dayCount.toString());
-            let msgEl = document.getElementById('bonus-message');
-            if(msgEl) msgEl.innerText = dayCount + "-kun: " + Math.round(reward) + " COIN olindi!";
             alert("Tabriklaymiz!");
             let btn = document.getElementById('bonus-btn');
             if(btn) btn.disabled = true;
@@ -282,7 +310,7 @@ function copyRefLink() {
 function checkNickName() {
     const tg = window.Telegram.WebApp;
     const user = tg.initDataUnsafe?.user;
-    if (!user) { alert("Xatolik!"); return; }
+    if (!user) return;
     const fullName = ((user.first_name || "") + " " + (user.last_name || "")).toLowerCase();
     const requiredNick = "@xanzoskins_bot";
     tg.CloudStorage.getItem('lastNickCheck', (err, lastNickCheck) => {
@@ -294,7 +322,7 @@ function checkNickName() {
         if (fullName.includes(requiredNick.toLowerCase())) {
             updateBalance(50);
             tg.CloudStorage.setItem('lastNickCheck', now.toString());
-            alert("Muofot olindi!");
+            alert("Mukofot olindi!");
         } else {
             alert("Ismingizda @" + requiredNick + " topilmadi.");
         }
