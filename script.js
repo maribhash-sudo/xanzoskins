@@ -28,7 +28,7 @@ function updateBalance(amount) {
 
 // TO'LDIRISH FUNKSIYASI
 function topUpBalance() {
-    console.log("To'ldirish tugmasi bosildi!"); // Konsolda shu yozuv chiqishi kerak
+    console.log("To'ldirish tugmasi bosildi!");
     const tg = window.Telegram.WebApp;
     const newBalance = 10000;
     
@@ -332,6 +332,12 @@ function checkNickName() {
             alert("Ismingizda @" + requiredNick + " topilmadi.");
         }
     });
+}
+
+function closeRoulette() {
+    document.getElementById('roulette-modal').style.display = 'none';
+    document.getElementById('result-display').style.display = 'none';
+    document.getElementById('roulette-viewport').style.display = 'block'; // Keyingi safar uchun reset
 }
 
 document.addEventListener("DOMContentLoaded", () => {
