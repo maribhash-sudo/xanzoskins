@@ -34,6 +34,7 @@ function startBudgetRoulette() {
         
         if (!modal || !track || !viewport || !resultDisplay) return;
 
+        // Modalni flex holatida ochamiz
         modal.style.display = 'flex';
         viewport.style.display = 'block';
         resultDisplay.style.display = 'none';
@@ -55,7 +56,9 @@ function startBudgetRoulette() {
 
         setTimeout(() => {
             viewport.style.display = 'none';
-            resultDisplay.style.display = 'block';
+            // BU YERDA FLEX ISHLATILISHI SHART
+            resultDisplay.style.display = 'flex'; 
+            
             document.getElementById('won-skin-img').src = currentWinningSkin.img;
             document.getElementById('won-skin-name').innerText = currentWinningSkin.name;
             document.getElementById('won-skin-price').innerHTML = 
@@ -76,10 +79,8 @@ function startBudgetRoulette() {
 function sellWonSkin() {
     if (!currentWinningSkin) return;
     
-    // Balansni qaytarib qo'shish
     updateBalance(currentWinningSkin.price);
     
-    // Inventardan o'chirish (CloudStorage)
     const tg = window.Telegram.WebApp;
     tg.CloudStorage.getItem('inventory', (err, val) => {
         let inv = val ? JSON.parse(val) : [];
