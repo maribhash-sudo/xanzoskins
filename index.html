@@ -23,60 +23,50 @@
                 <div id="cases-grid" class="grid"></div>
             </div>
 
-            <div id="page-bonus" class="page">
-    <div class="bonus-hero" style="text-align: center; padding: 20px 0;">
-        <img src="img/nav_diamond.png" class="coin-glow" style="width:80px; margin-bottom:10px;">
-        <h2 id="balance-large" style="font-size: 32px; margin: 0;">10000</h2>
-        <p style="color: #777; font-size: 14px; margin-top: 5px;">Sizning balansingiz</p>
+            <section id="page-bonus" class="view active">
+    <div class="bonus-header">
+        <img src="img/nav_diamond.png" class="main-coin">
+        <h1 id="display-balance">10000</h1>
+        <p>Sizning balansingiz</p>
     </div>
 
-    <h2 class="section-title">DOIMIY BONUSLAR</h2>
-
-    <div class="task-card-pro">
-        <div class="task-info-main">
-            <div class="task-icon-circle">🎁</div>
-            <div class="task-text-content">
-                <h4>Kunlik mukofot</h4>
-                <p>+50 dan 5000 COINgacha</p>
+    <div class="cards-wrapper">
+        <h3 style="color:var(--accent)">DOIMIY BONUSLAR</h3>
+        
+        <div class="card-box">
+            <div class="card-info">
+                <span class="icon">🎁</span>
+                <div>
+                    <h4>Kunlik mukofot</h4>
+                    <p>+50 dan 5000 COINgacha</p>
+                </div>
             </div>
+            <button onclick="app.claimDaily()" class="btn-glow">OLISH</button>
         </div>
-        <button id="bonus-btn" onclick="claimDailyBonus()" class="btn-action-pro">OLISH</button>
-    </div>
 
-    <div class="task-card-pro">
-        <div class="task-info-main">
-            <div class="task-icon-circle">👥</div>
-            <div class="task-text-content">
-                <h4>Do'stlarni taklif qilish</h4>
-                <p>Har bir do'st uchun +500 COIN</p>
+        <div class="card-box">
+            <div class="card-info">
+                <span class="icon">✈️</span>
+                <div>
+                    <h4>Telegram Kanal</h4>
+                    <p>+150 COIN</p>
+                </div>
             </div>
+            <button onclick="app.socialTask('tg')" class="btn-glow">OBUNA</button>
         </div>
-        <button onclick="copyRefLink()" class="btn-action-pro">LINK</button>
-    </div>
 
-    <h2 class="section-title">IJTIMOIY TARMOQLAR</h2>
-
-    <div class="task-card-pro">
-        <div class="task-info-main">
-            <div class="task-icon-circle" style="color: #0088cc;">✈️</div>
-            <div class="task-text-content">
-                <h4>Telegram Kanal</h4>
-                <p>+150 COIN</p>
+        <div class="card-box">
+            <div class="card-info">
+                <span class="icon">📸</span>
+                <div>
+                    <h4>Instagram</h4>
+                    <p>+150 COIN</p>
+                </div>
             </div>
+            <button onclick="app.socialTask('inst')" class="btn-glow">OBUNA</button>
         </div>
-        <button onclick="handleSocialTask('tg')" class="btn-action-pro">OBUNA</button>
     </div>
-
-    <div class="task-card-pro">
-        <div class="task-info-main">
-            <div class="task-icon-circle" style="color: #e1306c;">📸</div>
-            <div class="task-text-content">
-                <h4>Instagram</h4>
-                <p>+150 COIN</p>
-            </div>
-        </div>
-        <button onclick="handleSocialTask('inst')" class="btn-action-pro">OBUNA</button>
-    </div>
+</section>
 
     <div class="task-card-pro">
         <div class="task-info-main">
