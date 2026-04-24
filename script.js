@@ -36,19 +36,32 @@ function updateBalance(amount) {
             window.Telegram.WebApp.CloudStorage.setItem('userBalance', newBal.toString());
         }
         localStorage.setItem('userBalance', newBal.toString());
-        let balEl = document.getElementById('balance');
-        let largeBalEl = document.getElementById('balance-large');
-        if(balEl) balEl.innerText = newBal;
-        if(largeBalEl) largeBalEl.innerText = newBal;
+        
+        // Barcha balans ko'rsatkichlarini yangilash
+        const els = ['balance', 'balance-large', 'display-balance'];
+        els.forEach(id => {
+            let el = document.getElementById(id);
+            if(el) el.innerText = newBal;
+        });
     });
 }
 
 // --- 3. SAHIFA VA NAVIGATSIYA ---
 function showPage(pageId, element) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + pageId).classList.add('active');
-    document.querySelectorAll('.nav-btn').forEach(n => n.classList.remove('active'));
-    if(element) element.classList.add('active');
+    // Sahifalarni almashtirish
+    document.querySelectorAll('.view, .page').forEach(p => p.classList.remove('active'));
+    const targetPage = document.getElementById('page-' + pageId);
+    if(targetPage) targetPage.classList.add('active');
+
+    // Navigatsiya tugmalarini faollashtirish
+    document.querySelectorAll('.nav-btn, .nav-item').forEach(n => n.classList.remove('active'));
+    if(element) {
+        element.classList.add('active');
+    } else {
+        // Agar tugma bosilmasdan chaqirilsa (masalan JS orqali)
+        const activeNav = document.querySelector(`[onclick*="showPage('${pageId}'"]`) || document.querySelector(`[onclick*="setPage('${pageId}'"]`);
+        if(activeNav) activeNav.classList.add('active');
+    }
     
     if(pageId === 'inventory') renderInventory();
 }
@@ -59,26 +72,25 @@ function renderCases() {
     if (!grid) return;
     grid.innerHTML = "";
     cases.forEach(c => {
-        // Budget keysi uchun ruletkani chaqirish
         let clickAction = (c.name === "Budget") ? 'onclick="startBudgetRoulette()"' : 'onclick="alert(\'Tez orada...\')"';
         grid.innerHTML += `
-            <div class="case-card">
-                <img src="img/${c.img}" alt="${c.name}">
-                <p>${c.name}</p>
-                <button ${clickAction}>${c.price} Coin</button>
+            <div class="case-card card-box">
+                <img src="img/${c.img}" alt="${c.name}" style="width:100%; border-radius:10px;">
+                <p style="margin:10px 0; font-weight:bold;">${c.name}</p>
+                <button class="btn-glow" ${clickAction} style="width:100%;">${c.price} Coin</button>
             </div>`;
     });
 }
 
 function renderInventory() {
-    const grid = document.getElementById('inventory-grid');
+    const grid = document.getElementById('inventory-grid') || document.getElementById('inv-grid');
     if (!grid) return;
     let inv = JSON.parse(localStorage.getItem('userInventory') || '[]');
-    grid.innerHTML = inv.length === 0 ? '<p style="text-align:center; padding:20px;">Inventar bo\'sh</p>' : "";
-    inv.forEach((item, index) => {
+    grid.innerHTML = inv.length === 0 ? '<p style="text-align:center; padding:20px; color:#777;">Inventar bo\'sh</p>' : "";
+    inv.forEach((item) => {
         grid.innerHTML += `
-            <div class="inventory-card">
-                <img src="${item.img}" class="skin-thumb">
+            <div class="inventory-card card-box">
+                <img src="${item.img}" class="skin-thumb" style="width:100px;">
                 <p>${item.name}</p>
             </div>`;
     });
@@ -87,8 +99,14 @@ function renderInventory() {
 // --- 5. BONUS VA VAZIFALAR ---
 function claimDailyBonus() {
     updateBalance(500);
-    alert("500 COIN qo'shildi!");
-    document.getElementById('bonus-btn').disabled = true;
+    playSound('win');
+    alert("500 COIN hisobingizga qo'shildi!");
+    const btn = document.getElementById('bonus-btn');
+    if(btn) {
+        btn.disabled = true;
+        btn.innerText = "OLINDI";
+        btn.style.opacity = "0.5";
+    }
 }
 
 function handleSocialTask(type) {
@@ -96,24 +114,38 @@ function handleSocialTask(type) {
     window.open(url, "_blank");
     setTimeout(() => {
         updateBalance(150);
-        alert("+150 COIN qo'shildi!");
+        playSound('win');
+        alert("+150 COIN vazifa uchun qo'shildi!");
     }, 2000);
 }
 
 // --- 6. INITIALIZATION (BOSHLAISH) ---
 document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp;
-    tg.expand();
+    if(tg) {
+        tg.expand();
+        tg.ready();
+    }
     
+    // Balansni yuklash va chiqarish
     getBalance((val) => {
-        document.getElementById('balance').innerText = val;
-        let largeBalEl = document.getElementById('balance-large');
-        if(largeBalEl) largeBalEl.innerText = val;
+        const els = ['balance', 'balance-large', 'display-balance'];
+        els.forEach(id => {
+            let el = document.getElementById(id);
+            if(el) el.innerText = val;
+        });
     });
 
     renderCases();
+    
+    // Tilni sozlash
     const lang = localStorage.getItem('lang') || 'uz';
     setLanguage(lang);
+
+    // Trade linkni yuklash
+    const savedTradeLink = localStorage.getItem('tradeLink');
+    const tradeInput = document.getElementById('tradeLinkInput');
+    if (savedTradeLink && tradeInput) tradeInput.value = savedTradeLink;
 });
 
 function setLanguage(lang) {
@@ -124,12 +156,31 @@ function setLanguage(lang) {
     });
 }
 
-// --- AUDIO (Sizning kodingiz) ---
+function saveTradeLink() {
+    const link = document.getElementById('tradeLinkInput').value;
+    if (link) {
+        localStorage.setItem('tradeLink', link);
+        alert("Trade Link saqlandi!");
+    }
+}
+
+// --- AUDIO ---
 const sounds = {
     spin: new Audio('https://cdn.pixabay.com/audio/2022/03/15/audio_7306282998.mp3'),
     win: new Audio('https://cdn.pixabay.com/audio/2021/08/04/audio_0625c1539c.mp3')
 };
+
 function playSound(type) {
-    sounds[type].currentTime = 0;
-    sounds[type].play().catch(e => console.log("Audio bloklandi."));
+    if(sounds[type]) {
+        sounds[type].currentTime = 0;
+        sounds[type].play().catch(e => console.log("Audio yoqish uchun foydalanuvchi harakati kerak."));
+    }
 }
+
+// Eskicha nomlangan funksiyalar uchun ko'prik (compatibility)
+const app = {
+    claimDaily: claimDailyBonus,
+    socialTask: handleSocialTask,
+    setPage: showPage,
+    init: () => { /* Allaqachon DOMContentLoaded ichida ishlaydi */ }
+};
