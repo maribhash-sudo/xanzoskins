@@ -15,9 +15,11 @@
     -webkit-backdrop-filter: blur(15px);
 }
 
-/* Modal ochiq bo'lganda ko'rinishi uchun (JS orqali qo'shiladi) */
+/* Modal ochiq bo'lganda ko'rinishi uchun */
 #roulette-modal.active {
     display: flex !important;
+    height: 100vh !important;
+    overflow: auto !important; /* Agar tugmalar sig'masa, skroll qilsin */
 }
 
 /* Katta Vertikal Oyna (Viewport) */
