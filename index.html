@@ -23,50 +23,63 @@
                 <div id="cases-grid" class="grid"></div>
             </div>
 
-            <section id="page-bonus" class="view active">
-    <div class="bonus-header">
-        <img src="img/nav_diamond.png" class="main-coin">
-        <h1 id="display-balance">10000</h1>
-        <p>Sizning balansingiz</p>
-    </div>
-
-    <div class="cards-wrapper">
-        <h3 style="color:var(--accent)">DOIMIY BONUSLAR</h3>
-        
-        <div class="card-box">
-            <div class="card-info">
-                <span class="icon">🎁</span>
-                <div>
-                    <h4>Kunlik mukofot</h4>
-                    <p>+50 dan 5000 COINgacha</p>
-                </div>
+           <div id="app">
+    <main id="content">
+        <section id="page-bonus" class="view active">
+            <div class="bonus-header">
+                <img src="img/nav_diamond.png" style="width: 50px;">
+                <h1 id="display-balance">10000</h1>
+                <p style="color: #666; font-size: 12px;">UMUMIY BALANSINGIZ</p>
             </div>
-            <button onclick="app.claimDaily()" class="btn-glow">OLISH</button>
-        </div>
 
-        <div class="card-box">
-            <div class="card-info">
-                <span class="icon">✈️</span>
-                <div>
-                    <h4>Telegram Kanal</h4>
-                    <p>+150 COIN</p>
+            <h3 class="group-title">DOIMIY BONUSLAR</h3>
+            
+            <div class="card-box">
+                <div class="card-info">
+                    <div class="icon-circle">🎁</div>
+                    <div class="text-info">
+                        <h4>Kunlik mukofot</h4>
+                        <p>+50 dan 5000 gacha</p>
+                    </div>
                 </div>
+                <button onclick="claimDailyBonus()" class="btn-glow">OLISH</button>
             </div>
-            <button onclick="app.socialTask('tg')" class="btn-glow">OBUNA</button>
-        </div>
 
-        <div class="card-box">
-            <div class="card-info">
-                <span class="icon">📸</span>
-                <div>
-                    <h4>Instagram</h4>
-                    <p>+150 COIN</p>
+            <h3 class="group-title">IJTIMOIY TARMOQLAR</h3>
+
+            <div class="card-box">
+                <div class="card-info">
+                    <div class="icon-circle" style="color: #0088cc;">✈️</div>
+                    <div class="text-info">
+                        <h4>Telegram Kanal</h4>
+                        <p>+150 COIN</p>
+                    </div>
                 </div>
+                <button onclick="handleSocialTask('tg')" class="btn-glow">OBUNA</button>
             </div>
-            <button onclick="app.socialTask('inst')" class="btn-glow">OBUNA</button>
-        </div>
-    </div>
-</section>
+
+            <div class="card-box">
+                <div class="card-info">
+                    <div class="icon-circle" style="color: #e1306c;">📸</div>
+                    <div class="text-info">
+                        <h4>Instagram</h4>
+                        <p>+150 COIN</p>
+                    </div>
+                </div>
+                <button onclick="handleSocialTask('inst')" class="btn-glow">OBUNA</button>
+            </div>
+        </section>
+
+        <section id="page-cases" class="view"></section>
+        <section id="page-inventory" class="view"></section>
+    </main>
+
+    <nav class="bottom-nav">
+        <button onclick="showPage('bonus', this)" class="nav-item active"><span>BONUS</span></button>
+        <button onclick="showPage('cases', this)" class="nav-item"><span>CASES</span></button>
+        <button onclick="showPage('inventory', this)" class="nav-item"><span>INV</span></button>
+    </nav>
+</div>
 
     <div class="task-card-pro">
         <div class="task-info-main">
