@@ -22,12 +22,12 @@ function startBudgetRoulette() {
     // CloudStorage tekshiruvi (xatolik bermasligi uchun)
     const handleSpin = (val) => {
         let bal = val ? parseInt(val) : 100000;
-        if (bal < 5000) { 
+        if (bal < 500) { 
             alert("Balans yetarli emas!"); 
             return; 
         }
         
-        if (typeof updateBalance === 'function') updateBalance(-5000);
+        if (typeof updateBalance === 'function') updateBalance(-500);
         
         isSpinning = true;
 
