@@ -1,6 +1,6 @@
 /* --- MODAL VA OYNA SOZLAMALARI --- */
 #roulette-modal {
-    display: none !important; 
+    display: none; 
     position: fixed !important; 
     top: 0 !important; 
     left: 0 !important; 
@@ -19,7 +19,7 @@
 #roulette-modal.active {
     display: flex !important;
     height: 100vh !important;
-    overflow: auto !important; /* Agar tugmalar sig'masa, skroll qilsin */
+    overflow: auto !important; 
 }
 
 /* Katta Vertikal Oyna (Viewport) */
@@ -96,11 +96,11 @@
 
 /* --- YUTUQ OYNASI (Binafsha gradient) --- */
 .result-display {
-    display: none !important; /* Standart holatda yashirin */
+    display: none !important; 
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    position: absolute !important; /* Fixed o'rniga absolute */
+    position: absolute !important; 
     top: 50% !important;
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
@@ -113,9 +113,9 @@
     
     width: 85% !important;
     max-width: 350px !important;
-    min-height: 300px !important; /* Tugmalar sig'ishi uchun joy */
+    min-height: 300px !important; 
     text-align: center !important;
-    z-index: 9999999 !important; /* Eng yuqori qatlam */
+    z-index: 9999999 !important; 
     color: white !important;
 }
 
@@ -167,7 +167,7 @@
 .rarity-milspec { background: radial-gradient(circle, rgba(75, 105, 255, 0.5) 0%, #000 80%) !important; border-bottom: 3px solid #4b69ff; }
 .rarity-milspec .glow-circle { background-color: #4b69ff; }
 
-/* INVENTAR GRID KARTALARI (CS2 STILI) */
+/* INVENTAR GRID KARTALARI */
 #inventory-list {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 10px;
 }
