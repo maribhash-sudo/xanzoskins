@@ -24,9 +24,77 @@
             </div>
 
             <div id="page-bonus" class="page">
-                <h2 class="section-title" data-lang="bonus_title">BONUS</h2>
-                <div class="card" data-lang="bonus_card">Kundalik bonusni qabul qiling!</div>
+    <div class="bonus-hero" style="text-align: center; padding: 20px 0;">
+        <img src="img/nav_diamond.png" class="coin-glow" style="width:80px; margin-bottom:10px;">
+        <h2 id="balance-large" style="font-size: 32px; margin: 0;">10000</h2>
+        <p style="color: #777; font-size: 14px; margin-top: 5px;">Sizning balansingiz</p>
+    </div>
+
+    <h2 class="section-title">DOIMIY BONUSLAR</h2>
+
+    <div class="task-card-pro">
+        <div class="task-info-main">
+            <div class="task-icon-circle">🎁</div>
+            <div class="task-text-content">
+                <h4>Kunlik mukofot</h4>
+                <p>+50 dan 5000 COINgacha</p>
             </div>
+        </div>
+        <button id="bonus-btn" onclick="claimDailyBonus()" class="btn-action-pro">OLISH</button>
+    </div>
+
+    <div class="task-card-pro">
+        <div class="task-info-main">
+            <div class="task-icon-circle">👥</div>
+            <div class="task-text-content">
+                <h4>Do'stlarni taklif qilish</h4>
+                <p>Har bir do'st uchun +500 COIN</p>
+            </div>
+        </div>
+        <button onclick="copyRefLink()" class="btn-action-pro">LINK</button>
+    </div>
+
+    <h2 class="section-title">IJTIMOIY TARMOQLAR</h2>
+
+    <div class="task-card-pro">
+        <div class="task-info-main">
+            <div class="task-icon-circle" style="color: #0088cc;">✈️</div>
+            <div class="task-text-content">
+                <h4>Telegram Kanal</h4>
+                <p>+150 COIN</p>
+            </div>
+        </div>
+        <button onclick="handleSocialTask('tg')" class="btn-action-pro">OBUNA</button>
+    </div>
+
+    <div class="task-card-pro">
+        <div class="task-info-main">
+            <div class="task-icon-circle" style="color: #e1306c;">📸</div>
+            <div class="task-text-content">
+                <h4>Instagram</h4>
+                <p>+150 COIN</p>
+            </div>
+        </div>
+        <button onclick="handleSocialTask('inst')" class="btn-action-pro">OBUNA</button>
+    </div>
+
+    <div class="task-card-pro">
+        <div class="task-info-main">
+            <div class="task-icon-circle" style="color: #171a21;">🎮</div>
+            <div class="task-text-content">
+                <h4>Steam Guruh</h4>
+                <p>+150 COIN</p>
+            </div>
+        </div>
+        <button onclick="handleSocialTask('steam')" class="btn-action-pro">QO'SHILISH</button>
+    </div>
+
+    <h2 class="section-title">BOSHQA VAZIFALAR</h2>
+    <div id="active-tasks-list" class="task-container"></div>
+    
+    <h2 class="section-title" style="margin-top:30px;">BAJARILGAN</h2>
+    <div id="done-tasks-list" class="task-container"></div>
+</div>
 
             <div id="page-inventory" class="page">
                 <h2 class="section-title" data-lang="inventory_title">INVENTORY</h2>
