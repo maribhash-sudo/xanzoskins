@@ -13,18 +13,27 @@ const budgetSkins = [
 
 let currentWinningSkin = null;
 
+// Inventarga qo'shish uchun yordamchi funksiya
+function addToInventory(item) {
+    const tg = window.Telegram.WebApp;
+    tg.CloudStorage.getItem('inventory', (err, val) => {
+        let inv = val ? JSON.parse(val) : [];
+        inv.push(item);
+        tg.CloudStorage.setItem('inventory', JSON.stringify(inv));
+    });
+}
+
 function startBudgetRoulette() {
     const tg = window.Telegram.WebApp;
-    
-    // CloudStorage dan balansni tekshiramiz
     tg.CloudStorage.getItem('userBalance', (err, val) => {
         let bal = val ? parseInt(val) : 10000;
         
         if (bal < 500) { alert("Balans yetarli emas!"); return; }
         
-        // Balansni ayiramiz
+        // Balansdan 500 ayiramiz (updateBalance funksiyasi script.js da bor)
         updateBalance(-500); 
         
+        // Ovoz effekti
         if(typeof playSound === 'function') playSound('spin');
 
         const modal = document.getElementById('roulette-modal');
@@ -34,7 +43,10 @@ function startBudgetRoulette() {
         
         if (!modal || !track || !viewport || !resultDisplay) return;
 
-        // Modalni flex holatida ochamiz
+        // Animatsiyani boshlash (Keys rasmi titrashi)
+        const caseImg = document.querySelector('.case-img');
+        if(caseImg) caseImg.classList.add('animate-case');
+
         modal.style.display = 'flex';
         viewport.style.display = 'block';
         resultDisplay.style.display = 'none';
@@ -50,41 +62,40 @@ function startBudgetRoulette() {
         }
 
         setTimeout(() => {
+            // Animatsiyani to'xtatish
+            if(caseImg) caseImg.classList.remove('animate-case');
+            
             track.style.transition = "top 5s cubic-bezier(0.15, 0, 0.15, 1)";
             track.style.top = `-${40 * 160 - 80}px`; 
-        }, 100);
+        }, 500);
 
         setTimeout(() => {
             viewport.style.display = 'none';
-            // BU YERDA FLEX ISHLATILISHI SHART
-            resultDisplay.style.display = 'flex'; 
-            
+            resultDisplay.style.display = 'block';
             document.getElementById('won-skin-img').src = currentWinningSkin.img;
             document.getElementById('won-skin-name').innerText = currentWinningSkin.name;
             document.getElementById('won-skin-price').innerHTML = 
                 `<img src="img/nav_diamond.png" style="width:16px; vertical-align:middle;"> ${currentWinningSkin.price} COIN`;
             
             // Inventarga CloudStorage orqali qo'shish
-            tg.CloudStorage.getItem('inventory', (err, val) => {
-                let inv = val ? JSON.parse(val) : [];
-                inv.push(currentWinningSkin);
-                tg.CloudStorage.setItem('inventory', JSON.stringify(inv));
-            });
+            addToInventory(currentWinningSkin);
             
             if(typeof playSound === 'function') playSound('win');
-        }, 5200);
+        }, 5700); // Spin tugagach natija
     });
 }
 
 function sellWonSkin() {
     if (!currentWinningSkin) return;
     
+    // Balansni qaytarib qo'shish
     updateBalance(currentWinningSkin.price);
     
+    // Inventardan o'chirish (CloudStorage)
     const tg = window.Telegram.WebApp;
     tg.CloudStorage.getItem('inventory', (err, val) => {
         let inv = val ? JSON.parse(val) : [];
-        inv.pop(); 
+        inv.pop(); // Oxirgi qo'shilgan yutuqni o'chiradi
         tg.CloudStorage.setItem('inventory', JSON.stringify(inv));
     });
     
