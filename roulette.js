@@ -14,57 +14,71 @@ const budgetSkins = [
 let currentWinningSkin = null;
 let skipFlag = false;
 
+// DEBUG UCHUN: Ruletka funksiyasini to'g'irlaymiz
 function startBudgetRoulette() {
-    console.log("Ruletka funksiyasi chaqirildi!");
+    console.log("Budget keysi bosildi!"); // Konsolda shu yozuv chiqishi kerak
     const tg = window.Telegram.WebApp;
     
-    // 1. Balansni tekshirish
+    // 1. Modallarni topib olish
+    const modal = document.getElementById('roulette-modal');
+    const track = document.getElementById('roulette-track');
+    const viewport = document.getElementById('roulette-viewport');
+    const resultDisplay = document.getElementById('result-display');
+
+    if (!modal) {
+        console.error("XATO: 'roulette-modal' topilmadi!");
+        alert("Xatolik: Modal topilmadi!");
+        return;
+    }
+
+    // 2. Balansni tekshirish
     tg.CloudStorage.getItem('userBalance', (err, val) => {
         let bal = val ? parseInt(val) : 10000;
+        console.log("Hozirgi balans:", bal);
         
-        if (bal < 500) { alert("Balans yetarli emas!"); return; }
-        
-        // 2. Balansni ayirish (Faqat bir marta)
-        updateBalance(-500); 
-        
-        // 3. UI Tayyorlash
-        const modal = document.getElementById('roulette-modal');
-        const track = document.getElementById('roulette-track');
-        const viewport = document.getElementById('roulette-viewport');
-        const resultDisplay = document.getElementById('result-display');
-        skipFlag = false;
-        
+        if (bal < 500) { 
+            alert("Balans yetarli emas! Sizda: " + bal); 
+            return; 
+        }
+
+        // 3. Balansni ayirish (Faol funksiya bo'lsa)
+        if (typeof updateBalance === 'function') {
+            updateBalance(-500);
+        } else {
+            console.error("XATO: updateBalance funksiyasi topilmadi!");
+        }
+
+        // 4. Modallarni ko'rsatish (Majburiy)
         modal.style.display = 'flex';
         viewport.style.display = 'block';
         resultDisplay.style.display = 'none';
+
         track.innerHTML = "";
         track.style.transition = "none";
         track.style.top = "0px";
 
-        // 4. Elementlarni yaratish
-        for (let i = 0; i < 60; i++) {
+        // 5. Skinlarni qo'shish
+        for (let i = 0; i < 50; i++) {
             let s = budgetSkins[Math.floor(Math.random() * budgetSkins.length)];
             track.innerHTML += `<div class="roulette-item"><img src="${s.img}"></div>`;
-            if (i === 50) currentWinningSkin = s;
+            if (i === 40) currentWinningSkin = s;
         }
 
-        // 5. Animatsiya
+        // 6. Animatsiya
         setTimeout(() => {
-            if(!skipFlag) {
-                const ITEM_HEIGHT = 200;
-                let offset = (50 * ITEM_HEIGHT) - 100;
-                track.style.transition = "top 5s cubic-bezier(0.1, 0, 0.1, 1)";
-                track.style.top = `-${offset}px`;
-            }
+            track.style.transition = "top 5s cubic-bezier(0.15, 0, 0.15, 1)";
+            track.style.top = `-${40 * 200 - 100}px`; // 200px balandlikka moslangan
         }, 100);
 
-        // 6. Natija
         setTimeout(() => {
-            if(!skipFlag) showWinner();
+            viewport.style.display = 'none';
+            resultDisplay.style.display = 'block';
+            document.getElementById('won-skin-img').src = currentWinningSkin.img;
+            document.getElementById('won-skin-name').innerText = currentWinningSkin.name;
+            addToInventory(currentWinningSkin);
         }, 5200);
     });
 }
-
 function showWinner() {
     if(!currentWinningSkin) return;
     
