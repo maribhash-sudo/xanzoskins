@@ -1,4 +1,3 @@
-// 1. DATA (Sening img papkangdagi fayllar bilan to'liq moslashtirildi)
 const budgetSkins = [
     { name: "AK-47", img: "img/AK47.png", price: 5000, rarity: "cover", quality: "FN" },
     { name: "Deagle White", img: "img/DEAGLEWHITE.png", price: 3500, rarity: "classified", quality: "MW" },
@@ -15,40 +14,14 @@ const budgetSkins = [
 let currentWinningSkin = null;
 let isSpinning = false;
 
-// --- YORDAMCHI FUNKSIYA: Xavfsiz balans olish ---
-function getSafeBalance(callback) {
-    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.CloudStorage) {
-        window.Telegram.WebApp.CloudStorage.getItem('userBalance', (err, val) => {
-            callback(val ? parseInt(val) : 10000);
-        });
-    } else {
-        let val = localStorage.getItem('userBalance');
-        callback(val ? parseInt(val) : 10000);
-    }
-}
-
-// --- YORDAMCHI FUNKSIYA: Xavfsiz balans saqlash ---
-function saveSafeBalance(newBal) {
-    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.CloudStorage) {
-        window.Telegram.WebApp.CloudStorage.setItem('userBalance', newBal.toString());
-    } else {
-        localStorage.setItem('userBalance', newBal.toString());
-    }
-}
-
-// 2. RULETKA FUNKSIYASI
 function startBudgetRoulette() {
     if (isSpinning) return;
     
-    getSafeBalance((bal) => {
-        if (bal < 500) { 
-            alert("Balans yetarli emas!"); 
-            return; 
-        }
+    // getBalance funksiyasi script.js da
+    getBalance((bal) => {
+        if (bal < 500) { alert("Balans yetarli emas!"); return; }
         
-        // Pulni yechish
-        updateBalance(-500);
-        
+        updateBalance(-500); 
         isSpinning = true;
 
         const modal = document.getElementById('roulette-modal');
@@ -56,7 +29,6 @@ function startBudgetRoulette() {
         const viewport = document.getElementById('roulette-viewport');
         const result = document.getElementById('result-display');
 
-        // Modalni ochish
         modal.classList.add('active');
         viewport.style.display = 'block';
         result.style.display = 'none';
@@ -69,7 +41,6 @@ function startBudgetRoulette() {
         let winnerIndex = 40; 
         currentWinningSkin = budgetSkins[Math.floor(Math.random() * budgetSkins.length)];
 
-        // Skinlarni generatsiya qilish
         for(let i=0; i<55; i++) {
             let s = (i === winnerIndex) ? currentWinningSkin : budgetSkins[Math.floor(Math.random() * budgetSkins.length)];
             track.innerHTML += `
@@ -98,19 +69,13 @@ function startBudgetRoulette() {
 function showWinnerCard(winningSkin) {
     const viewport = document.getElementById('roulette-viewport');
     const resultDisplay = document.getElementById('result-display');
-    
     viewport.style.display = 'none';
     resultDisplay.className = `result-display rarity-${winningSkin.rarity}`;
     
     document.getElementById('won-skin-img').src = winningSkin.img;
     document.getElementById('won-skin-name').innerText = winningSkin.name;
-    
-    const qualityEl = document.getElementById('won-skin-quality');
-    if(qualityEl) qualityEl.innerText = `Sifat: ${winningSkin.quality}`;
-    
-    document.getElementById('won-skin-price').innerHTML = `
-        <img src="img/nav_diamond.png" class="coin-icon-small"> ${winningSkin.price} COIN
-    `;
+    document.getElementById('won-skin-quality').innerText = `Sifat: ${winningSkin.quality}`;
+    document.getElementById('won-skin-price').innerHTML = `<img src="img/nav_diamond.png" class="coin-icon-small"> ${winningSkin.price} COIN`;
     
     resultDisplay.style.display = 'flex';
     
@@ -130,54 +95,7 @@ function sellWonSkin() {
     closeRoulette();
 }
 
-// "Steamga yuborish" uchun bo'sh funksiya (xato chiqmasligi uchun)
 function withdrawWonSkin() {
     alert("Buyurtma qabul qilindi!");
     closeRoulette();
-}
-
-function updateBalance(amount) {
-    getSafeBalance((currentBal) => {
-        let newBal = currentBal + amount;
-        saveSafeBalance(newBal);
-        let balEl = document.getElementById('balance');
-        if(balEl) balEl.innerText = newBal;
-        if(typeof updateUIBalance === 'function') updateUIBalance();
-    });
-}
-
-function addToInventory(skin) {
-    try {
-        // 1. Eski inventarni olish
-        let rawData = localStorage.getItem('userInventory');
-        let inventory = [];
-
-        // 2. Ma'lumotni tekshirish va massivga aylantirish
-        if (rawData) {
-            try {
-                inventory = JSON.parse(rawData);
-                if (!Array.isArray(inventory)) inventory = [];
-            } catch (e) {
-                console.warn("Inventar ma'lumoti buzilgan, yangisi yaratildi.");
-                inventory = [];
-            }
-        }
-
-        // 3. Yangi skinni qo'shish
-        inventory.push({
-            name: skin.name,
-            img: skin.img,
-            price: skin.price,
-            rarity: skin.rarity,
-            quality: skin.quality,
-            date: new Date().getTime()
-        });
-
-        // 4. Saqlash
-        localStorage.setItem('userInventory', JSON.stringify(inventory));
-        console.log("Inventarga muvaffaqiyatli saqlandi!");
-
-    } catch (e) {
-        console.error("Inventarga qo'shishda xatolik:", e);
-    }
 }
