@@ -1,33 +1,53 @@
-// 1. DATA (Skinlar ma'lumotlari)
+// 1. DATA (Sening img papkangdagi fayllar bilan to'liq moslashtirildi)
 const budgetSkins = [
     { name: "AK-47", img: "img/AK47.png", price: 5000, rarity: "cover", quality: "FN" },
     { name: "Deagle White", img: "img/DEAGLEWHITE.png", price: 3500, rarity: "classified", quality: "MW" },
     { name: "M4A1-S Paint", img: "img/M4A1-SPAINT.png", price: 4200, rarity: "classified", quality: "FN" },
+    { name: "M4A1-S Red", img: "img/M4A1-SRED.png", price: 4800, rarity: "classified", quality: "FN" },
     { name: "Five Seven", img: "img/FIVESEVEN.png", price: 1500, rarity: "restricted", quality: "FT" },
     { name: "Mac 10", img: "img/MAC10.png", price: 1200, rarity: "restricted", quality: "MW" },
     { name: "Glock White", img: "img/GLOCKWHITE.png", price: 800, rarity: "milspec", quality: "FT" },
     { name: "MP5", img: "img/MP5.png", price: 950, rarity: "milspec", quality: "WW" },
-    { name: "USP Camo", img: "img/USP-CAMO.png", price: 600, rarity: "milspec", quality: "BS" }
+    { name: "USP Camo", img: "img/USP-CAMO.png", price: 600, rarity: "milspec", quality: "BS" },
+    { name: "USP Topic", img: "img/USP-TOPIC.png", price: 700, rarity: "milspec", quality: "FT" }
 ];
 
 let currentWinningSkin = null;
 let isSpinning = false;
 
+// --- YORDAMCHI FUNKSIYA: Xavfsiz balans olish ---
+function getSafeBalance(callback) {
+    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.CloudStorage) {
+        window.Telegram.WebApp.CloudStorage.getItem('userBalance', (err, val) => {
+            callback(val ? parseInt(val) : 10000);
+        });
+    } else {
+        let val = localStorage.getItem('userBalance');
+        callback(val ? parseInt(val) : 10000);
+    }
+}
+
+// --- YORDAMCHI FUNKSIYA: Xavfsiz balans saqlash ---
+function saveSafeBalance(newBal) {
+    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.CloudStorage) {
+        window.Telegram.WebApp.CloudStorage.setItem('userBalance', newBal.toString());
+    } else {
+        localStorage.setItem('userBalance', newBal.toString());
+    }
+}
+
 // 2. RULETKA FUNKSIYASI
 function startBudgetRoulette() {
     if (isSpinning) return;
     
-    const tg = window.Telegram.WebApp;
-    
-    // CloudStorage tekshiruvi (xatolik bermasligi uchun)
-    const handleSpin = (val) => {
-        let bal = val ? parseInt(val) : 100000;
+    getSafeBalance((bal) => {
         if (bal < 500) { 
             alert("Balans yetarli emas!"); 
             return; 
         }
         
-        if (typeof updateBalance === 'function') updateBalance(-500);
+        // Pulni yechish
+        updateBalance(-500);
         
         isSpinning = true;
 
@@ -36,7 +56,7 @@ function startBudgetRoulette() {
         const viewport = document.getElementById('roulette-viewport');
         const result = document.getElementById('result-display');
 
-        // UI-ni tozalash va ko'rsatish
+        // Modalni ochish
         modal.classList.add('active');
         viewport.style.display = 'block';
         result.style.display = 'none';
@@ -49,6 +69,7 @@ function startBudgetRoulette() {
         let winnerIndex = 40; 
         currentWinningSkin = budgetSkins[Math.floor(Math.random() * budgetSkins.length)];
 
+        // Skinlarni generatsiya qilish
         for(let i=0; i<55; i++) {
             let s = (i === winnerIndex) ? currentWinningSkin : budgetSkins[Math.floor(Math.random() * budgetSkins.length)];
             track.innerHTML += `
@@ -63,6 +84,7 @@ function startBudgetRoulette() {
             const ITEM_HEIGHT = 350; 
             const VIEWPORT_HEIGHT = 350;
             let offset = (winnerIndex * ITEM_HEIGHT) - (VIEWPORT_HEIGHT / 2) + (ITEM_HEIGHT / 2);
+            track.offsetWidth; 
             track.style.top = `-${offset}px`; 
         }, 100);
 
@@ -70,15 +92,7 @@ function startBudgetRoulette() {
             showWinnerCard(currentWinningSkin);
             isSpinning = false;
         }, 6200);
-    };
-
-    // Telegram CloudStorage yoki LocalStorage orqali balansni olish
-    if (tg.CloudStorage && typeof tg.CloudStorage.getItem === 'function') {
-        tg.CloudStorage.getItem('userBalance', (err, val) => handleSpin(val));
-    } else {
-        let localBal = localStorage.getItem('userBalance');
-        handleSpin(localBal);
-    }
+    });
 }
 
 function showWinnerCard(winningSkin) {
@@ -91,7 +105,6 @@ function showWinnerCard(winningSkin) {
     document.getElementById('won-skin-img').src = winningSkin.img;
     document.getElementById('won-skin-name').innerText = winningSkin.name;
     
-    // Sifatni chiqarish
     const qualityEl = document.getElementById('won-skin-quality');
     if(qualityEl) qualityEl.innerText = `Sifat: ${winningSkin.quality}`;
     
@@ -113,6 +126,22 @@ function closeRoulette() {
 
 function sellWonSkin() {
     if (!currentWinningSkin) return;
-    if (typeof updateBalance === 'function') updateBalance(currentWinningSkin.price);
+    updateBalance(currentWinningSkin.price);
     closeRoulette();
+}
+
+// "Steamga yuborish" uchun bo'sh funksiya (xato chiqmasligi uchun)
+function withdrawWonSkin() {
+    alert("Buyurtma qabul qilindi!");
+    closeRoulette();
+}
+
+function updateBalance(amount) {
+    getSafeBalance((currentBal) => {
+        let newBal = currentBal + amount;
+        saveSafeBalance(newBal);
+        let balEl = document.getElementById('balance');
+        if(balEl) balEl.innerText = newBal;
+        if(typeof updateUIBalance === 'function') updateUIBalance();
+    });
 }
