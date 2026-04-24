@@ -34,9 +34,84 @@ let tasks = [
 ];
 
 const translations = {
-    uz: { topup: "TO'LDIRISH", cases_title: "CASES", active_tasks: "FAOL VAZIFALAR", completed: "BAJARILGAN", inventory_title: "INVENTORY", nav_bonus: "Bonus", nav_cases: "Cases", nav_inv: "Inv", nav_profile: "Profile", select_lang: "Tilni tanlang:", trade_link: "Steam Trade Link:", save_btn: "SAQLASH", claim_btn: "OLISH", done_btn: "BAJARILDI" },
-    ru: { topup: "ПОПОЛНИТЬ", cases_title: "КЕЙСЫ", active_tasks: "ЗАДАНИЯ", completed: "ВЫПОЛНЕНО", inventory_title: "ИНВЕНТАРЬ", nav_bonus: "Бонус", nav_cases: "Кейсы", nav_inv: "Инв.", nav_profile: "Профиль", select_lang: "Выберите язык:", trade_link: "Steam Trade Link:", save_btn: "СОХРАНИТЬ", claim_btn: "ПОЛУЧИТЬ", done_btn: "ВЫПОЛНЕНО" },
-    en: { topup: "TOP UP", cases_title: "CASES", active_tasks: "ACTIVE TASKS", completed: "COMPLETED", inventory_title: "INVENTORY", nav_bonus: "Bonus", nav_cases: "Cases", nav_inv: "Inv", nav_profile: "Profile", select_lang: "Select Language:", trade_link: "Steam Trade Link:", save_btn: "SAVE", claim_btn: "CLAIM", done_btn: "DONE" }
+    uz: { 
+        topup: "TO'LDIRISH", 
+        cases_title: "CASES", 
+        active_tasks: "FAOL VAZIFALAR", 
+        completed: "BAJARILGAN", 
+        inventory_title: "INVENTORY", 
+        nav_bonus: "Bonus", 
+        nav_cases: "Cases", 
+        nav_inv: "Inv", 
+        nav_profile: "Profile", 
+        select_lang: "Tilni tanlang:", 
+        trade_link: "Steam Trade Link:", 
+        save_btn: "SAQLASH", 
+        claim_btn: "OLISH", 
+        done_btn: "BAJARILDI",
+        balance_desc: "Sizning balansingiz",
+        bonus_title: "DOIMIY BONUSLAR",
+        daily_reward: "Kunlik mukofot",
+        daily_desc: "+50 dan 5000 COINgacha",
+        referral_title: "Do'stlarni taklif qilish",
+        referral_desc: "Har bir do'st uchun +500 COIN",
+        nick_title: "Nikga bot nomini qo'shish",
+        nick_desc: "Har 24 soatda +50 COIN",
+        link_btn: "LINK",
+        check_btn: "TEKSHIRISH"
+    },
+    ru: { 
+        topup: "ПОПОЛНИТЬ", 
+        cases_title: "КЕЙСЫ", 
+        active_tasks: "ЗАДАНИЯ", 
+        completed: "ВЫПОЛНЕНО", 
+        inventory_title: "ИНВЕНТАРЬ", 
+        nav_bonus: "Бонус", 
+        nav_cases: "Кейсы", 
+        nav_inv: "Инв.", 
+        nav_profile: "Профиль", 
+        select_lang: "Выберите язык:", 
+        trade_link: "Steam Trade Link:", 
+        save_btn: "СОХРАНИТЬ", 
+        claim_btn: "ПОЛУЧИТЬ", 
+        done_btn: "ВЫПОЛНЕНО",
+        balance_desc: "Ваш баланс",
+        bonus_title: "ПОСТОЯННЫЕ БОНУСЫ",
+        daily_reward: "Ежедневная награда",
+        daily_desc: "От 50 до 5000 COIN",
+        referral_title: "Пригласить друзей",
+        referral_desc: "За каждого друга +500 COIN",
+        nick_title: "Добавить имя бота",
+        nick_desc: "Каждые 24 часа +50 COIN",
+        link_btn: "ССЫЛКА",
+        check_btn: "ПРОВЕРИТЬ"
+    },
+    en: { 
+        topup: "TOP UP", 
+        cases_title: "CASES", 
+        active_tasks: "ACTIVE TASKS", 
+        completed: "COMPLETED", 
+        inventory_title: "INVENTORY", 
+        nav_bonus: "Bonus", 
+        nav_cases: "Cases", 
+        nav_inv: "Inv", 
+        nav_profile: "Profile", 
+        select_lang: "Select Language:", 
+        trade_link: "Steam Trade Link:", 
+        save_btn: "SAVE", 
+        claim_btn: "CLAIM", 
+        done_btn: "DONE",
+        balance_desc: "Your balance",
+        bonus_title: "DAILY BONUSES",
+        daily_reward: "Daily Reward",
+        daily_desc: "+50 to 5000 COIN",
+        referral_title: "Invite Friends",
+        referral_desc: "Per friend +500 COIN",
+        nick_title: "Add Bot Name to Nick",
+        nick_desc: "Every 24h +50 COIN",
+        link_btn: "LINK",
+        check_btn: "CHECK"
+    }
 };
 
 function updateUIBalance() {
@@ -62,10 +137,9 @@ function renderCases() {
     grid.innerHTML = "";
     cases.forEach(c => {
         let clickAction = (c.name.uz === "Budget") ? 'onclick="startBudgetRoulette()"' : '';
-        // Koin rasmi kattalashtirildi va dumaloq qilinishi uchun stil berildi
         grid.innerHTML += `
             <div class="case-card">
-                <img src="img/${c.img}" class="case-img">
+                <img src="img/${c.img}" class="case-img coin-glow">
                 <p class="case-name">${c.name[lang]}</p>
                 <button class="case-buy-btn" ${clickAction}>
                     <span>${c.price}</span>
