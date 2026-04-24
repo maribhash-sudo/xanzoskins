@@ -17,7 +17,6 @@ let isSpinning = false;
 function startBudgetRoulette() {
     if (isSpinning) return;
     
-    // getBalance funksiyasi script.js da
     getBalance((bal) => {
         if (bal < 500) { alert("Balans yetarli emas!"); return; }
         
@@ -45,7 +44,6 @@ function startBudgetRoulette() {
             let s = (i === winnerIndex) ? currentWinningSkin : budgetSkins[Math.floor(Math.random() * budgetSkins.length)];
             track.innerHTML += `
                 <div class="roulette-item rarity-${s.rarity}">
-                    <div class="glow-circle"></div>
                     <img src="${s.img}" onerror="this.src='img/default.png'">
                 </div>`;
         }
@@ -75,10 +73,9 @@ function showWinnerCard(winningSkin) {
     document.getElementById('won-skin-img').src = winningSkin.img;
     document.getElementById('won-skin-name').innerText = winningSkin.name;
     document.getElementById('won-skin-quality').innerText = `Sifat: ${winningSkin.quality}`;
-    document.getElementById('won-skin-price').innerHTML = `<img src="img/nav_diamond.png" class="coin-icon-small"> ${winningSkin.price} COIN`;
+    document.getElementById('won-skin-price').innerHTML = `${winningSkin.price} COIN`;
     
     resultDisplay.style.display = 'flex';
-    
     if(typeof addToInventory === 'function') addToInventory(winningSkin);
     if(typeof playSound === 'function') playSound('win');
 }
@@ -87,15 +84,4 @@ function closeRoulette() {
     document.getElementById('roulette-modal').classList.remove('active');
     document.getElementById('result-display').style.display = 'none';
     document.getElementById('roulette-viewport').style.display = 'block';
-}
-
-function sellWonSkin() {
-    if (!currentWinningSkin) return;
-    updateBalance(currentWinningSkin.price);
-    closeRoulette();
-}
-
-function withdrawWonSkin() {
-    alert("Buyurtma qabul qilindi!");
-    closeRoulette();
 }
