@@ -1,3 +1,4 @@
+// 1. SKINLAR RO'YXATI
 const budgetSkins = [
     { name: "AK-47", img: "img/AK47.png", price: 500, rarity: "cover", quality: "FN" },
     { name: "Deagle White", img: "img/DEAGLEWHITE.png", price: 700, rarity: "classified", quality: "MW" },
@@ -11,99 +12,131 @@ const budgetSkins = [
     { name: "USP Tropic", img: "img/USP-TOPIC.png", price: 1500, rarity: "restricted", quality: "MW" }
 ];
 
+// 2. GLOBAL O'ZGARUVCHILAR
 let currentWinningSkin = null;
 let skipFlag = false;
+let isSpinning = false; // Ketma-ket bosishni oldini olish
 
-// DEBUG UCHUN: Ruletka funksiyasini to'g'irlaymiz
+// 3. RULETKA BOSHLANISHI
 function startBudgetRoulette() {
-    console.log("Budget keysi bosildi!"); // Konsolda shu yozuv chiqishi kerak
+    if (isSpinning) return;
+    
+    console.log("Budget keysi ochilmoqda...");
     const tg = window.Telegram.WebApp;
     
-    // 1. Modallarni topib olish
     const modal = document.getElementById('roulette-modal');
     const track = document.getElementById('roulette-track');
     const viewport = document.getElementById('roulette-viewport');
     const resultDisplay = document.getElementById('result-display');
 
-    if (!modal) {
-        console.error("XATO: 'roulette-modal' topilmadi!");
-        alert("Xatolik: Modal topilmadi!");
+    if (!modal || !track) {
+        console.error("XATO: Elementlar topilmadi!");
         return;
     }
 
-    // 2. Balansni tekshirish
     tg.CloudStorage.getItem('userBalance', (err, val) => {
         let bal = val ? parseInt(val) : 10000;
-        console.log("Hozirgi balans:", bal);
         
-        if (bal < 500) { 
-            alert("Balans yetarli emas! Sizda: " + bal); 
-            return; 
+        if (bal < 500) {
+            alert("Balans yetarli emas!");
+            return;
         }
 
-        // 3. Balansni ayirish (Faol funksiya bo'lsa)
+        // Jarayonni boshlaymiz
+        isSpinning = true;
+        skipFlag = false;
+        
+        // Pulni yechish (Hozircha test rejimi bo'lsa ham funksiya chaqiriladi)
         if (typeof updateBalance === 'function') {
             updateBalance(-500);
-        } else {
-            console.error("XATO: updateBalance funksiyasi topilmadi!");
         }
 
-        // 4. Modallarni ko'rsatish (Majburiy)
+        // UI holatini tiklash
         modal.style.display = 'flex';
         viewport.style.display = 'block';
         resultDisplay.style.display = 'none';
-
-        track.innerHTML = "";
         track.style.transition = "none";
         track.style.top = "0px";
+        track.innerHTML = "";
 
-        // 5. Skinlarni qo'shish
-        for (let i = 0; i < 50; i++) {
+        // Skinlarni generatsiya qilish (50 ta element)
+        for (let i = 0; i < 60; i++) {
             let s = budgetSkins[Math.floor(Math.random() * budgetSkins.length)];
-            track.innerHTML += `<div class="roulette-item"><img src="${s.img}"></div>`;
-            if (i === 40) currentWinningSkin = s;
+            const item = document.createElement('div');
+            item.className = 'roulette-item';
+            item.innerHTML = `<img src="${s.img}" onerror="this.src='img/default.png'">`;
+            track.appendChild(item);
+            
+            // 50-chi skin g'olib bo'ladi
+            if (i === 50) currentWinningSkin = s;
         }
 
-        // 6. Animatsiya
+        // Animatsiyani ishga tushirish
         setTimeout(() => {
-            track.style.transition = "top 5s cubic-bezier(0.15, 0, 0.15, 1)";
-            track.style.top = `-${40 * 200 - 100}px`; // 200px balandlikka moslangan
+            if (!skipFlag) {
+                track.style.transition = "top 5s cubic-bezier(0.1, 0, 0.1, 1)";
+                // Har bir element 200px balandlikda deb hisoblangan
+                track.style.top = `-${(50 * 200) - 100}px`; 
+            }
         }, 100);
 
+        // Natijani ko'rsatish (5.2 soniyadan keyin)
         setTimeout(() => {
-            viewport.style.display = 'none';
-            resultDisplay.style.display = 'block';
-            document.getElementById('won-skin-img').src = currentWinningSkin.img;
-            document.getElementById('won-skin-name').innerText = currentWinningSkin.name;
-            addToInventory(currentWinningSkin);
+            if (!skipFlag) showWinner();
+            isSpinning = false;
         }, 5200);
     });
 }
+
+// 4. G'OLIBNI KO'RSATISH
 function showWinner() {
-    if(!currentWinningSkin) return;
+    if (!currentWinningSkin) return;
     
     document.getElementById('roulette-viewport').style.display = 'none';
     document.getElementById('result-display').style.display = 'block';
     
     document.getElementById('won-skin-img').src = currentWinningSkin.img;
     document.getElementById('won-skin-name').innerText = currentWinningSkin.name;
-    document.getElementById('won-skin-quality').innerText = "Sifat: " + currentWinningSkin.quality;
-    document.getElementById('won-skin-price-val').innerText = currentWinningSkin.price;
     
-    // Inventarga saqlash
+    // Sifat va narx (agar HTML-da elementlar bo'lsa)
+    const qualityEl = document.getElementById('won-skin-quality');
+    if (qualityEl) qualityEl.innerText = "Sifat: " + currentWinningSkin.quality;
+    
+    const priceEl = document.getElementById('won-skin-price-val');
+    if (priceEl) priceEl.innerText = currentWinningSkin.price;
+    
+    // Inventarga qo'shish
     addToInventory(currentWinningSkin);
+    console.log("Yutuq ko'rsatildi va inventarga qo'shildi.");
 }
 
+// 5. O'TKAZIB YUBORISH (SKIP)
 function skipRoulette() {
+    if (!isSpinning) return;
     skipFlag = true;
     showWinner();
+    isSpinning = false;
 }
 
+// 6. INVENTARGA SAQLASH
 function addToInventory(item) {
     const tg = window.Telegram.WebApp;
     tg.CloudStorage.getItem('inventory', (err, val) => {
-        let inv = val ? JSON.parse(val) : [];
+        let inv = [];
+        try {
+            inv = val ? JSON.parse(val) : [];
+        } catch (e) {
+            inv = [];
+        }
+        
         inv.push(item);
-        tg.CloudStorage.setItem('inventory', JSON.stringify(inv));
+        
+        tg.CloudStorage.setItem('inventory', JSON.stringify(inv), (err, success) => {
+            if (success) {
+                console.log("Skin inventarga saqlandi!");
+                // Agar inventar sahifasi ochiq bo'lsa, uni yangilash uchun:
+                if (typeof renderInventory === 'function') renderInventory();
+            }
+        });
     });
 }
