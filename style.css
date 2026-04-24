@@ -1,14 +1,85 @@
-#roulette-modal {
-    display: none; 
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(0, 0, 0, 0.95); z-index: 999999;
-    flex-direction: column; align-items: center; justify-content: center;
-    backdrop-filter: blur(15px);
+/* 1. ASOSIY SOZLAMALAR */
+:root {
+    --bg: #050505;
+    --card: #111111;
+    --accent: #FF4500;
+    --glow: rgba(255, 69, 0, 0.3);
+    --text: #ffffff;
 }
-#roulette-modal.active { display: flex !important; }
 
-/* Qolgan qismlari o'zgarishsiz */
-.roulette-viewport { width: 90vw; max-width: 350px; height: 350px; border: 4px solid #FFD700; border-radius: 20px; overflow: hidden; position: relative; background: #111; }
-.roulette-track { position: absolute; top: 0; width: 100%; display: flex; flex-direction: column; }
-.animate-track { transition: top 6s cubic-bezier(0.1, 0.6, 0.1, 1) !important; }
-.result-display { display: none; flex-direction: column; align-items: center; justify-content: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: linear-gradient(135deg, #3d0a66 0%, #1a052e 100%); padding: 25px; border-radius: 30px; z-index: 9999999; color: white; width: 85%; max-width: 350px; }
+* { box-sizing: border-box; }
+body { 
+    background: var(--bg); 
+    color: var(--text); 
+    font-family: 'Montserrat', sans-serif; 
+    margin: 0; 
+    padding-bottom: 80px; /* Navigatsiya uchun joy */
+}
+
+/* 2. SAHIFA BOSHQARUVI */
+.page { display: none; }
+.page.active { display: block; }
+
+/* 3. ASOSIY KONTEYNER */
+.app-container { max-width: 600px; margin: auto; }
+
+/* 4. BALANS VA HEADER */
+.bonus-header { text-align: center; padding: 40px 20px; }
+.main-coin { width: 70px; filter: drop-shadow(0 0 15px var(--accent)); }
+#display-balance { font-size: 40px; font-weight: 800; margin: 10px 0 0; }
+
+/* 5. CARD-BOX (Bonus va Vazifalar uchun) */
+.cards-wrapper { padding: 0 15px; }
+.card-box {
+    background: var(--card);
+    border: 1px solid #222;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.3s;
+}
+.card-box:hover { border-color: var(--accent); box-shadow: 0 0 15px var(--glow); }
+
+.card-info { display: flex; align-items: center; gap: 15px; }
+.icon-circle { 
+    width: 45px; height: 45px; background: #1a1a1a; 
+    display: flex; align-items: center; justify-content: center; 
+    border-radius: 12px; font-size: 20px; 
+}
+.text-info h4 { margin: 0; font-size: 15px; }
+.text-info p { margin: 3px 0 0; font-size: 11px; color: #888; }
+
+/* 6. TUGMALAR */
+.btn-glow {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 0 4px 10px rgba(255, 69, 0, 0.3);
+}
+
+/* 7. GRID (Cases va Inventar uchun) */
+.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px; }
+.case-card { 
+    background: var(--card); border: 1px solid #222; border-radius: 12px; 
+    padding: 15px; text-align: center; 
+}
+.case-card img { width: 100%; margin-bottom: 10px; }
+
+/* 8. NAVIGATSIYA */
+.bottom-nav { 
+    position: fixed; bottom: 0; left: 0; width: 100%; height: 70px;
+    background: #000; border-top: 1px solid #222;
+    display: flex; justify-content: space-around; align-items: center;
+    z-index: 1000;
+}
+.nav-btn { background: none; border: none; color: #555; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.nav-btn.active { color: var(--accent); }
+.nav-btn img { width: 24px; }
