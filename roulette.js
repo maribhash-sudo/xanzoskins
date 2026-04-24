@@ -145,3 +145,39 @@ function updateBalance(amount) {
         if(typeof updateUIBalance === 'function') updateUIBalance();
     });
 }
+
+function addToInventory(skin) {
+    try {
+        // 1. Eski inventarni olish
+        let rawData = localStorage.getItem('userInventory');
+        let inventory = [];
+
+        // 2. Ma'lumotni tekshirish va massivga aylantirish
+        if (rawData) {
+            try {
+                inventory = JSON.parse(rawData);
+                if (!Array.isArray(inventory)) inventory = [];
+            } catch (e) {
+                console.warn("Inventar ma'lumoti buzilgan, yangisi yaratildi.");
+                inventory = [];
+            }
+        }
+
+        // 3. Yangi skinni qo'shish
+        inventory.push({
+            name: skin.name,
+            img: skin.img,
+            price: skin.price,
+            rarity: skin.rarity,
+            quality: skin.quality,
+            date: new Date().getTime()
+        });
+
+        // 4. Saqlash
+        localStorage.setItem('userInventory', JSON.stringify(inventory));
+        console.log("Inventarga muvaffaqiyatli saqlandi!");
+
+    } catch (e) {
+        console.error("Inventarga qo'shishda xatolik:", e);
+    }
+}
