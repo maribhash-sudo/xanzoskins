@@ -15,6 +15,7 @@ let currentWinningSkin = null;
 let skipFlag = false;
 
 function startBudgetRoulette() {
+    console.log("Ruletka funksiyasi chaqirildi!");
     const tg = window.Telegram.WebApp;
     
     // 1. Balansni tekshirish
