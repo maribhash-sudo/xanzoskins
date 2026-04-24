@@ -13,7 +13,7 @@ function showPage(pageId, element) {
     updateUIBalance();
 }
 
-// BALANSNI SAQLASH VA YANGILASH
+// BALANSNI SAQLASH VA YANGILASH (CloudStorage orqali)
 function updateBalance(amount) {
     const tg = window.Telegram.WebApp;
     tg.CloudStorage.getItem('userBalance', (err, val) => {
@@ -305,8 +305,11 @@ function checkNickName() {
     });
 }
 
+// BOT ISHGA TUSHGANDA MA'LUMOTLARNI YUKLASH
 document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp;
+    tg.expand();
+
     // Balansni yuklash
     tg.CloudStorage.getItem('userBalance', (err, val) => {
         document.getElementById('balance').innerText = val ? val : '10000';
