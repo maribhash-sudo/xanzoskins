@@ -79,7 +79,7 @@
             <div id="page-inventory" class="page">
                 <h2 class="section-title" data-lang="inventory_title">INVENTORY</h2>
                 <button onclick="sellAllInventory()" style="margin: 10px; padding: 10px; background: #e74c3c; color: white; border: none; width: 90%; border-radius: 5px; font-weight: bold;">BARCHASINI SOTISH</button>
-                <div id="inventory-grid" class="grid"></div>
+                <div id="inventory-list" class="grid"></div>
             </div>
 
             <div id="page-profile" class="page">
@@ -111,15 +111,19 @@
         <div id="roulette-viewport" class="roulette-viewport">
             <div id="roulette-track" class="roulette-track"></div>
         </div>
+        <button class="skip-btn" onclick="skipRoulette()">Пропустить анимацию ⏭</button>
+        
         <div id="result-display" class="result-display" style="display: none;">
-            <h3>YUTUQ!</h3>
-            <img id="won-skin-img" src="" alt="Winner">
-            <p id="won-skin-name"></p>
-            <p id="won-skin-price"></p>
+            <img id="won-skin-img" src="" class="won-skin-img" alt="Winner">
+            <h3 id="won-skin-name" class="won-skin-name"></h3>
+            <p id="won-skin-quality" class="won-skin-quality"></p>
+            
             <div class="modal-btns">
-                <button onclick="withdrawWonSkin()">STEAMGA YUBORISH</button>
-                <button onclick="sellWonSkin()" style="background:#444;">SOTISH</button>
-                <button onclick="startBudgetRoulette()" style="background:linear-gradient(to bottom, #ff8c00, #ff4500);">YANA AYLANTIRISH</button>
+                <button class="btn-upgrade">Улучшить</button>
+                <button class="btn-again" onclick="startBudgetRoulette()">Крутить ещё 💎 5000</button>
+                <button id="sell-btn" class="sell-btn" onclick="sellWonSkin()">
+                    Продать за 💎 <span id="won-skin-price-val">...</span>
+                </button>
             </div>
         </div>
     </div>
