@@ -1,22 +1,22 @@
 /* --- MODAL VA OYNA SOZLAMALARI --- */
-#roulette-modal, .roulette-modal {
-    display: none; 
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100vw; 
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.95); 
-    z-index: 999999; /* Juda yuqori qiymat */
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center;
+#roulette-modal {
+    display: none !important; 
+    position: fixed !important; 
+    top: 0 !important; 
+    left: 0 !important; 
+    width: 100vw !important; 
+    height: 100vh !important;
+    background: rgba(0, 0, 0, 0.95) !important; 
+    z-index: 999999 !important;
+    flex-direction: column !important; 
+    align-items: center !important; 
+    justify-content: center !important;
     backdrop-filter: blur(15px); 
     -webkit-backdrop-filter: blur(15px);
 }
 
-/* Modal ochiq bo'lganda ko'rinishi uchun */
-#roulette-modal.active, .roulette-modal.active {
+/* Modal ochiq bo'lganda ko'rinishi uchun (JS orqali qo'shiladi) */
+#roulette-modal.active {
     display: flex !important;
 }
 
@@ -31,6 +31,7 @@
     position: relative; 
     background: #111;
     box-shadow: 0 0 50px rgba(255, 215, 0, 0.2), inset 0 0 20px rgba(0,0,0,1);
+    display: block !important;
 }
 
 /* Markaziy qizil chiziq (Win-line) */
@@ -111,7 +112,7 @@
     width: 85%;
     max-width: 350px;
     text-align: center;
-    z-index: 9999;
+    z-index: 9999999 !important;
     color: white;
 }
 
