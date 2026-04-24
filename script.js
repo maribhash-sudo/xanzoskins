@@ -13,6 +13,19 @@ function showPage(pageId, element) {
     updateUIBalance();
 }
 
+// BALANSNI SAQLASH VA YANGILASH
+function updateBalance(amount) {
+    const tg = window.Telegram.WebApp;
+    tg.CloudStorage.getItem('userBalance', (err, val) => {
+        let currentBal = val ? parseInt(val) : 10000;
+        let newBal = currentBal + amount;
+        tg.CloudStorage.setItem('userBalance', newBal.toString());
+        let balEl = document.getElementById('balance');
+        if(balEl) balEl.innerText = newBal;
+        updateUIBalance();
+    });
+}
+
 // 1. 10 ta Keyslar
 const cases = [
     { name: {uz: "Budget", ru: "Бюджет", en: "Budget"}, price: 500, img: "case1.png" },
@@ -176,10 +189,7 @@ function completeTask(id) {
     const t = tasks.find(x => x.id === id);
     if (!t.done) {
         t.done = true;
-        let balEl = document.getElementById('balance');
-        let currentBal = parseInt(balEl.innerText);
-        balEl.innerText = currentBal + t.reward;
-        updateUIBalance();
+        updateBalance(t.reward);
         if(t.link) window.open(t.link, '_blank');
         renderTasks();
     }
@@ -187,7 +197,7 @@ function completeTask(id) {
 
 function saveSteamLink() {
     const link = document.getElementById('tradeLinkInput').value;
-    localStorage.setItem('tradeLink', link);
+    window.Telegram.WebApp.CloudStorage.setItem('tradeLink', link);
     alert("Saqlandi!");
 }
 
@@ -195,67 +205,71 @@ function renderInventory() {
     const grid = document.getElementById('inventory-grid');
     if(!grid) return;
     grid.innerHTML = "";
-    let inv = JSON.parse(localStorage.getItem('inventory') || '[]');
-    inv.forEach((item, index) => {
-        grid.innerHTML += `
-            <div class="case-card">
-                <img src="${item.img}" style="width:60px">
-                <p>${item.name}</p>
-                <small style="display:flex; justify-content:center; align-items:center; gap:3px;">
-                    <img src="img/nav_diamond.png" style="width:12px;"> ${item.price}
-                </small>
-                <button onclick="withdrawItem(${index})" style="font-size:10px;">Steam</button>
-            </div>`;
+    window.Telegram.WebApp.CloudStorage.getItem('inventory', (err, val) => {
+        let inv = val ? JSON.parse(val) : [];
+        inv.forEach((item, index) => {
+            grid.innerHTML += `
+                <div class="case-card">
+                    <img src="${item.img}" style="width:60px">
+                    <p>${item.name}</p>
+                    <small style="display:flex; justify-content:center; align-items:center; gap:3px;">
+                        <img src="img/nav_diamond.png" style="width:12px;"> ${item.price}
+                    </small>
+                    <button onclick="withdrawItem(${index})" style="font-size:10px;">Steam</button>
+                </div>`;
+        });
     });
 }
 
 function sellAllInventory() {
-    let inv = JSON.parse(localStorage.getItem('inventory') || '[]');
-    if(inv.length === 0) { alert("Inventar bo'sh!"); return; }
-    let total = 0;
-    inv.forEach(i => total += i.price);
-    let balEl = document.getElementById('balance');
-    balEl.innerText = parseInt(balEl.innerText) + total;
-    updateUIBalance();
-    localStorage.setItem('inventory', '[]');
-    renderInventory();
-    alert("Barchasi sotildi! +" + total + " COIN");
+    window.Telegram.WebApp.CloudStorage.getItem('inventory', (err, val) => {
+        let inv = val ? JSON.parse(val) : [];
+        if(inv.length === 0) { alert("Inventar bo'sh!"); return; }
+        let total = 0;
+        inv.forEach(i => total += i.price);
+        updateBalance(total);
+        window.Telegram.WebApp.CloudStorage.setItem('inventory', '[]');
+        renderInventory();
+        alert("Barchasi sotildi! +" + total + " COIN");
+    });
 }
 
 function withdrawItem(index) {
-    alert("Steamga yuborildi!");
-    let inv = JSON.parse(localStorage.getItem('inventory') || '[]');
-    inv.splice(index, 1);
-    localStorage.setItem('inventory', JSON.stringify(inv));
-    renderInventory();
+    window.Telegram.WebApp.CloudStorage.getItem('inventory', (err, val) => {
+        let inv = val ? JSON.parse(val) : [];
+        alert("Steamga yuborildi!");
+        inv.splice(index, 1);
+        window.Telegram.WebApp.CloudStorage.setItem('inventory', JSON.stringify(inv));
+        renderInventory();
+    });
 }
 
 function claimDailyBonus() {
-    let lastClaim = localStorage.getItem('lastClaimDate');
-    let today = new Date().toDateString();
-    if (lastClaim === today) {
-        alert("Bugun bonusni olib bo'ldingiz!");
-        return;
-    }
-    let dayCount = parseInt(localStorage.getItem('streakDay') || '0');
-    dayCount++;
-    if (dayCount > 30) dayCount = 1;
-    let reward = 50 + (dayCount - 1) * 163;
-    if (dayCount === 30) reward = 5000;
-    
-    let balEl = document.getElementById('balance');
-    balEl.innerText = parseInt(balEl.innerText) + Math.round(reward);
-    updateUIBalance();
-    
-    localStorage.setItem('lastClaimDate', today);
-    localStorage.setItem('streakDay', dayCount);
-    
-    let msgEl = document.getElementById('bonus-message');
-    if(msgEl) msgEl.innerText = dayCount + "-kun: " + Math.round(reward) + " COIN olindi!";
-    alert("Tabriklaymiz!");
-    
-    let btn = document.getElementById('bonus-btn');
-    if(btn) btn.disabled = true;
+    const tg = window.Telegram.WebApp;
+    tg.CloudStorage.getItem('lastClaimDate', (err, lastClaim) => {
+        let today = new Date().toDateString();
+        if (lastClaim === today) {
+            alert("Bugun bonusni olib bo'ldingiz!");
+            return;
+        }
+        tg.CloudStorage.getItem('streakDay', (err, streak) => {
+            let dayCount = streak ? parseInt(streak) : 0;
+            dayCount++;
+            if (dayCount > 30) dayCount = 1;
+            let reward = 50 + (dayCount - 1) * 163;
+            if (dayCount === 30) reward = 5000;
+            
+            updateBalance(Math.round(reward));
+            tg.CloudStorage.setItem('lastClaimDate', today);
+            tg.CloudStorage.setItem('streakDay', dayCount.toString());
+            
+            let msgEl = document.getElementById('bonus-message');
+            if(msgEl) msgEl.innerText = dayCount + "-kun: " + Math.round(reward) + " COIN olindi!";
+            alert("Tabriklaymiz!");
+            let btn = document.getElementById('bonus-btn');
+            if(btn) btn.disabled = true;
+        });
+    });
 }
 
 function copyRefLink() {
@@ -274,31 +288,36 @@ function checkNickName() {
     const fullName = ((user.first_name || "") + " " + (user.last_name || "")).toLowerCase();
     const requiredNick = "@xanzoskins_bot";
     
-    let lastNickCheck = localStorage.getItem('lastNickCheck');
-    let now = Date.now();
-    if (lastNickCheck && (now - lastNickCheck < 24 * 60 * 60 * 1000)) {
-        alert("Siz bugun tekshirdingiz!");
-        return;
-    }
-    
-    if (fullName.includes(requiredNick.toLowerCase())) {
-        let balEl = document.getElementById('balance');
-        balEl.innerText = parseInt(balEl.innerText) + 50;
-        updateUIBalance();
-        localStorage.setItem('lastNickCheck', now);
-        alert("Muofot olindi!");
-    } else {
-        alert("Ismingizda @" + requiredNick + " topilmadi.");
-    }
+    tg.CloudStorage.getItem('lastNickCheck', (err, lastNickCheck) => {
+        let now = Date.now();
+        if (lastNickCheck && (now - parseInt(lastNickCheck) < 24 * 60 * 60 * 1000)) {
+            alert("Siz bugun tekshirdingiz!");
+            return;
+        }
+        
+        if (fullName.includes(requiredNick.toLowerCase())) {
+            updateBalance(50);
+            tg.CloudStorage.setItem('lastNickCheck', now.toString());
+            alert("Muofot olindi!");
+        } else {
+            alert("Ismingizda @" + requiredNick + " topilmadi.");
+        }
+    });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    const tg = window.Telegram.WebApp;
+    // Balansni yuklash
+    tg.CloudStorage.getItem('userBalance', (err, val) => {
+        document.getElementById('balance').innerText = val ? val : '10000';
+        updateUIBalance();
+    });
+    
     const lang = localStorage.getItem('lang') || 'uz';
     setLanguage(lang);
     renderCases();
     renderTasks();
     
-    const tg = window.Telegram.WebApp;
     if (tg.initDataUnsafe?.user) {
         let userNameEl = document.getElementById('user-name');
         if(userNameEl) userNameEl.innerText = tg.initDataUnsafe.user.first_name;
@@ -307,9 +326,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if(refInput) refInput.value = "https://t.me/Xanzo_skins_bot?start=" + tg.initDataUnsafe.user.id;
     }
 
-    let lastClaim = localStorage.getItem('lastClaimDate');
-    let btn = document.getElementById('bonus-btn');
-    if (lastClaim === new Date().toDateString() && btn) {
-        btn.disabled = true;
-    }
+    tg.CloudStorage.getItem('lastClaimDate', (err, lastClaim) => {
+        let btn = document.getElementById('bonus-btn');
+        if (lastClaim === new Date().toDateString() && btn) {
+            btn.disabled = true;
+        }
+    });
 });
