@@ -13,6 +13,16 @@ function showPage(pageId, element) {
     updateUIBalance();
 }
 
+// BALANSNI SAQLASH VA YANGILASH
+function updateBalance(amount) {
+    let currentBal = parseInt(localStorage.getItem('userBalance') || '10000');
+    let newBal = currentBal + amount;
+    localStorage.setItem('userBalance', newBal);
+    let balEl = document.getElementById('balance');
+    if(balEl) balEl.innerText = newBal;
+    updateUIBalance();
+}
+
 // 1. 10 ta Keyslar
 const cases = [
     { name: {uz: "Budget", ru: "Бюджет", en: "Budget"}, price: 500, img: "case1.png" },
@@ -176,10 +186,7 @@ function completeTask(id) {
     const t = tasks.find(x => x.id === id);
     if (!t.done) {
         t.done = true;
-        let balEl = document.getElementById('balance');
-        let currentBal = parseInt(balEl.innerText);
-        balEl.innerText = currentBal + t.reward;
-        updateUIBalance();
+        updateBalance(t.reward);
         if(t.link) window.open(t.link, '_blank');
         renderTasks();
     }
@@ -214,9 +221,7 @@ function sellAllInventory() {
     if(inv.length === 0) { alert("Inventar bo'sh!"); return; }
     let total = 0;
     inv.forEach(i => total += i.price);
-    let balEl = document.getElementById('balance');
-    balEl.innerText = parseInt(balEl.innerText) + total;
-    updateUIBalance();
+    updateBalance(total);
     localStorage.setItem('inventory', '[]');
     renderInventory();
     alert("Barchasi sotildi! +" + total + " COIN");
@@ -243,9 +248,7 @@ function claimDailyBonus() {
     let reward = 50 + (dayCount - 1) * 163;
     if (dayCount === 30) reward = 5000;
     
-    let balEl = document.getElementById('balance');
-    balEl.innerText = parseInt(balEl.innerText) + Math.round(reward);
-    updateUIBalance();
+    updateBalance(Math.round(reward));
     
     localStorage.setItem('lastClaimDate', today);
     localStorage.setItem('streakDay', dayCount);
@@ -282,9 +285,7 @@ function checkNickName() {
     }
     
     if (fullName.includes(requiredNick.toLowerCase())) {
-        let balEl = document.getElementById('balance');
-        balEl.innerText = parseInt(balEl.innerText) + 50;
-        updateUIBalance();
+        updateBalance(50);
         localStorage.setItem('lastNickCheck', now);
         alert("Muofot olindi!");
     } else {
@@ -293,6 +294,10 @@ function checkNickName() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Balansni xotiradan yuklash
+    let savedBal = localStorage.getItem('userBalance') || '10000';
+    document.getElementById('balance').innerText = savedBal;
+    
     const lang = localStorage.getItem('lang') || 'uz';
     setLanguage(lang);
     renderCases();
