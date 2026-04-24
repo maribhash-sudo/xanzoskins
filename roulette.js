@@ -1,4 +1,4 @@
-// 1. DATA (Skinlar ma'lumotlariga rarity va quality qo'shildi)
+// 1. DATA (Skinlar ma'lumotlari)
 const budgetSkins = [
     { name: "AK-47", img: "img/AK47.png", price: 5000, rarity: "cover", quality: "FN" },
     { name: "Deagle White", img: "img/DEAGLEWHITE.png", price: 3500, rarity: "classified", quality: "MW" },
@@ -13,50 +13,45 @@ const budgetSkins = [
 let currentWinningSkin = null;
 let isSpinning = false;
 
-// 2. RULETKA FUNKSIYASI
+// 2. RULETKA FUNKSIYASI (Birlashtirilgan versiya)
 function startBudgetRoulette() {
     if (isSpinning) return;
-    isSpinning = true;
-
-    console.log("Budget keysi ochilmoqda (Katta Glow)...");
+    
     const tg = window.Telegram.WebApp;
     
     // Balansni tekshirish
     tg.CloudStorage.getItem('userBalance', (err, val) => {
         let bal = val ? parseInt(val) : 100000;
-        if (bal < 5000) { alert("Balans yetarli emas!"); isSpinning = false; return; }
+        if (bal < 5000) { alert("Balans yetarli emas!"); return; }
         
-        // Pulni yechish funksiyasi (script.js dagi)
+        // Pulni yechish
         if (typeof updateBalance === 'function') updateBalance(-5000);
-
-        // Ovoz effekti
-        if(typeof playSound === 'function') playSound('spin');
+        
+        isSpinning = true;
 
         const modal = document.getElementById('roulette-modal');
         const track = document.getElementById('roulette-track');
         const viewport = document.getElementById('roulette-viewport');
-        const resultDisplay = document.getElementById('result-display');
-        
-        // UI reset
-        modal.style.display = 'flex';
+        const result = document.getElementById('result-display');
+
+        // Modalni klass qo'shish orqali ochamiz
+        modal.classList.add('active');
         viewport.style.display = 'block';
-        resultDisplay.style.display = 'none';
-        
-        track.className = "roulette-track"; // Animatsiya klassini o'chirib turish
+        result.style.display = 'none';
+
+        // Trackni tozalash
+        track.className = "roulette-track"; 
         track.style.transition = "none";
         track.style.top = "0px";
         track.innerHTML = "";
 
-        // 3. Lenta tayyorlash (Skinlar rarity va glow bilan)
-        let winnerIndex = 40; // 40-o'rin g'olib bo'ladi
+        // G'olib skinni tanlash
+        let winnerIndex = 40; 
+        currentWinningSkin = budgetSkins[Math.floor(Math.random() * budgetSkins.length)];
 
+        // Skinlarni generatsiya qilish
         for(let i=0; i<50; i++) {
-            let s = budgetSkins[Math.floor(Math.random() * budgetSkins.length)];
-            
-            // G'olib skinni belgilash
-            if (i === winnerIndex) currentWinningSkin = s;
-
-            // Har bir element HTML'i (Glow nur doirasi bilan)
+            let s = (i === winnerIndex) ? currentWinningSkin : budgetSkins[Math.floor(Math.random() * budgetSkins.length)];
             track.innerHTML += `
                 <div class="roulette-item rarity-${s.rarity}">
                     <div class="glow-circle"></div>
@@ -64,50 +59,56 @@ function startBudgetRoulette() {
                 </div>`;
         }
 
-        // 4. Animatsiya - Matematik aniqlik bilan
+        // Animatsiyani boshlash
         setTimeout(() => {
-            track.classList.add("animate-track"); // Animatsiya klassini qo'shish
-            
-            // ITEM_HEIGHT CSS'dagi bilan bir xil bo'lishi shart
+            track.classList.add("animate-track");
             const ITEM_HEIGHT = 350; 
             const VIEWPORT_HEIGHT = 350;
-            
-            // Formula: g'olib item'ni qizil chiziqning qoq o'rtasiga qo'yadi
             let offset = (winnerIndex * ITEM_HEIGHT) - (VIEWPORT_HEIGHT / 2) + (ITEM_HEIGHT / 2);
             track.style.top = `-${offset}px`; 
         }, 100);
 
-        // 5. Natija ko'rsatish
+        // 6.2 soniyadan keyin natijani ko'rsatish
         setTimeout(() => {
             showWinnerCard(currentWinningSkin);
             isSpinning = false;
-        }, 6200); 
+        }, 6200);
     });
 }
 
-// Yutuq oynasini ko'rsatish funksiyasi
+// Yutuq oynasini ko'rsatish
 function showWinnerCard(winningSkin) {
     const viewport = document.getElementById('roulette-viewport');
     const resultDisplay = document.getElementById('result-display');
     
     viewport.style.display = 'none';
-    
-    // Rarity nur effektini o'rnatish
     resultDisplay.className = `result-display rarity-${winningSkin.rarity}`;
     
     document.getElementById('won-skin-img').src = winningSkin.img;
     document.getElementById('won-skin-name').innerText = winningSkin.name;
-    document.getElementById('won-skin-quality').innerText = `Sifat: ${winningSkin.quality}`;
+    // Qo'shimcha ma'lumotlar
+    const qualityEl = document.querySelector('.result-display p'); // Oddiy tanlov
+    if(qualityEl) qualityEl.innerText = `Sifat: ${winningSkin.quality}`;
     
-    // Narx va Diamond
     document.getElementById('won-skin-price').innerHTML = `
         <img src="img/nav_diamond.png" class="coin-icon-small"> ${winningSkin.price} COIN
     `;
     
     resultDisplay.style.display = 'flex';
     
-    // Inventarga saqlash
-    addToInventory(winningSkin);
-    
+    if(typeof addToInventory === 'function') addToInventory(winningSkin);
     if(typeof playSound === 'function') playSound('win');
+}
+
+// Yopish funksiyasi
+function closeRoulette() {
+    document.getElementById('roulette-modal').classList.remove('active');
+    document.getElementById('result-display').style.display = 'none';
+    document.getElementById('roulette-viewport').style.display = 'block';
+}
+
+function sellWonSkin() {
+    if (!currentWinningSkin) return;
+    updateBalance(currentWinningSkin.price);
+    closeRoulette();
 }
