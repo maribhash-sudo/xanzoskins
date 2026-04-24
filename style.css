@@ -1,22 +1,17 @@
 :root { --bg: #050505; --accent: #FF4500; }
 body { background: var(--bg); color: #fff; font-family: sans-serif; margin: 0; }
 
-.view { display: none; }
-.view.active { display: block; }
+.header { padding: 20px; display: flex; justify-content: center; }
+.balance-box { background: #111; padding: 10px 20px; border-radius: 20px; display: flex; align-items: center; gap: 10px; border: 1px solid #222; }
 
-.bonus-header { text-align: center; padding: 40px; }
-#user-balance { font-size: 48px; font-weight: 800; color: #fff; text-shadow: 0 0 15px var(--accent); }
+.page { display: none; }
+.page.active { display: block; }
+.title { text-align: center; color: var(--accent); }
 
-.card-box {
-    background: #111; border: 1px solid #222; border-radius: 12px;
-    padding: 15px; margin: 10px; display: flex; justify-content: space-between;
-    align-items: center; transition: 0.3s;
-}
-.card-box:hover { border-color: var(--accent); box-shadow: 0 0 10px rgba(255,69,0,0.2); }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; }
+.case-item { background: #111; border-radius: 10px; padding: 10px; text-align: center; border: 1px solid #222; }
+.case-item img { width: 100%; }
 
-.bottom-menu { 
-    position: fixed; bottom: 0; width: 100%; display: flex; 
-    background: #000; border-top: 1px solid #222; padding: 15px 0; 
-}
-.nav-btn { flex: 1; background: none; border: none; color: #555; }
+.bottom-nav { position: fixed; bottom: 0; width: 100%; display: flex; background: #000; border-top: 1px solid #222; padding: 10px 0; }
+.nav-btn { flex: 1; background: none; border: none; color: #666; }
 .nav-btn.active { color: var(--accent); }
