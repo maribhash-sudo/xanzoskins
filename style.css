@@ -35,16 +35,32 @@ body {
 
 /* GRID VA KARTALAR (Shaffof va Nurlanuvchi) */
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-.case-card, .card, .task-card, .task-card-pro { 
+
+/* KEYS KARTASI (Fon olib tashlandi va Glow qo'shildi) */
+.case-card { 
+    background: transparent !important; 
+    border: none !important; 
+    padding: 15px; 
+    text-align: center;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+}
+.case-card img { 
+    width: 80%; 
+    margin-bottom: 10px; 
+    filter: drop-shadow(0 0 10px var(--fire)); /* GLOW EFEKTI */
+}
+
+/* QOLGAN KARTALAR (Bonus va vazifalar uchun o'zgarishsiz) */
+.card, .task-card, .task-card-pro { 
     background: var(--card); 
     border: 1px solid var(--border); 
     padding: 15px; 
     border-radius: 15px; 
     text-align: center;
-    backdrop-filter: blur(10px); /* Orqasidan nurlanish effekti uchun */
+    backdrop-filter: blur(10px);
     box-shadow: 0 0 15px rgba(255, 69, 0, 0.1);
 }
-.case-card img { width: 80%; margin-bottom: 10px; }
 
 /* --- KEYS QISMI KOINNI KATTALASHTIRISH VA DUMALOQ QILISH --- */
 .case-card button {
