@@ -23,23 +23,28 @@
 
             <section id="page-bonus" class="page">
                 <h2 class="title">BONUS</h2>
-                <div class="bonus-list"></div>
+                <div class="bonus-list" id="bonus-list"></div>
             </section>
 
             <section id="page-inventory" class="page">
                 <h2 class="title">INVENTORY</h2>
+                <div id="inv-grid" class="grid"></div>
             </section>
 
             <section id="page-profile" class="page">
                 <h2 class="title">PROFILE</h2>
+                <div class="profile-card">
+                    <input type="text" id="tradeLink" placeholder="Steam Trade Link...">
+                    <button onclick="saveTradeLink()">SAQLASH</button>
+                </div>
             </section>
         </main>
 
         <nav class="bottom-nav">
-            <button class="nav-btn" onclick="showPage('bonus')">Bonus</button>
-            <button class="nav-btn active" onclick="showPage('cases')">Cases</button>
-            <button class="nav-btn" onclick="showPage('inventory')">Inv</button>
-            <button class="nav-btn" onclick="showPage('profile')">Profile</button>
+            <button class="nav-btn" onclick="showPage('bonus', this)">Bonus</button>
+            <button class="nav-btn active" onclick="showPage('cases', this)">Cases</button>
+            <button class="nav-btn" onclick="showPage('inventory', this)">Inv</button>
+            <button class="nav-btn" onclick="showPage('profile', this)">Profile</button>
         </nav>
     </div>
     <script src="script.js"></script>
