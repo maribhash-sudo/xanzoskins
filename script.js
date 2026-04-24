@@ -13,7 +13,7 @@ function showPage(pageId, element) {
     updateUIBalance();
 }
 
-// BALANSNI SAQLASH VA YANGILASH
+// BALANSNI SAQLASH VA YANGILASH (CloudStorage orqali)
 function updateBalance(amount) {
     const tg = window.Telegram.WebApp;
     tg.CloudStorage.getItem('userBalance', (err, val) => {
@@ -258,11 +258,9 @@ function claimDailyBonus() {
             if (dayCount > 30) dayCount = 1;
             let reward = 50 + (dayCount - 1) * 163;
             if (dayCount === 30) reward = 5000;
-            
             updateBalance(Math.round(reward));
             tg.CloudStorage.setItem('lastClaimDate', today);
             tg.CloudStorage.setItem('streakDay', dayCount.toString());
-            
             let msgEl = document.getElementById('bonus-message');
             if(msgEl) msgEl.innerText = dayCount + "-kun: " + Math.round(reward) + " COIN olindi!";
             alert("Tabriklaymiz!");
@@ -287,14 +285,12 @@ function checkNickName() {
     if (!user) { alert("Xatolik!"); return; }
     const fullName = ((user.first_name || "") + " " + (user.last_name || "")).toLowerCase();
     const requiredNick = "@xanzoskins_bot";
-    
     tg.CloudStorage.getItem('lastNickCheck', (err, lastNickCheck) => {
         let now = Date.now();
         if (lastNickCheck && (now - parseInt(lastNickCheck) < 24 * 60 * 60 * 1000)) {
             alert("Siz bugun tekshirdingiz!");
             return;
         }
-        
         if (fullName.includes(requiredNick.toLowerCase())) {
             updateBalance(50);
             tg.CloudStorage.setItem('lastNickCheck', now.toString());
@@ -307,7 +303,7 @@ function checkNickName() {
 
 document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp;
-    // Balansni yuklash
+    tg.expand();
     tg.CloudStorage.getItem('userBalance', (err, val) => {
         document.getElementById('balance').innerText = val ? val : '10000';
         updateUIBalance();
