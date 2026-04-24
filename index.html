@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xanzo Skins</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="roulette.css">
+    <script src="https://telegram.org/js/telegram-web-app.js?5"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header class="header" id="main-header">
+            <div class="balance-box" style="display: flex; align-items: center;">
+                <img src="img/nav_diamond.png" class="coin-glow" alt="coin" style="width:30px; margin-right:8px;">
+                <span id="balance">10000</span>
+            </div>
+            <button class="btn-topup" onclick="topUpBalance()">TO'LDIRISH</button>
+        </header>
+
+        <main>
+            <div id="page-cases" class="page active">
+                <h2 class="section-title">CASES</h2>
+                <div id="cases-grid" class="grid"></div>
+            </div>
+
+            <div id="page-bonus" class="page">
+                <div class="bonus-hero" style="text-align: center; padding: 20px 0;">
+                    <img src="img/nav_diamond.png" class="coin-glow" style="width:80px; margin-bottom:10px;">
+                    <h2 id="balance-large" style="font-size: 32px; margin: 0;">10000</h2>
+                    <p style="color: #777; font-size: 14px; margin-top: 5px;">Sizning balansingiz</p>
+                </div>
+                <h2 class="section-title">DOIMIY BONUSLAR</h2>
+                <div class="task-card-pro">
+                    <div class="task-info-main">
+                        <div class="task-icon-circle">🎁</div>
+                        <div class="task-text-content"><h4>Kunlik mukofot</h4><p>+50 dan 5000 COINgacha</p></div>
+                    </div>
+                    <button id="bonus-btn" onclick="claimDailyBonus()" class="btn-action-pro">OLISH</button>
+                </div>
+                <div class="task-card-pro">
+                    <div class="task-info-main">
+                        <div class="task-icon-circle">👥</div>
+                        <div class="task-text-content"><h4>Do'stlarni taklif qilish</h4><p>Har bir do'st uchun +500 COIN</p></div>
+                    </div>
+                    <button onclick="copyRefLink()" class="btn-action-pro">LINK</button>
+                </div>
+                <input type="text" id="ref-link" readonly style="display:none;">
+                <h2 class="section-title">ACTIVE TASKS</h2>
+                <div id="active-tasks-list" class="task-container"></div>
+                <h2 class="section-title" style="margin-top:30px;">COMPLETED</h2>
+                <div id="done-tasks-list" class="task-container"></div>
+            </div>
+
+            <div id="page-inventory" class="page">
+                <h2 class="section-title">INVENTORY</h2>
+                <button onclick="sellAllInventory()" style="margin: 10px; padding: 10px; background: #e74c3c; color: white; border: none; width: 90%; border-radius: 5px; font-weight: bold;">BARCHASINI SOTISH</button>
+                <div id="inventory-grid" class="grid"></div>
+            </div>
+
+            <div id="page-profile" class="page">
+                <div class="card">
+                    <p>Tilni tanlang:</p>
+                    <div class="grid-buttons">
+                        <button class="lang-btn" onclick="setLanguage('uz')">🇺🇿 UZ</button>
+                        <button class="lang-btn" onclick="setLanguage('ru')">🇷🇺 RU</button>
+                        <button class="lang-btn" onclick="setLanguage('en')">🇺🇸 EN</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <p>Steam Trade Link:</p>
+                    <input type="text" id="tradeLinkInput" placeholder="https://steamcommunity.com/...">
+                    <button onclick="saveSteamLink()" class="btn-action-pro" style="width: 100%; margin-top: 10px;">SAQLASH</button>
+                </div>
+            </div>
+        </main>
+
+        <nav class="bottom-nav">
+            <button class="nav-btn" onclick="showPage('bonus', this)"><img src="img/nav_diamond.png"><span>Bonus</span></button>
+            <button class="nav-btn active" onclick="showPage('cases', this)"><img src="img/nav_case.png"><span>Cases</span></button>
+            <button class="nav-btn" onclick="showPage('inventory', this)"><img src="img/nav_inventory.png"><span>Inv</span></button>
+            <button class="nav-btn" onclick="showPage('profile', this)"><img src="img/profile.png"><span>Profile</span></button>
+        </nav>
+    </div>
+
+    <div id="roulette-modal">
+        <div id="roulette-viewport" class="roulette-viewport">
+            <div id="roulette-track" class="roulette-track"></div>
+        </div>
+        <div id="result-display" class="result-display">
+            <h2 style="color: #FFD700; margin-bottom: 5px;">TABRIKLAYMIZ!</h2>
+            <img id="won-skin-img" src="" alt="Skin Image">
+            <h3 id="won-skin-name" style="margin: 10px 0; font-size: 20px;">AK-47</h3>
+            <p id="won-skin-quality" style="color: #ccc; margin-bottom: 5px;">Sifat: Factory New</p>
+            <div id="won-skin-price" style="font-weight: bold; color: #FFD700; margin-bottom: 20px; font-size: 18px;"></div>
+            <div class="modal-btns">
+                <button class="btn-main btn-blue" onclick="withdrawWonSkin()">Steamga yuborish</button>
+                <button class="btn-main btn-dark" onclick="startBudgetRoulette()">Yana aylantirish</button>
+                <button class="btn-main btn-upg" onclick="sellWonSkin()" style="background: #e67e22 !important;">Sotish</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="roulette.js"></script>
+</body>
+</html>
