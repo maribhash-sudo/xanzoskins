@@ -12,8 +12,8 @@
 <body>
     <div class="app-container">
         <header class="header" id="main-header">
-            <div class="balance-box">
-                <img src="img/nav_diamond.png" alt="coin" style="width:20px; vertical-align:middle; margin-right:5px;">
+            <div class="balance-box" style="display: flex; align-items: center;">
+                <img src="img/nav_diamond.png" class="coin-glow" alt="coin" style="width:30px; margin-right:8px;">
                 <span id="balance">10000</span>
             </div>
             <button class="btn-topup" data-lang="topup">TO'LDIRISH</button>
@@ -27,22 +27,22 @@
 
             <div id="page-bonus" class="page">
                 <div class="bonus-hero" style="text-align: center; padding: 20px 0;">
-                    <img src="img/nav_diamond.png" alt="coin" style="width:60px; margin-bottom:10px; filter: drop-shadow(0 0 10px rgba(255, 69, 0, 0.5));">
+                    <img src="img/nav_diamond.png" class="coin-glow" alt="coin" style="width:80px; margin-bottom:10px;">
                     <h2 id="balance-large" style="font-size: 32px; margin: 0;">10000</h2>
-                    <p style="color: #777; font-size: 14px; margin-top: 5px;">Sizning balansingiz</p>
+                    <p style="color: #777; font-size: 14px; margin-top: 5px;" data-lang="balance_desc">Sizning balansingiz</p>
                 </div>
 
-                <h2 class="section-title">DOIMIY BONUSLAR</h2>
+                <h2 class="section-title" data-lang="bonus_title">DOIMIY BONUSLAR</h2>
 
                 <div class="task-card-pro">
                     <div class="task-info-main">
                         <div class="task-icon-circle">🎁</div>
                         <div class="task-text-content">
-                            <h4>Kunlik mukofot</h4>
-                            <p>+50 dan 5000 COINgacha</p>
+                            <h4 data-lang="daily_reward">Kunlik mukofot</h4>
+                            <p data-lang="daily_desc">+50 dan 5000 COINgacha</p>
                         </div>
                     </div>
-                    <button id="bonus-btn" onclick="claimDailyBonus()" class="btn-action-pro">OLISH</button>
+                    <button id="bonus-btn" onclick="claimDailyBonus()" class="btn-action-pro" data-lang="claim_btn">OLISH</button>
                 </div>
                 <p id="bonus-message" style="text-align:center; font-size: 12px; margin-top: -5px; margin-bottom: 15px;"></p>
 
@@ -50,11 +50,11 @@
                     <div class="task-info-main">
                         <div class="task-icon-circle">👥</div>
                         <div class="task-text-content">
-                            <h4>Do'stlarni taklif qilish</h4>
-                            <p>Har bir do'st uchun +500 COIN</p>
+                            <h4 data-lang="referral_title">Do'stlarni taklif qilish</h4>
+                            <p data-lang="referral_desc">Har bir do'st uchun +500 COIN</p>
                         </div>
                     </div>
-                    <button onclick="copyRefLink()" class="btn-action-pro">LINK</button>
+                    <button onclick="copyRefLink()" class="btn-action-pro" data-lang="link_btn">LINK</button>
                 </div>
                 <input type="text" id="ref-link" readonly style="display:none;">
 
@@ -62,11 +62,11 @@
                     <div class="task-info-main">
                         <div class="task-icon-circle">🏷️</div>
                         <div class="task-text-content">
-                            <h4>Nikga bot nomini qo'shish</h4>
-                            <p>Har 24 soatda +50 COIN</p>
+                            <h4 data-lang="nick_title">Nikga bot nomini qo'shish</h4>
+                            <p data-lang="nick_desc">Har 24 soatda +50 COIN</p>
                         </div>
                     </div>
-                    <button onclick="checkNickName()" class="btn-action-pro">TEKSHIRISH</button>
+                    <button onclick="checkNickName()" class="btn-action-pro" data-lang="check_btn">TEKSHIRISH</button>
                 </div>
 
                 <h2 class="section-title" data-lang="active_tasks">ACTIVE TASKS</h2>
@@ -126,6 +126,4 @@
 
     <script src="script.js"></script>
     <script src="audio.js"></script>
-    <script src="roulette.js"></script>
-</body>
-</html>
+    <script src="roulette.
