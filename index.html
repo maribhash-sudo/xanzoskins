@@ -112,14 +112,23 @@
             <div id="roulette-track" class="roulette-track"></div>
         </div>
 
-       <div id="result-display" class="result-display">
-    <img id="won-skin-img" src="" alt="Skin">
-    <h3 id="won-skin-name">...</h3>
-    <p id="won-skin-quality">...</p>
+      <div id="result-display" class="result-display">
+    <h2 style="color: #FFD700; margin-bottom: 5px;">TABRIKLAYMIZ!</h2>
+    
+    <img id="won-skin-img" src="" alt="Skin Image">
+    
+    <h3 id="won-skin-name" style="margin: 10px 0; font-size: 20px;">AK-47</h3>
+    
+    <p id="won-skin-quality" style="color: #ccc; margin-bottom: 5px;">Sifat: Factory New</p>
+    
+    <div id="won-skin-price" style="font-weight: bold; color: #FFD700; margin-bottom: 20px; font-size: 18px;">
+        </div>
+
     <div class="modal-btns">
-        <button class="btn-main btn-upg" onclick="closeRoulette()">Yaxshilash</button>
-        <button class="btn-main btn-dark" onclick="startBudgetRoulette()">Krutit yana</button>
-        <button class="btn-main btn-blue" onclick="sellWonSkin()">Sotish</button>
+        <button class="btn-main btn-blue" onclick="withdrawWonSkin()">Steamga yuborish</button>
+        <button class="btn-main btn-dark" onclick="startBudgetRoulette()">Yana aylantirish</button>
+        <button class="btn-main btn-upg" onclick="sellWonSkin()" style="background: #e67e22 !important;">Sotish</button>
+        <button class="btn-main" onclick="closeRoulette()" style="background: #555;">Yopish</button>
     </div>
 </div>
 
