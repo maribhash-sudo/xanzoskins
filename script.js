@@ -26,26 +26,6 @@ function updateBalance(amount) {
     });
 }
 
-// YANGI QO'SHILGAN: TO'LOV QISMINI BOSGANDA 10000 COIN QILISH
-function topUpBalance() {
-    const tg = window.Telegram.WebApp;
-    const newBalance = 10000;
-    
-    tg.CloudStorage.setItem('userBalance', newBalance.toString(), (err, success) => {
-        if (success) {
-            let balEl = document.getElementById('balance');
-            if(balEl) balEl.innerText = newBalance;
-            
-            let largeBal = document.getElementById('balance-large');
-            if(largeBal) largeBal.innerText = newBalance;
-            
-            alert("Balans 10 000 COIN ga to'ldirildi!");
-        } else {
-            alert("Xatolik yuz berdi!");
-        }
-    });
-}
-
 // 1. 10 ta Keyslar
 const cases = [
     { name: {uz: "Budget", ru: "Бюджет", en: "Budget"}, price: 500, img: "case1.png" },
