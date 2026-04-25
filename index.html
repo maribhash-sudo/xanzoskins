@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Xanzo Skins</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="app-shell">
+        <header class="app-header">
+            <div class="balance-box">
+                <img src="img/nav_diamond.png">
+                <span id="balance">10000</span>
+            </div>
+        </header>
+
+        <main class="app-content">
+            <section id="page-cases" class="page active">
+                <div id="cases-grid" class="grid"></div>
+            </section>
+
+            <section id="page-bonus" class="page">
+                <h2 class="section-title">DAILY TASKS</h2>
+                <div class="task-card">
+                    <p>Kunlik bonus</p>
+                    <button class="btn-neon">OLISH</button>
+                </div>
+            </section>
+
+            <section id="page-inventory" class="page">
+                <h2 class="section-title">MY INVENTORY</h2>
+                <div id="inv-grid" class="grid"></div>
+            </section>
+
+            <section id="page-profile" class="page">
+                <h2 class="section-title">PROFILE</h2>
+                <div class="profile-settings">
+                    <button onclick="setLang('uz')">🇺🇿 UZ</button>
+                    <button onclick="setLang('ru')">🇷🇺 RU</button>
+                    <input type="text" placeholder="Steam Trade Link...">
+                </div>
+            </section>
+        </main>
+
+        <nav class="app-nav">
+            <button class="nav-btn" onclick="showPage('bonus', this)"><img src="img/nav_diamond.png"></button>
+            <button class="nav-btn active" onclick="showPage('cases', this)"><img src="img/nav_case.png"></button>
+            <button class="nav-btn" onclick="showPage('inventory', this)"><img src="img/nav_inventory.png"></button>
+            <button class="nav-btn" onclick="showPage('profile', this)"><img src="img/profile.png"></button>
+        </nav>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
