@@ -200,3 +200,66 @@ input { width: 100%; padding: 12px; background: #000; border: 1px solid var(--bo
     50% { transform: translateY(-8px); }
     100% { transform: translateY(0px); }
 }
+
+/* Profil Avatar qismi */
+.avatar-glow-large {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto;
+    border: 3px solid var(--tiffany); /* Rasmdagi tiffany rangi */
+    border-radius: 50%;
+    padding: 3px;
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+}
+
+/* Rasmdagi menyu stili */
+.profile-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 10px;
+}
+
+.menu-item-card {
+    display: flex;
+    align-items: center;
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid var(--tiffany-border); /* Tiffany ramka */
+    border-radius: 15px; /* Yumaloq burchaklar */
+    padding: 15px 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.menu-item-card:hover {
+    background: rgba(0, 242, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.menu-icon {
+    font-size: 20px;
+    margin-right: 15px;
+    filter: drop-shadow(0 0 5px var(--tiffany));
+}
+
+.menu-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+}
+
+/* Sozlamalar ochiladigan qismi */
+.settings-drawer {
+    background: rgba(30, 30, 30, 0.5);
+    border-radius: 15px;
+    padding: 15px;
+    margin-top: -5px;
+    border: 1px dashed var(--tiffany-border);
+    animation: fadeIn 0.3s ease;
+}
+
+.grid-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
