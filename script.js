@@ -1,10 +1,24 @@
-// Telegram WebApp-ni kengaytirish
+// 1. Telegram WebApp-ni eng birinchi bo'lib ishga tushiramiz
 const tg = window.Telegram.WebApp;
-if (tg.expand) {
+
+// Telegram interfeysini to'liq ekranga yoyish va tayyorligini bildirish
+if (tg) {
     tg.expand();
+    tg.ready();
+    // Tepada (Header) rangini qora qilish (telefon tepasi chiroyli ko'rinishi uchun)
+    tg.setHeaderColor('#050505');
+    tg.setBackgroundColor('#050505');
 }
 
-// Keyslar datasi (Rasmlar yo'llari to'g'ri: ./img/...)
+// 2. Mobil qurilmalarda "Scroll" (siljish) muammosini oldini olish uchun Viewport balandligini sozlash
+function setDocHeight() {
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+}
+window.addEventListener('resize', setDocHeight);
+window.addEventListener('orientationchange', setDocHeight);
+setDocHeight();
+
+// 3. Keyslar datasi (Rasmlar yo'llari o'zgarishsiz qoldi)
 const caseData = [
     { id: 1, name: "Kilowatt Case", img: "./img/case1.png" },
     { id: 2, name: "Revolution Case", img: "./img/case2.webp" },
@@ -18,10 +32,11 @@ const caseData = [
     { id: 10, name: "Shattered Web", img: "./img/case10.png" }
 ];
 
-// Keyslarni ekranga render qilish
+// 4. Keyslarni ekranga render qilish
 function renderCases() {
     const container = document.getElementById('cases-grid');
     if (!container) return;
+    
     container.innerHTML = caseData.map(c => `
         <div class="case-card" onclick="openCase(${c.id})">
             <img src="${c.img}" class="case-img" alt="${c.name}">
@@ -30,63 +45,64 @@ function renderCases() {
     `).join('');
 }
 
-// Sahifani almashtirish funksiyasi
+// 5. Sahifani almashtirish funksiyasi (Takomillashtirildi)
 function showPage(pageId, btn) {
-    // 1. Hamma sahifalarni yashirish
+    // Sahifalarni yashirish
     document.querySelectorAll('.page').forEach(p => {
         p.classList.remove('active');
     });
 
-    // 2. Tanlangan sahifani ko'rsatish
-    const targetPage = document.getElementById('page-' + pageId);
+    // Tanlangan sahifani ko'rsatish
+    const targetPage = document.getElementById('page-' + pageId) || document.getElementById(pageId);
     if (targetPage) {
         targetPage.classList.add('active');
-    } else {
-        // Agar page- IDsi noto'g'ri bo'lsa, to'g'ridan-to'g'ri IDni qidirish
-        const directPage = document.getElementById(pageId);
-        if (directPage) directPage.classList.add('active');
     }
     
-    // 3. Navigatsiyadagi aktiv tugmani yangilash
+    // Navigatsiyadagi aktiv tugmani yangilash
     document.querySelectorAll('.nav-btn').forEach(b => {
         b.classList.remove('active');
     });
+    
     if (btn) {
         btn.classList.add('active');
     } else {
-        // Agar tugma yuborilmagan bo'lsa, onclick-da pageId bor tugmani topish
         const targetBtn = document.querySelector(`.nav-btn[onclick*="'${pageId}'"]`);
         if (targetBtn) targetBtn.classList.add('active');
     }
     
-    // 4. Tebranish effekti
-    if (tg.HapticFeedback) {
+    // HapticFeedback (Tebranish)
+    if (tg && tg.HapticFeedback) {
         tg.HapticFeedback.impactOccurred('medium');
     }
+    
+    // Sahifa almashganda tepaga qaytarish (scroll reset)
+    window.scrollTo(0, 0);
 }
 
-// Keys ochish (Hozircha alert)
+// 6. Keys ochish (Telegram xabarnomasi bilan)
 function openCase(id) {
-    if (tg.showAlert) {
-        tg.showAlert("Keys ochilmoqda: " + id);
+    const selectedCase = caseData.find(c => c.id === id);
+    const caseName = selectedCase ? selectedCase.name : id;
+
+    if (tg && tg.showAlert) {
+        tg.showAlert(`📦 ${caseName} ochilmoqda...`);
     } else {
-        alert("Keys ochilmoqda: " + id);
+        alert("Keys ochilmoqda: " + caseName);
     }
 }
 
-// Sahifa yuklanganda ishlash
-window.onload = () => {
-    // 1. Keyslarni render qilish
+// 7. Sahifa yuklanganda barcha funksiyalarni ishga tushirish
+document.addEventListener('DOMContentLoaded', () => {
     renderCases();
     
-    // 2. Telegram WebApp-ni tayyorligini bildirish
-    if (tg.ready) {
-        tg.ready();
-    }
-    
-    // 3. Boshlang'ich sahifani (Bonus) navigatsiyada aktiv qilish
+    // Boshlang'ich sahifani (Bonus) navigatsiyada aktiv qilish
     const initialBtn = document.querySelector('.nav-btn[onclick*="showPage(\'bonus\'"]');
     if (initialBtn) {
         initialBtn.classList.add('active');
     }
-};
+    
+    // Ilovani to'liq yuklanganini Telegramga bildirish
+    if (tg) {
+        tg.ready();
+    }
+});
