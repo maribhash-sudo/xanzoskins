@@ -10,14 +10,15 @@
 <body>
     <div class="app-shell">
         <main class="app-content">
+            
             <section id="page-bonus" class="page active">
                 <div class="hero-coin-container">
-                    <img src="./img/nav_diamond.png" class="hero-coin" alt="Coin">
+                    <img src="./img/nav_diamond.png" class="hero-coin" alt="Xanzo Coin">
                     <div class="balance-text" id="balance">10,000</div>
                 </div>
                 <h2 class="section-title">DOIMIY BONUSLAR</h2>
                 <div class="bonus-card">
-                    <div class="bonus-info">🎁 Kunlik mukofot</div>
+                    <div class="bonus-info">Kunlik mukofot</div>
                     <button class="btn-neon">OLISH</button>
                 </div>
             </section>
@@ -33,22 +34,45 @@
             </section>
 
             <section id="page-profile" class="page">
-                <div class="profile-avatar">👤</div>
+                <div class="profile-avatar"></div>
                 <div class="menu-list">
-                    <div class="menu-item-card"><span class="menu-icon">👤</span><span class="menu-text">Mening profilim</span></div>
-                    <div class="menu-item-card"><span class="menu-icon">💎</span><span class="menu-text">Up-grade</span></div>
-                    <div class="menu-item-card"><span class="menu-icon">🔗</span><span class="menu-text">Trade Link</span></div>
-                    <div class="menu-item-card"><span class="menu-icon">👥</span><span class="menu-text">Hamjamiyat</span></div>
-                    <div class="menu-item-card"><span class="menu-icon">⚙️</span><span class="menu-text">Sozlamalar</span></div>
+                    <div class="menu-item-card">
+                        <span class="menu-icon">👤</span> 
+                        <span class="menu-text">Mening profilim</span>
+                    </div>
+                    <div class="menu-item-card">
+                        <span class="menu-icon">💎</span> 
+                        <span class="menu-text">Up-grade</span>
+                    </div>
+                    <div class="menu-item-card">
+                        <span class="menu-icon">🔗</span> 
+                        <span class="menu-text">Trade Link</span>
+                    </div>
+                    <div class="menu-item-card">
+                        <span class="menu-icon">👥</span> 
+                        <span class="menu-text">Hamjamiyat</span>
+                    </div>
+                    <div class="menu-item-card">
+                        <span class="menu-icon">⚙️</span> 
+                        <span class="menu-text">Sozlamalar</span>
+                    </div>
                 </div>
             </section>
         </main>
 
         <nav class="app-nav">
-            <button class="nav-btn active" onclick="showPage('bonus', this)"><img src="./img/nav_diamond.png"></button>
-            <button class="nav-btn" onclick="showPage('cases', this)"><img src="./img/nav_case.png"></button>
-            <button class="nav-btn" onclick="showPage('inventory', this)"><img src="./img/nav_inventory.png"></button>
-            <button class="nav-btn" onclick="showPage('profile', this)"><img src="./img/profile.png"></button>
+            <button class="nav-btn active" onclick="showPage('bonus', this)">
+                <img src="./img/nav_diamond.png" alt="Bonus">
+            </button>
+            <button class="nav-btn" onclick="showPage('cases', this)">
+                <img src="./img/nav_case.png" alt="Cases">
+            </button>
+            <button class="nav-btn" onclick="showPage('inventory', this)">
+                <img src="./img/nav_inventory.png" alt="Inv">
+            </button>
+            <button class="nav-btn" onclick="showPage('profile', this)">
+                <img src="./img/profile.png" alt="Profile">
+            </button>
         </nav>
     </div>
     <script src="script.js"></script>
