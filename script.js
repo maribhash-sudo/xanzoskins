@@ -1,15 +1,16 @@
+// Telegram WebApp-ni kengaytirish
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-// Keyslar datasi (img yo'llari to'g'ri)
+// Keyslar datasi (Rasmlar kengaytmalari .png va .webp holatiga to'g'rilandi)
 const caseData = [
     { id: 1, name: "Chroma Case", img: "case1.png" },
-    { id: 2, name: "Gamma Case", img: "case2.png" },
-    { id: 3, name: "Spectrum Case", img: "case3.png" },
-    { id: 4, name: "Prisma Case", img: "case4.png" },
+    { id: 2, name: "Gamma Case", img: "case2.webp" },
+    { id: 3, name: "Spectrum Case", img: "case3.webp" },
+    { id: 4, name: "Prisma Case", img: "case4.webp" },
     { id: 5, name: "Danger Zone", img: "case5.png" },
-    { id: 6, name: "Clutch Case", img: "case6.png" },
-    { id: 7, name: "Horizon Case", img: "case7.png" },
+    { id: 6, name: "Clutch Case", img: "case6.webp" },
+    { id: 7, name: "Horizon Case", img: "case7.webp" },
     { id: 8, name: "Phoenix Case", img: "case8.png" },
     { id: 9, name: "Wildfire Case", img: "case9.png" },
     { id: 10, name: "Snakebite Case", img: "case10.png" }
