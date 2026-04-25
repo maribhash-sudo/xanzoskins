@@ -365,7 +365,12 @@ function applyLanguage(lang) {
     elements.forEach(el => {
         const key = el.getAttribute('data-lang');
         if (translations[lang] && translations[lang][key]) {
-            el.innerText = translations[lang][key];
+            // Agar element INPUT bo'lsa placeholder-ni o'zgartiramiz
+            if (el.tagName === 'INPUT') {
+                el.placeholder = translations[lang][key];
+            } else {
+                el.innerText = translations[lang][key];
+            }
         }
     });
 }
