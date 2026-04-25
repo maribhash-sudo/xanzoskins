@@ -93,12 +93,16 @@ function setLanguage(lang) {
 }
 
 function renderCases() {
-    const lang = localStorage.getItem('lang') || 'uz';
+    const lang = localStorage.getItem('userLang') || 'uz'; // 'userLang' kalitidan foydalanamiz
     const grid = document.getElementById('cases-grid');
-    if(!grid) return;
-    grid.innerHTML = "";
+    if (!grid) return;
+    
+    grid.innerHTML = ""; // Avvalgi ma'lumotni tozalash
+    
     cases.forEach(c => {
+        // Budget kesini tekshirish (o'zgarishsiz qoldi)
         let clickAction = (c.name.uz === "Budget") ? 'onclick="startBudgetRoulette()"' : '';
+        
         grid.innerHTML += `
             <div class="case-card">
                 <img src="img/${c.img}" class="case-img coin-glow">
@@ -294,17 +298,19 @@ function toggleSettings() {
 
 // Tilni sahifani yangilamasdan o'zgartirish
 function setLanguage(lang) {
-    // 1. Tilni xotiraga saqlaymiz
-    localStorage.setItem('userLang', lang);
+    localStorage.setItem('userLang', lang); // Endi bu yerda ham 'userLang'
     
-    // 2. Sahifadagi matnlarni darhol yangilaymiz (Reload-siz)
-    applyLanguage(lang);
-    
-    // 3. Sozlamalar menyusini yopamiz (chiroyli chiqishi uchun)
-    const settingsContent = document.getElementById('settings-content');
-    if (settingsContent) {
-        settingsContent.style.display = 'none';
+    // 1. Matnlarni yangilash (applyLanguage funksiyang bo'lsa)
+    if(typeof applyLanguage === 'function') {
+        applyLanguage(lang);
     }
+    
+    // 2. Keys nomlarini darhol yangilash
+    renderCases(); 
+    
+    // 3. Sozlamalar menyusini yopish
+    const settingsContent = document.getElementById('settings-content');
+    if (settingsContent) settingsContent.style.display = 'none';
 }
 
 // Sahifadagi barcha data-lang elementlarini yangilash
