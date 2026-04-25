@@ -16,36 +16,52 @@
         </header>
 
         <main id="content">
-            <section id="page-cases" class="page active">
-                <h2 class="title">CASES</h2>
-                <div id="cases-grid" class="grid"></div>
-            </section>
+    <section id="page-cases" class="page active">
+        <h2 class="neon-title">CASES</h2>
+        <div id="cases-grid" class="grid"></div>
+    </section>
 
-            <section id="page-bonus" class="page">
-                <h2 class="title">BONUS</h2>
-                <div class="bonus-list" id="bonus-list"></div>
-            </section>
-
-            <section id="page-inventory" class="page">
-                <h2 class="title">INVENTORY</h2>
-                <div id="inv-grid" class="grid"></div>
-            </section>
-
-            <section id="page-profile" class="page">
-                <h2 class="title">PROFILE</h2>
-                <div class="profile-card">
-                    <input type="text" id="tradeLink" placeholder="Steam Trade Link...">
-                    <button onclick="saveTradeLink()">SAQLASH</button>
+    <section id="page-bonus" class="page">
+        <h2 class="neon-title">BONUS</h2>
+        <div class="bonus-container" id="bonus-list">
+            <div class="bonus-card daily">
+                <div class="bonus-info">
+                    <h3>KUNLIK BONUS</h3>
+                    <p>+500 COIN</p>
                 </div>
-            </section>
-        </main>
+                <button onclick="claimDaily()">OLISH</button>
+            </div>
+            <div class="bonus-card telegram">
+                <div class="bonus-info">
+                    <h3>TELEGRAM</h3>
+                    <p>+150 COIN</p>
+                </div>
+                <button onclick="window.open('https://t.me/XanzoSkins')">OBUNA</button>
+            </div>
+        </div>
+    </section>
 
-        <nav class="bottom-nav">
-            <button class="nav-btn" onclick="showPage('bonus', this)">Bonus</button>
-            <button class="nav-btn active" onclick="showPage('cases', this)">Cases</button>
-            <button class="nav-btn" onclick="showPage('inventory', this)">Inv</button>
-            <button class="nav-btn" onclick="showPage('profile', this)">Profile</button>
-        </nav>
+    <section id="page-inventory" class="page">
+        <h2 class="neon-title">INVENTORY</h2>
+        <div id="inv-grid" class="grid"></div>
+    </section>
+
+    <section id="page-profile" class="page">
+        <h2 class="neon-title">PROFILE</h2>
+        <div class="profile-box">
+            <img src="img/profile.png" class="profile-img">
+            <input type="text" id="trade-link" placeholder="Steam Trade Link...">
+            <button onclick="saveLink()">SAQLASH</button>
+        </div>
+    </section>
+</main>
+
+<nav class="bottom-nav">
+    <button class="nav-btn" onclick="showPage('bonus', this)"><img src="img/nav_diamond.png"></button>
+    <button class="nav-btn active" onclick="showPage('cases', this)"><img src="img/nav_case.png"></button>
+    <button class="nav-btn" onclick="showPage('inventory', this)"><img src="img/nav_inventory.png"></button>
+    <button class="nav-btn" onclick="showPage('profile', this)"><img src="img/profile.png"></button>
+</nav>
     </div>
     <script src="script.js"></script>
 </body>
