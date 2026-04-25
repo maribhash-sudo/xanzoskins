@@ -1,29 +1,57 @@
 :root {
     --tiffany: #00f2ff;
+    --tiffany-glow: rgba(0, 242, 255, 0.5);
     --bg: #050505;
-    --card: #121212;
+    --card-bg: #111111;
+    --text: #ffffff;
 }
 
-body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: var(--bg); color: white; font-family: sans-serif; }
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body, html { margin: 0; padding: 0; height: 100%; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; overflow: hidden; }
 
 .app-shell { display: flex; flex-direction: column; height: 100vh; }
-.app-header { height: 60px; display: flex; justify-content: center; align-items: center; }
+
+/* HEADER */
+.app-header { height: 60px; display: flex; justify-content: center; align-items: center; border-bottom: 1px solid #222; }
+.balance-box { background: #1a1a1a; padding: 5px 20px; border-radius: 20px; border: 1px solid var(--tiffany); display: flex; align-items: center; gap: 8px; box-shadow: 0 0 10px var(--tiffany-glow); }
+.balance-box img { width: 20px; }
+
+/* MAIN CONTENT */
 .app-content { flex: 1; overflow-y: auto; padding: 15px; }
-
-/* Tiffany Glow kartalar */
-.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-.case-item {
-    background: var(--card); border: 1px solid rgba(0, 242, 255, 0.2);
-    border-radius: 15px; padding: 10px; text-align: center;
-    transition: 0.3s;
-}
-.case-item:hover { border-color: var(--tiffany); box-shadow: 0 0 15px var(--tiffany); }
-
-/* Navigatsiya */
-.app-nav { height: 70px; background: #000; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid var(--tiffany); }
-.nav-btn { background: none; border: none; opacity: 0.5; }
-.nav-btn.active { opacity: 1; transform: scale(1.1); filter: drop-shadow(0 0 5px var(--tiffany)); }
-.nav-btn img { width: 30px; }
-
 .page { display: none; }
-.page.active { display: block; }
+.page.active { display: block; animation: fadeIn 0.3s ease; }
+
+/* BONUS PAGE (Katta Coin faqat shu yerda) */
+.bonus-hero { text-align: center; padding: 30px 0; }
+.big-coin { width: 120px; filter: drop-shadow(0 0 20px var(--tiffany)); animation: float 3s infinite ease-in-out; }
+
+/* CASES GRID (Professional Neon) */
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.case-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    position: relative;
+    transition: 0.3s;
+    overflow: hidden;
+}
+.case-card::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle, var(--tiffany-glow) 0%, transparent 70%);
+    opacity: 0; transition: 0.3s;
+}
+.case-card:hover { border-color: var(--tiffany); transform: translateY(-5px); box-shadow: 0 5px 20px var(--tiffany-glow); }
+.case-card:hover::before { opacity: 0.2; }
+.case-img { width: 100%; height: auto; position: relative; z-index: 1; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5)); }
+.case-name { margin-top: 10px; font-weight: bold; font-size: 14px; color: var(--tiffany); text-transform: uppercase; }
+
+/* NAV BAR */
+.app-nav { height: 75px; background: #000; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid var(--tiffany); padding-bottom: env(safe-area-inset-bottom); }
+.nav-btn { background: none; border: none; opacity: 0.4; transition: 0.3s; cursor: pointer; }
+.nav-btn img { width: 28px; }
+.nav-btn.active { opacity: 1; filter: drop-shadow(0 0 8px var(--tiffany)); transform: scale(1.1); }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
