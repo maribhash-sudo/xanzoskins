@@ -1,87 +1,79 @@
 :root {
-    /* Tiffany/Neon rangi - Asosiy neon cyan */
-    --bg: #060b13;            /* Juda to'q, deyarli qora ko'k fon */
-    --card: #0f1724;          /* Kartalar uchun to'q fon */
-    --neon: #00f2ff;          /* Tiffany/Cyan neon rangi */
-    --glow: 0 0 15px rgba(0, 242, 255, 0.4); /* Neon nur effekti */
-    --text: #ffffff;
+    --tiffany: #00f2ff;
+    --glow: 0 0 15px rgba(0, 242, 255, 0.4);
+    --bg: #050a12;
 }
 
 body {
     background: var(--bg);
-    color: var(--text);
-    font-family: 'Montserrat', sans-serif;
+    color: white;
     margin: 0;
-    padding-bottom: 90px;
+    font-family: sans-serif;
+    overflow-x: hidden;
 }
 
-/* 1. BALANS VA HEADER */
-.balance-box {
-    background: var(--card);
-    border: 1px solid rgba(0, 242, 255, 0.3);
-    box-shadow: 0 0 10px rgba(0, 242, 255, 0.1);
-    padding: 10px 20px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+/* Sahifalarni boshqarish */
+.page { display: none; padding: 20px; animation: fadeIn 0.3s; }
+.page.active { display: block; }
 
-/* 2. CASE KARTALARI (Neon effekt) */
-.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-.case-item {
-    background: var(--card);
-    border: 1px solid rgba(0, 242, 255, 0.2);
-    border-radius: 15px;
-    padding: 15px;
-    text-align: center;
-    transition: 0.3s;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Hover bo'lganda yaltirash */
-.case-item:hover {
-    border-color: var(--neon);
-    box-shadow: var(--glow);
-    transform: translateY(-5px);
-}
-
-.case-item img { width: 90%; margin-bottom: 10px; }
-
-/* 3. TUGMALAR (Tiffany uslubida) */
-button {
-    background: transparent;
-    border: 1px solid var(--neon);
-    color: var(--neon);
-    padding: 8px 15px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-button:active { background: var(--neon); color: #000; }
-
-/* 4. NAVIGATSIYA (Glow) */
+/* Navigatsiya - Faqat rasmlar uchun */
 .bottom-nav {
     position: fixed; bottom: 0; width: 100%;
-    background: #0a111a;
-    border-top: 2px solid rgba(0, 242, 255, 0.2);
+    display: flex; justify-content: space-around;
+    background: rgba(10, 20, 30, 0.9);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--tiffany);
     padding: 10px 0;
-    display: flex;
-    justify-content: space-around;
+    z-index: 1000;
 }
 
-.nav-btn { color: #556c8a; border: none; }
-.nav-btn.active { color: var(--neon); text-shadow: 0 0 10px var(--neon); }
+.nav-btn {
+    background: none; border: none;
+    padding: 10px; transition: 0.3s;
+}
 
-/* Bonus sahifasi kartalari */
-.bonus-list .card-item {
-    margin: 15px;
+.nav-btn img {
+    width: 32px; height: 32px;
+    filter: grayscale(100%) opacity(0.5);
+}
+
+.nav-btn.active img {
+    filter: grayscale(0%) drop-shadow(var(--glow));
+    transform: scale(1.2);
+}
+
+/* Tiffany Bonus Kartalari */
+.bonus-card {
+    background: #0d1624;
+    border: 1px solid rgba(0, 242, 255, 0.2);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-left: 3px solid var(--neon);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
 }
+
+.bonus-info h3 { margin: 0; font-size: 16px; color: var(--tiffany); }
+.bonus-info p { margin: 5px 0 0; font-size: 14px; }
+
+/* Grid (Keyslar uchun) */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding-bottom: 100px;
+}
+
+.case-item {
+    background: #0d1624;
+    border-radius: 15px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid rgba(0, 242, 255, 0.1);
+}
+
+.neon-title { text-align: center; color: var(--tiffany); text-shadow: var(--glow); margin-bottom: 25px; }
