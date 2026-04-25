@@ -294,8 +294,17 @@ function toggleSettings() {
 
 // Tilni sahifani yangilamasdan o'zgartirish
 function setLanguage(lang) {
+    // 1. Tilni xotiraga saqlaymiz
     localStorage.setItem('userLang', lang);
+    
+    // 2. Sahifadagi matnlarni darhol yangilaymiz (Reload-siz)
     applyLanguage(lang);
+    
+    // 3. Sozlamalar menyusini yopamiz (chiroyli chiqishi uchun)
+    const settingsContent = document.getElementById('settings-content');
+    if (settingsContent) {
+        settingsContent.style.display = 'none';
+    }
 }
 
 // Sahifadagi barcha data-lang elementlarini yangilash
@@ -309,20 +318,23 @@ function applyLanguage(lang) {
     });
 }
 
-// Boshlang'ich yuklanish
-window.onload = () => {
-    renderCases();
-    tg.ready();
-    
-    // Saqlangan tilni o'qib, avtomatik qo'llash
+window.addEventListener('load', () => {
+    // Saqlangan tilni olamiz, agar yo'q bo'lsa 'uz'
     const savedLang = localStorage.getItem('userLang') || 'uz';
+    
+    // HECH QANDAY ALERTSIZ tilni qo'llaymiz
     applyLanguage(savedLang);
-};
+    
+    // Boshqa funksiyalaringiz bo'lsa:
+    if (typeof renderCases === "function") renderCases();
+});
+
 // Trade link bo'limini ochish
 function toggleTrade() {
     const tradeSection = document.getElementById('trade-input-section');
     tradeSection.style.display = (tradeSection.style.display === 'none' || tradeSection.style.display === '') ? 'block' : 'none';
 }
+
 // Trade link bo'limini ko'rsatish
 document.getElementById('trade-link-trigger').onclick = function() {
     const inputSection = document.getElementById('trade-input-section');
