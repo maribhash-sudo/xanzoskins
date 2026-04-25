@@ -36,7 +36,7 @@ body {
 /* GRID VA KARTALAR (Shaffof va Nurlanuvchi) */
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
 
-/* KEYS KARTASI (Fon olib tashlandi va Glow qo'shildi) */
+/* KEYS KARTASI (Animatsiya qo'shildi) */
 .case-card { 
     background: transparent !important; 
     border: none !important; 
@@ -44,6 +44,8 @@ body {
     text-align: center;
     box-shadow: none !important;
     backdrop-filter: none !important;
+    /* Animatsiya qo'shildi */
+    animation: floatEffect 3s ease-in-out infinite;
 }
 .case-card img { 
     width: 80%; 
@@ -191,3 +193,10 @@ input { width: 100%; padding: 12px; background: #000; border: 1px solid var(--bo
 .rarity-classified { border-bottom: 3px solid #d32ce6; }
 .rarity-restricted { border-bottom: 3px solid #8847ff; }
 .rarity-milspec { border-bottom: 3px solid #4b69ff; }
+
+/* ANIMATSIYA */
+@keyframes floatEffect {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
+}
