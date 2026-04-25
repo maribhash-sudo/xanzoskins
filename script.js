@@ -1,7 +1,7 @@
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-// Keyslar datasi
+// Keyslar datasi (img yo'llari to'g'ri)
 const caseData = [
     { id: 1, name: "Chroma Case", img: "case1.png" },
     { id: 2, name: "Gamma Case", img: "case2.png" },
@@ -20,7 +20,7 @@ function renderCases() {
     if (!container) return;
     container.innerHTML = caseData.map(c => `
         <div class="case-card" onclick="openCase(${c.id})">
-            <img src="img/${c.img}" class="case-img" style="width:100%;">
+            <img src="img/${c.img}" class="case-img">
             <div class="case-name">${c.name}</div>
         </div>
     `).join('');
@@ -37,6 +37,7 @@ function showPage(pageId, btn) {
 }
 
 function openCase(id) {
+    // Ruletka logikasi qo'shilguncha alert chiqarib turamiz
     alert("Keys ochilmoqda: " + id);
 }
 
