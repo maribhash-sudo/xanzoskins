@@ -1,81 +1,193 @@
 :root { 
     --fire: #FF4500; 
-    --tiffany: #00f2ff;      /* Tiffani rangi qaytarildi */
-    --tiffany-glow: rgba(0, 242, 255, 0.5);
     --bg: #000; 
-    --card: rgba(20, 20, 20, 0.7); 
-    --border: rgba(255, 69, 0, 0.3); 
-    --orange-glow: rgba(255, 69, 0, 0.15); 
+    --card: rgba(20, 20, 20, 0.6); /* Shaffof kartalar */
+    --border: rgba(255, 69, 0, 0.3); /* Olov rangli shaffof chegara */
+    --green: #2ecc71; 
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; }
 
 body { 
     background: radial-gradient(circle at top, #1a0505 0%, #000 100%); 
     color: #fff; 
     font-family: 'Montserrat', sans-serif; 
-    padding-bottom: 100px;
-    position: relative;
+    margin: 0; 
+    padding-bottom: 100px; 
 }
 
-/* Firefly Animatsiyasi */
-.firefly-bg {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -1; pointer-events: none; overflow: hidden;
-}
-.firefly-bg::before, .firefly-bg::after {
-    content: ''; position: absolute; width: 3px; height: 3px;
-    border-radius: 50%; background: var(--fire);
-    box-shadow: 0 0 10px 2px rgba(255, 69, 0, 0.7);
-    animation: fly 20s infinite linear; opacity: 0;
-}
-.firefly-bg::after { animation-delay: -10s; animation-duration: 25s; }
+.app-container { max-width: 600px; margin: auto; padding: 15px; }
 
 /* HEADER */
 .header { 
     display: flex; justify-content: space-between; align-items: center; 
     background: rgba(20,20,20,0.8); padding: 15px; border-radius: 12px; 
-    border-bottom: 2px solid var(--tiffany); /* Tiffani border */
-    box-shadow: 0 0 20px var(--tiffany-glow); 
+    border-bottom: 2px solid var(--fire); 
+    box-shadow: 0 0 10px rgba(255, 69, 0, 0.2);
 }
-#balance { color: var(--tiffany); font-size: 22px; font-weight: 800; text-shadow: 0 0 10px var(--tiffany-glow); }
+#balance { color: var(--fire); font-size: 22px; font-weight: 800; }
 
 /* NAVIGATSIYA */
-.bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 85px; background: #000; border-top: 1px solid var(--tiffany); display: flex; justify-content: space-around; align-items: center; z-index: 1000; }
-.nav-btn { background: none; border: none; color: #777; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; }
-.nav-btn.active { color: var(--tiffany); filter: drop-shadow(0 0 8px var(--tiffany)); }
+.bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 85px; background: #000; border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index: 1000; }
+.nav-btn { background: none; border: none; color: #777; display: flex; flex-direction: column; align-items: center; width: 25%; gap: 5px; cursor: pointer; }
+.nav-btn img { width: 36px; height: 36px; object-fit: contain; }
+.nav-btn.active { color: var(--fire); }
 
-/* KEYS KARTASI (Tiffani neon glow bilan) */
+/* GRID VA KARTALAR (Shaffof va Nurlanuvchi) */
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+
+/* KEYS KARTASI (Fon olib tashlandi va Glow qo'shildi) */
 .case-card { 
-    background: var(--card) !important; 
-    border: 1px solid var(--tiffany) !important; 
-    border-radius: 20px !important;
-    padding: 15px; text-align: center;
-    box-shadow: 0 0 15px rgba(0, 242, 255, 0.1) !important;
+    background: transparent !important; 
+    border: none !important; 
+    padding: 15px; 
+    text-align: center;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
 }
-.case-card:hover { border-color: var(--fire) !important; box-shadow: 0 0 20px var(--orange-glow); }
 .case-card img { 
-    width: 80%; margin-bottom: 10px; 
-    filter: drop-shadow(0 0 10px var(--tiffany)); 
+    width: 80%; 
+    margin-bottom: 10px; 
+    filter: drop-shadow(0 0 10px var(--fire)); /* GLOW EFEKTI */
 }
 
-/* TUGMALAR (Tiffani va Olov rang uyg'unligi) */
-button { 
-    width: 100%; padding: 12px; background: var(--tiffany); color: #000; 
-    border: none; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase;
+/* QOLGAN KARTALAR (Bonus va vazifalar uchun o'zgarishsiz) */
+.card, .task-card, .task-card-pro { 
+    background: var(--card); 
+    border: 1px solid var(--border); 
+    padding: 15px; 
+    border-radius: 15px; 
+    text-align: center;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 15px rgba(255, 69, 0, 0.1);
 }
+
+/* --- KEYS QISMI KOINNI KATTALASHTIRISH VA DUMALOQ QILISH --- */
+.case-card button {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    gap: 8px; 
+    font-size: 14px !important;
+}
+
+.case-card button img {
+    width: 24px !important;    /* O'lcham */
+    height: 24px !important;   /* O'lcham */
+    object-fit: contain !important; /* Rasm cho'zilmasligi uchun */
+    aspect-ratio: 1 / 1 !important; /* Mukammal kvadrat/dumaloq shakl uchun */
+    margin-bottom: 0 !important;
+    vertical-align: middle;
+}
+
+/* TASK CARD PRO (Bonus sahifasi uchun) */
+.task-card-pro {
+    display: flex; justify-content: space-between; align-items: center;
+    text-align: left; margin-bottom: 15px;
+}
+.task-info-main { display: flex; align-items: center; gap: 15px; }
+.task-icon-circle {
+    width: 40px; height: 40px;
+    background: rgba(255, 69, 0, 0.1);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; border: 1px solid var(--border);
+}
+.task-text-content h4 { margin: 0; font-size: 14px; color: #fff; }
+.task-text-content p { margin: 3px 0 0; font-size: 12px; color: #ff8c00; font-weight: 600; }
+
+/* KICHIKROQ TUGMALAR */
 .btn-action-pro {
-    background: var(--fire) !important; color: white !important;
-    box-shadow: 0 0 15px rgba(255, 69, 0, 0.4);
+    background: var(--fire) !important;
+    color: white !important;
+    border: none !important;
+    padding: 6px 14px !important;
+    font-size: 11px !important;
+    border-radius: 6px !important;
+    text-transform: uppercase;
+    font-weight: 800 !important;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255, 69, 0, 0.4);
+    width: auto !important; /* Tugma kartani yirtmasligi uchun */
+}
+.btn-action-pro:active { transform: scale(0.95); }
+
+/* QOLGAN ELEMENTLAR */
+button { width: 100%; padding: 12px; background: var(--fire); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
+input { width: 100%; padding: 12px; background: #000; border: 1px solid var(--border); color: #fff; border-radius: 8px; margin-bottom: 10px; }
+.page { display: none; }
+.page.active { display: block; }
+.section-title { color: var(--fire); border-bottom: 2px solid var(--fire); padding-bottom: 5px; font-size: 16px; font-weight: 800; margin-top: 20px; text-transform: uppercase; }
+.lang-btn { background: #222 !important; }
+
+/* --- INVENTAR (MARKET) UCHUN QO'SHIMCHA CS2 STILI --- */
+
+#inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
 }
 
-/* Sarlavha */
-.section-title { color: var(--tiffany); border-bottom: 2px solid var(--tiffany); padding-bottom: 5px; font-size: 16px; font-weight: 800; margin-top: 20px; text-transform: uppercase; }
-
-/* Animatsiyalar */
-@keyframes fly { 
-    0% { opacity: 0; transform: translate(0, 100vh) scale(1); } 
-    10% { opacity: 1; } 
-    90% { opacity: 1; }
-    100% { transform: translate(100vw, -100vh) scale(0.5); opacity: 0; } 
+.inventory-card {
+    background: rgba(30, 30, 30, 0.7);
+    border-radius: 8px;
+    padding: 10px;
+    position: relative;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    overflow: hidden;
 }
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: #888;
+}
+
+.quality-badge {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.skin-thumb {
+    width: 90%;
+    margin: 10px auto;
+    display: block;
+    filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
+}
+
+.card-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 5px;
+}
+
+.skin-name {
+    font-size: 11px;
+    margin: 3px 0;
+    color: #eee;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.skin-price {
+    font-size: 12px;
+    color: #ffd700;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+}
+
+.coin-icon-small { width: 12px; height: 12px; }
+
+/* RARITY TAGLARI (PASTKI CHIZIQLAR) */
+.rarity-cover { border-bottom: 3px solid #eb4b4b; }
+.rarity-classified { border-bottom: 3px solid #d32ce6; }
+.rarity-restricted { border-bottom: 3px solid #8847ff; }
+.rarity-milspec { border-bottom: 3px solid #4b69ff; }
