@@ -6,18 +6,17 @@ if (tg.expand) {
 
 // Keyslar datasi (Rasmlar yo'llari to'g'ri: ./img/...)
 const caseData = [
-    { id: 1, name: "Chroma Case", img: "./img/case1.png" },
-    { id: 2, name: "Gamma Case", img: "./img/case2.png" },
-    { id: 3, name: "Spectrum Case", img: "./img/case3.png" },
-    { id: 4, name: "Prisma Case", img: "./img/case4.png" },
-    { id: 5, name: "Danger Zone", img: "./img/case5.png" },
-    { id: 6, name: "Clutch Case", img: "./img/case6.png" },
-    { id: 7, name: "Horizon Case", img: "./img/case7.png" },
-    { id: 8, name: "Phoenix Case", img: "./img/case8.png" },
-    { id: 9, name: "Wildfire Case", img: "./img/case9.png" },
-    { id: 10, name: "Snakebite Case", img: "./img/case10.png" }
+    { id: 1, name: "Kilowatt Case", img: "./img/case1.png" },
+    { id: 2, name: "Revolution Case", img: "./img/case2.webp" },
+    { id: 3, name: "Recoil Case", img: "./img/case3.webp" },
+    { id: 4, name: "Dreams & Nightmares", img: "./img/case4.webp" },
+    { id: 5, name: "Snakebite Case", img: "./img/case5.png" },
+    { id: 6, name: "Broken Fang", img: "./img/case6.webp" },
+    { id: 7, name: "Fracture Case", img: "./img/case7.webp" },
+    { id: 8, name: "Prisma 2 Case", img: "./img/case8.png" },
+    { id: 9, name: "CS20 Case", img: "./img/case9.png" },
+    { id: 10, name: "Shattered Web", img: "./img/case10.png" }
 ];
-
 // Keyslarni ekranga render qilish
 function renderCases() {
     const container = document.getElementById('cases-grid');
