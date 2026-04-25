@@ -13,20 +13,18 @@ const budgetSkins = [
 let currentWinningSkin = null;
 let isSpinning = false;
 
-// 2. RULETKA FUNKSIYASI
+// 2. RULETKA FUNKSIYASI (Birlashtirilgan versiya)
 function startBudgetRoulette() {
     if (isSpinning) return;
     
     const tg = window.Telegram.WebApp;
     
-    // CloudStorage tekshiruvi (xatolik bermasligi uchun)
-    const handleSpin = (val) => {
+    // Balansni tekshirish
+    tg.CloudStorage.getItem('userBalance', (err, val) => {
         let bal = val ? parseInt(val) : 100000;
-        if (bal < 5000) { 
-            alert("Balans yetarli emas!"); 
-            return; 
-        }
+        if (bal < 5000) { alert("Balans yetarli emas!"); return; }
         
+        // Pulni yechish
         if (typeof updateBalance === 'function') updateBalance(-5000);
         
         isSpinning = true;
@@ -36,20 +34,23 @@ function startBudgetRoulette() {
         const viewport = document.getElementById('roulette-viewport');
         const result = document.getElementById('result-display');
 
-        // UI-ni tozalash va ko'rsatish
+        // Modalni klass qo'shish orqali ochamiz
         modal.classList.add('active');
         viewport.style.display = 'block';
         result.style.display = 'none';
 
+        // Trackni tozalash
         track.className = "roulette-track"; 
         track.style.transition = "none";
         track.style.top = "0px";
         track.innerHTML = "";
 
+        // G'olib skinni tanlash
         let winnerIndex = 40; 
         currentWinningSkin = budgetSkins[Math.floor(Math.random() * budgetSkins.length)];
 
-        for(let i=0; i<55; i++) {
+        // Skinlarni generatsiya qilish
+        for(let i=0; i<50; i++) {
             let s = (i === winnerIndex) ? currentWinningSkin : budgetSkins[Math.floor(Math.random() * budgetSkins.length)];
             track.innerHTML += `
                 <div class="roulette-item rarity-${s.rarity}">
@@ -58,6 +59,7 @@ function startBudgetRoulette() {
                 </div>`;
         }
 
+        // Animatsiyani boshlash
         setTimeout(() => {
             track.classList.add("animate-track");
             const ITEM_HEIGHT = 350; 
@@ -66,21 +68,15 @@ function startBudgetRoulette() {
             track.style.top = `-${offset}px`; 
         }, 100);
 
+        // 6.2 soniyadan keyin natijani ko'rsatish
         setTimeout(() => {
             showWinnerCard(currentWinningSkin);
             isSpinning = false;
         }, 6200);
-    };
-
-    // Telegram CloudStorage yoki LocalStorage orqali balansni olish
-    if (tg.CloudStorage && typeof tg.CloudStorage.getItem === 'function') {
-        tg.CloudStorage.getItem('userBalance', (err, val) => handleSpin(val));
-    } else {
-        let localBal = localStorage.getItem('userBalance');
-        handleSpin(localBal);
-    }
+    });
 }
 
+// Yutuq oynasini ko'rsatish
 function showWinnerCard(winningSkin) {
     const viewport = document.getElementById('roulette-viewport');
     const resultDisplay = document.getElementById('result-display');
@@ -90,9 +86,8 @@ function showWinnerCard(winningSkin) {
     
     document.getElementById('won-skin-img').src = winningSkin.img;
     document.getElementById('won-skin-name').innerText = winningSkin.name;
-    
-    // Sifatni chiqarish
-    const qualityEl = document.getElementById('won-skin-quality');
+    // Qo'shimcha ma'lumotlar
+    const qualityEl = document.querySelector('.result-display p'); // Oddiy tanlov
     if(qualityEl) qualityEl.innerText = `Sifat: ${winningSkin.quality}`;
     
     document.getElementById('won-skin-price').innerHTML = `
@@ -105,6 +100,7 @@ function showWinnerCard(winningSkin) {
     if(typeof playSound === 'function') playSound('win');
 }
 
+// Yopish funksiyasi
 function closeRoulette() {
     document.getElementById('roulette-modal').classList.remove('active');
     document.getElementById('result-display').style.display = 'none';
@@ -113,6 +109,6 @@ function closeRoulette() {
 
 function sellWonSkin() {
     if (!currentWinningSkin) return;
-    if (typeof updateBalance === 'function') updateBalance(currentWinningSkin.price);
+    updateBalance(currentWinningSkin.price);
     closeRoulette();
 }
