@@ -42,7 +42,7 @@ const cases = [
 
 // 2. Vazifalar
 let tasks = [
-    { id: 'tg', name: {uz: "Telegram Obuna", ru: "Подписка Telegram", en: "Join Telegram"}, reward: 250, done: false, link: 'https://t.me/community' },
+    { id: 'tg', name: {uz: "Telegram Obuna", ru: "Подписка Telegram", en: "Join Telegram"}, reward: 250, done: false, link: 'https://t.me/your_channel' },
     { id: 'insta', name: {uz: "Instagram Obuna", ru: "Подписка Instagram", en: "Follow Instagram"}, reward: 250, done: false, link: 'https://instagram.com/' }
 ];
 
@@ -116,26 +116,47 @@ function renderCases() {
 }
 
 function renderTasks() {
-    const lang = localStorage.getItem('lang') || 'uz';
-    const active = document.getElementById('active-tasks-list');
-    const done = document.getElementById('done-tasks-list');
-    if(!active) return;
-    active.innerHTML = ""; done.innerHTML = "";
+    const lang = localStorage.getItem('userLang') || 'uz';
+    const activeContainer = document.getElementById('active-tasks-list');
+    const doneContainer = document.getElementById('done-tasks-list');
+    
+    if (!activeContainer || !doneContainer) return;
+
+    activeContainer.innerHTML = "";
+    doneContainer.innerHTML = "";
+
     tasks.forEach(t => {
-        const btnText = t.done ? translations[lang].done_btn : translations[lang].claim_btn;
-        const card = `
-        <div class="task-card-pro">
-            <div class="task-info-main">
-                <div class="task-icon-circle">📱</div>
-                <div class="task-text-content">
-                    <h4>${t.name[lang]}</h4>
-                    <p style="display:flex; align-items:center; gap:5px;"><img src="img/nav_diamond.png" style="width:14px;"> +${t.reward}</p>
+        const html = `
+            <div class="task-card-pro">
+                <div class="task-info-main">
+                    <div class="task-icon-circle">${t.id === 'tg' ? '📱' : '📸'}</div>
+                    <div class="task-text-content">
+                        <h4>${t.name[lang]}</h4>
+                        <p>+${t.reward} COIN</p>
+                    </div>
                 </div>
+                <button onclick="${t.done ? '' : `completeTask('${t.id}')`}" class="btn-action-pro" ${t.done ? 'disabled style="background:#555!important"' : ''}>
+                    ${t.done ? (lang === 'uz' ? 'BAJARILDI' : lang === 'ru' ? 'ВЫПОЛНЕНО' : 'DONE') : (lang === 'uz' ? 'OLISH' : lang === 'ru' ? 'ЗАБРАТЬ' : 'CLAIM')}
+                </button>
             </div>
-            <button class="btn-action-pro" onclick="completeTask('${t.id}')">${btnText}</button>
-        </div>`;
-        t.done ? done.innerHTML += card : active.innerHTML += card;
+        `;
+
+        if (t.done) {
+            doneContainer.innerHTML += html;
+        } else {
+            activeContainer.innerHTML += html;
+        }
     });
+}
+
+// Vazifani bajarish funksiyasi
+function completeTask(taskId) {
+    const task = tasks.find(t => t.id === taskId);
+    if (task) {
+        window.open(task.link, '_blank'); // Linkga o'tish
+        task.done = true; // Vazifani bajardi deb belgilash
+        renderTasks(); // Ro'yxatni yangilash
+    }
 }
 
 function completeTask(id) {
