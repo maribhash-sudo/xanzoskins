@@ -336,3 +336,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+// Sozlamalarni ko'rsatish/yashirish
+function toggleSettings() {
+    const content = document.getElementById('settings-content');
+    content.style.display = content.style.display === 'none' ? 'block' : 'none';
+}
+
+// Trade link bo'limini ko'rsatish
+document.getElementById('trade-link-trigger').onclick = function() {
+    const inputSection = document.getElementById('trade-input-section');
+    inputSection.style.display = inputSection.style.display === 'none' ? 'block' : 'none';
+};
