@@ -1,0 +1,29 @@
+:root {
+    --tiffany: #00f2ff;
+    --bg: #050505;
+    --card: #121212;
+}
+
+body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: var(--bg); color: white; font-family: sans-serif; }
+
+.app-shell { display: flex; flex-direction: column; height: 100vh; }
+.app-header { height: 60px; display: flex; justify-content: center; align-items: center; }
+.app-content { flex: 1; overflow-y: auto; padding: 15px; }
+
+/* Tiffany Glow kartalar */
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.case-item {
+    background: var(--card); border: 1px solid rgba(0, 242, 255, 0.2);
+    border-radius: 15px; padding: 10px; text-align: center;
+    transition: 0.3s;
+}
+.case-item:hover { border-color: var(--tiffany); box-shadow: 0 0 15px var(--tiffany); }
+
+/* Navigatsiya */
+.app-nav { height: 70px; background: #000; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid var(--tiffany); }
+.nav-btn { background: none; border: none; opacity: 0.5; }
+.nav-btn.active { opacity: 1; transform: scale(1.1); filter: drop-shadow(0 0 5px var(--tiffany)); }
+.nav-btn img { width: 30px; }
+
+.page { display: none; }
+.page.active { display: block; }
