@@ -6,25 +6,26 @@
     left: 0; 
     width: 100vw; 
     height: 100vh; 
-    background: rgba(0, 0, 0, 0.9); 
+    background: rgba(0, 0, 0, 0.95); 
     z-index: 99999; 
     justify-content: center; 
     align-items: center; 
     flex-direction: column; 
-    backdrop-filter: blur(15px); /* Orqa fonni chiroyli xiralashtiradi */
+    backdrop-filter: blur(15px); 
     -webkit-backdrop-filter: blur(15px);
 }
 
-/* Roulette Oynasi - Full-screen responsive */
+/* Roulette Oynasi - Full-screen responsive dizayn */
 .roulette-viewport { 
-    width: 95vw; 
+    width: 90vw; 
+    max-width: 400px; /* Kattaroq ekranlarda juda cho'zilib ketmasligi uchun */
     height: 200px; 
-    border: 3px solid #FFD700; 
+    border: 4px solid #FFD700; 
     border-radius: 20px; 
     overflow: hidden; 
     position: relative; 
-    background: #111; 
-    box-shadow: 0 0 40px rgba(255, 215, 0, 0.2), inset 0 0 20px rgba(0,0,0,1);
+    background: radial-gradient(circle, #222 0%, #000 100%); 
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.3), inset 0 0 20px rgba(0,0,0,1);
 }
 
 /* O'rtadagi g'oliblik chizig'i (Win-line) */
@@ -34,11 +35,11 @@
     top: 50%;
     left: 0;
     width: 100%;
-    height: 3px;
-    background: #FF4500;
+    height: 4px;
+    background: rgba(255, 69, 0, 0.9);
+    box-shadow: 0 0 20px #FF4500;
     z-index: 10;
     transform: translateY(-50%);
-    box-shadow: 0 0 10px #FF4500;
 }
 
 .roulette-track { 
@@ -51,27 +52,27 @@
 
 /* Har bir skin bloki */
 .roulette-item { 
-    height: 200px; 
+    height: 200px; /* Viewport balandligi bilan bir xil */
     display: flex; 
     justify-content: center; 
     align-items: center; 
-    background: rgba(255, 255, 255, 0.01);
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid #333;
 }
 
 .roulette-item img { 
-    width: 140px; 
-    height: 140px;
+    width: 150px; /* Kattaroq skinlar */
+    height: 150px;
     object-fit: contain; 
+    filter: drop-shadow(0 0 15px rgba(255,255,255,0.2));
 }
 
-/* Natija chiqish qismi (Video va rasmdegidek) */
+/* Natija chiqish qismi */
 .result-display { 
     display: none; 
     text-align: center; 
     color: white; 
-    padding: 30px;
-    border-radius: 30px;
-    width: 90vw;
+    padding: 25px;
     animation: zoomIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -80,155 +81,62 @@
     to { opacity: 1; transform: scale(1); }
 }
 
-.won-skin-img { 
-    width: 250px; 
-    filter: drop-shadow(0 0 20px rgba(255,255,255,0.3));
+.result-display img { 
+    width: 220px; 
+    filter: drop-shadow(0 0 30px #FFD700);
     margin-bottom: 20px; 
 }
 
-.won-skin-name { 
-    color: white; 
-    font-size: 30px; 
-    font-weight: bold;
+.result-display h3 { 
+    color: #FFD700; 
+    font-size: 32px; 
+    text-transform: uppercase;
+    letter-spacing: 2px;
     margin: 0; 
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
 }
 
-.won-skin-quality {
-    color: #ccc;
-    font-size: 16px;
-    margin: 5px 0 20px 0;
-}
-
-/* Diamond belgisi va narx stili */
-.coin-icon {
-    width: 18px;
-    height: 18px;
-    vertical-align: middle;
-    margin-right: 5px;
-}
-
-#won-skin-price {
-    font-size: 20px;
-    font-weight: bold;
-    color: #FFD700;
-    margin-bottom: 25px;
-}
-
-/* Tugmalar - Premium */
+/* Tugmalar - Premium ko'rinish */
 .modal-btns { 
     display: flex; 
     flex-direction: column; 
-    gap: 12px; 
-    width: 80%;
+    gap: 15px; 
+    margin-top: 25px; 
+    width: 85%;
 }
 
 .modal-btns button { 
-    padding: 15px; 
+    padding: 18px; 
     border: none; 
     border-radius: 12px; 
     color: white; 
     cursor: pointer; 
-    font-weight: bold; 
+    font-size: 16px;
+    font-weight: 800; 
     text-transform: uppercase;
+    background: linear-gradient(45deg, #FF4500, #FF8C00); 
+    box-shadow: 0 6px 20px rgba(255, 69, 0, 0.4);
     transition: 0.2s;
 }
 
-.modal-btns button:active { transform: scale(0.95); }
-
-.sell-btn { background: #FF4500 !important; }
-.withdraw-btn { background: #007bff !important; }
-
-/* RARITY RANG GRADIENTLARI (Yutuq oynasi va Inventar uchun) */
-/* Cover (Qizil) */
-.rarity-cover {
-    background: radial-gradient(circle, rgba(235, 75, 75, 0.5) 0%, #000 80%) !important;
-    border-bottom: 3px solid #eb4b4b;
-}
-/* Classified (Pushti) */
-.rarity-classified {
-    background: radial-gradient(circle, rgba(211, 44, 230, 0.5) 0%, #000 80%) !important;
-    border-bottom: 3px solid #d32ce6;
-}
-/* Restricted (Siyohrang) */
-.rarity-restricted {
-    background: radial-gradient(circle, rgba(136, 71, 255, 0.5) 0%, #000 80%) !important;
-    border-bottom: 3px solid #8847ff;
-}
-/* Mil-spec (To'q ko'k) */
-.rarity-milspec {
-    background: radial-gradient(circle, rgba(75, 105, 255, 0.5) 0%, #000 80%) !important;
-    border-bottom: 3px solid #4b69ff;
+.modal-btns button:active {
+    transform: scale(0.96);
 }
 
-/* INVENTAR GRID KARTALARI (RASMDEGIDEK) */
-#inventory-list {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 ustun */
-    gap: 10px;
-    padding: 15px;
+.withdraw-btn {
+    background: linear-gradient(45deg, #32CD32, #228B22) !important;
 }
 
-.inventory-card {
-    border-radius: 10px;
-    padding: 8px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    transition: 0.2s;
-}
-
-.inventory-card:active { transform: scale(0.95); }
-
-/* Burchakdagi sifat belgisi (FN, MW, etc) */
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    font-size: 10px;
-    color: #ccc;
-    margin-bottom: 5px;
-}
-.quality-badge {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 1px 4px;
-    border-radius: 3px;
-}
-.rarity-icon { color: rgba(255,255,255,0.3); }
-
-/* Skin rasmi */
-.skin-thumb {
-    width: 100%;
-    height: 70px;
-    object-fit: contain;
-    filter: drop-shadow(0 0 10px rgba(255,255,255,0.1));
-}
-
-/* Skin nomi va narxi */
-.card-footer .skin-name {
-    font-size: 11px;
-    color: white;
-    margin: 5px 0 2px 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.card-footer .skin-price {
-    font-size: 10px;
-    color: #FFD700;
-    font-weight: bold;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Keys titrash animatsiyasi (JS ulaydi) */
+/* Keys titrash animatsiyasi */
 .case-shake {
-    animation: shake 0.3s infinite;
+    animation: shake 0.2s infinite;
 }
+
 @keyframes shake {
     0% { transform: translate(1px, 1px) rotate(0deg); }
     20% { transform: translate(-1px, -2px) rotate(-1deg); }
     40% { transform: translate(-3px, 0px) rotate(1deg); }
     60% { transform: translate(3px, 2px) rotate(0deg); }
-    100% { transform: translate(1px, -2px) rotate(-1deg); }
+    80% { transform: translate(1px, -1px) rotate(1deg); }
+    100% { transform: translate(-1px, 2px) rotate(-1deg); }
 }
