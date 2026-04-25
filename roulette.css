@@ -6,38 +6,37 @@
     left: 0; 
     width: 100vw; 
     height: 100vh; 
-    background: rgba(0, 0, 0, 0.95); 
+    background: rgba(0, 0, 0, 0.85); 
     z-index: 99999; 
     justify-content: center; 
     align-items: center; 
     flex-direction: column; 
-    backdrop-filter: blur(15px); 
+    backdrop-filter: blur(15px); /* Orqa fonni chiroyli xiralashtiradi */
     -webkit-backdrop-filter: blur(15px);
 }
 
-/* Roulette Oynasi - Full-screen responsive dizayn */
+/* Roulette Oynasi - Neon effekt va ramka */
 .roulette-viewport { 
-    width: 90vw; 
-    max-width: 400px; /* Kattaroq ekranlarda juda cho'zilib ketmasligi uchun */
-    height: 200px; 
-    border: 4px solid #FFD700; 
+    width: 320px; 
+    height: 180px; 
+    border: 3px solid #FFD700; 
     border-radius: 20px; 
     overflow: hidden; 
     position: relative; 
     background: radial-gradient(circle, #222 0%, #000 100%); 
-    box-shadow: 0 0 50px rgba(255, 215, 0, 0.3), inset 0 0 20px rgba(0,0,0,1);
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.2), inset 0 0 20px rgba(0,0,0,1);
 }
 
-/* O'rtadagi g'oliblik chizig'i (Win-line) */
+/* O'rtadagi qizil chiziq (Win-line) */
 .roulette-viewport::after {
     content: "";
     position: absolute;
     top: 50%;
     left: 0;
     width: 100%;
-    height: 4px;
-    background: rgba(255, 69, 0, 0.9);
-    box-shadow: 0 0 20px #FF4500;
+    height: 2px;
+    background: rgba(255, 69, 0, 0.8);
+    box-shadow: 0 0 10px #FF4500;
     z-index: 10;
     transform: translateY(-50%);
 }
@@ -52,19 +51,19 @@
 
 /* Har bir skin bloki */
 .roulette-item { 
-    height: 200px; /* Viewport balandligi bilan bir xil */
+    height: 180px; 
     display: flex; 
     justify-content: center; 
     align-items: center; 
     background: rgba(255, 255, 255, 0.02);
-    border-bottom: 1px solid #333;
+    transition: transform 0.3s;
 }
 
 .roulette-item img { 
-    width: 150px; /* Kattaroq skinlar */
-    height: 150px;
+    width: 80%; 
+    height: 80%; 
     object-fit: contain; 
-    filter: drop-shadow(0 0 15px rgba(255,255,255,0.2));
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.1));
 }
 
 /* Natija chiqish qismi */
@@ -82,45 +81,44 @@
 }
 
 .result-display img { 
-    width: 220px; 
-    filter: drop-shadow(0 0 30px #FFD700);
-    margin-bottom: 20px; 
+    width: 200px; 
+    filter: drop-shadow(0 0 25px #FFD700);
+    margin-bottom: 15px; 
 }
 
 .result-display h3 { 
     color: #FFD700; 
-    font-size: 32px; 
+    font-size: 28px; 
     text-transform: uppercase;
     letter-spacing: 2px;
     margin: 0; 
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
 }
 
 /* Tugmalar - Premium ko'rinish */
 .modal-btns { 
     display: flex; 
     flex-direction: column; 
-    gap: 15px; 
-    margin-top: 25px; 
-    width: 85%;
+    gap: 12px; 
+    margin-top: 20px; 
+    width: 80%;
 }
 
 .modal-btns button { 
-    padding: 18px; 
+    padding: 15px; 
     border: none; 
     border-radius: 12px; 
     color: white; 
     cursor: pointer; 
-    font-size: 16px;
     font-weight: 800; 
     text-transform: uppercase;
     background: linear-gradient(45deg, #FF4500, #FF8C00); 
-    box-shadow: 0 6px 20px rgba(255, 69, 0, 0.4);
+    box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
     transition: 0.2s;
 }
 
 .modal-btns button:active {
-    transform: scale(0.96);
+    transform: scale(0.95);
 }
 
 .withdraw-btn {
