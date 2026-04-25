@@ -25,36 +25,98 @@ body, html {
 
 .app-content { 
     flex: 1; 
-    overflow-y: auto; 
-    padding: 15px; 
-    padding-bottom: 80px; /* Nav uchun joy */
-}
-
-/* Sahifalar */
-.page { display: none; }
-.page.active { display: block; }
-
-/* Flex-dagi qismlar */
-.hero-coin-container { text-align: center; padding: 20px; }
-.hero-coin { width: 120px; height: 120px; filter: drop-shadow(0 0 15px var(--tiffany)); }
-.balance-text { font-size: 32px; font-weight: bold; color: #fff; margin-top: 10px; }
-
-.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-.case-card { background: var(--card-bg); border-radius: 12px; padding: 10px; text-align: center; }
-.case-img { width: 100%; max-height: 80px; object-fit: contain; }
-.case-name { font-size: 11px; color: var(--tiffany); margin-top: 5px; }
-
-/* Navigatsiya - Telefon uchun pastga yopishtirildi */
-.app-nav { 
-    flex-shrink: 0;
-    height: 70px; 
-    background: #000; 
     display: flex; 
-    justify-content: space-around; 
-    align-items: center; 
-    border-top: 1px solid #222;
-    padding-bottom: env(safe-area-inset-bottom); /* iPhone uchun */
+    flex-direction: column; 
+    overflow-y: auto; 
+    padding: 20px; 
+    gap: 20px;
+    padding-bottom: 120px; /* Navigatsiya uchun xavfsiz joy */
 }
-.nav-btn { background: none; border: none; opacity: 0.5; padding: 10px; }
-.nav-btn.active { opacity: 1; transform: scale(1.1); }
-.nav-btn img { width: 28px; height: 28px; }
+
+/* 1. BONUS COIN - Kattaroq va jozibali */
+.hero-coin-container { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center;
+    padding: 30px 0;
+    min-height: 250px; /* Joyni kengroq oldik */
+}
+.hero-coin { 
+    width: 200px !important; 
+    height: 200px !important; 
+    object-fit: contain; 
+    filter: drop-shadow(0 0 30px var(--tiffany)); 
+    animation: float 4s infinite ease-in-out; 
+}
+.balance-text { 
+    font-size: 48px; 
+    font-weight: 900; 
+    color: #fff; 
+    margin-top: 15px;
+    text-shadow: 0 0 20px var(--tiffany-glow);
+}
+
+/* 2. GRID - Keyslar va Inventar uchun */
+.grid { 
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 15px; 
+    width: 100%;
+}
+
+/* 3. CASE KARTALARI - Sog'lom shakl */
+.case-card { 
+    background: linear-gradient(145deg, #151515, #0a0a0a);
+    border: 1px solid var(--card-border); 
+    border-radius: 24px; 
+    padding: 20px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center;
+    min-height: 180px; /* Balandlikni tenglashtirdik */
+    transition: 0.3s transform;
+}
+.case-card:active { transform: scale(0.95); }
+.case-img { 
+    width: 120px; 
+    height: 90px; 
+    object-fit: contain; 
+    margin-bottom: 15px;
+}
+.case-name { 
+    font-size: 14px; 
+    font-weight: bold; 
+    color: #fff;
+    text-transform: uppercase;
+}
+
+/* 4. PROFIL - Professional ko'rinish */
+#page-profile {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+.profile-avatar { 
+    width: 100px; 
+    height: 100px; 
+    background: #111; 
+    border: 3px solid var(--tiffany); 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 45px;
+    margin-bottom: 30px;
+    box-shadow: 0 0 20px var(--tiffany-glow);
+}
+.menu-list { width: 100%; display: flex; flex-direction: column; gap: 12px; }
+.menu-item-card { 
+    background: #111; 
+    padding: 18px; 
+    border-radius: 16px; 
+    display: flex; 
+    align-items: center; 
+    border: 1px solid #222;
+}
