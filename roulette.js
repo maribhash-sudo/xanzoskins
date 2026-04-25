@@ -1,114 +1,94 @@
-// 1. DATA (Skinlar ma'lumotlari)
 const budgetSkins = [
-    { name: "AK-47", img: "img/AK47.png", price: 5000, rarity: "cover", quality: "FN" },
-    { name: "Deagle White", img: "img/DEAGLEWHITE.png", price: 3500, rarity: "classified", quality: "MW" },
-    { name: "M4A1-S Paint", img: "img/M4A1-SPAINT.png", price: 4200, rarity: "classified", quality: "FN" },
-    { name: "Five Seven", img: "img/FIVESEVEN.png", price: 1500, rarity: "restricted", quality: "FT" },
-    { name: "Mac 10", img: "img/MAC10.png", price: 1200, rarity: "restricted", quality: "MW" },
-    { name: "Glock White", img: "img/GLOCKWHITE.png", price: 800, rarity: "milspec", quality: "FT" },
-    { name: "MP5", img: "img/MP5.png", price: 950, rarity: "milspec", quality: "WW" },
-    { name: "USP Camo", img: "img/USP-CAMO.png", price: 600, rarity: "milspec", quality: "BS" }
+    { name: "AK-47", img: "img/AK47.png", price: 500, rarity: "cover", quality: "FN" },
+    { name: "Deagle White", img: "img/DEAGLEWHITE.png", price: 700, rarity: "classified", quality: "MW" },
+    { name: "Five Seven", img: "img/FIVESEVEN.png", price: 300, rarity: "restricted", quality: "FT" },
+    { name: "Glock White", img: "img/GLOCKWHITE.png", price: 200, rarity: "milspec", quality: "WW" },
+    { name: "M4A1-S Paint", img: "img/M4A1-SPAINT.png", price: 900, rarity: "classified", quality: "FN" },
+    { name: "M4A1-S Red", img: "img/M4A1-SRED.png", price: 850, rarity: "milspec", quality: "FT" },
+    { name: "Mac 10", img: "img/MAC10.png", price: 400, rarity: "restricted", quality: "MW" },
+    { name: "MP5", img: "img/MP5.png", price: 350, rarity: "milspec", quality: "BS" },
+    { name: "USP Camo", img: "img/USP-CAMO.png", price: 250, rarity: "milspec", quality: "FT" },
+    { name: "USP Tropic", img: "img/USP-TOPIC.png", price: 1500, rarity: "restricted", quality: "MW" }
 ];
 
 let currentWinningSkin = null;
-let isSpinning = false;
+let skipFlag = false;
 
-// 2. RULETKA FUNKSIYASI (Birlashtirilgan versiya)
 function startBudgetRoulette() {
-    if (isSpinning) return;
-    
     const tg = window.Telegram.WebApp;
     
-    // Balansni tekshirish
+    // 1. Balansni tekshirish
     tg.CloudStorage.getItem('userBalance', (err, val) => {
-        let bal = val ? parseInt(val) : 100000;
-        if (bal < 5000) { alert("Balans yetarli emas!"); return; }
+        let bal = val ? parseInt(val) : 10000;
         
-        // Pulni yechish
-        if (typeof updateBalance === 'function') updateBalance(-5000);
+        if (bal < 500) { alert("Balans yetarli emas!"); return; }
         
-        isSpinning = true;
-
+        // 2. Balansni ayirish (Faqat bir marta)
+        updateBalance(-500); 
+        
+        // 3. UI Tayyorlash
         const modal = document.getElementById('roulette-modal');
         const track = document.getElementById('roulette-track');
         const viewport = document.getElementById('roulette-viewport');
-        const result = document.getElementById('result-display');
-
-        // Modalni klass qo'shish orqali ochamiz
-        modal.classList.add('active');
+        const resultDisplay = document.getElementById('result-display');
+        skipFlag = false;
+        
+        modal.style.display = 'flex';
         viewport.style.display = 'block';
-        result.style.display = 'none';
-
-        // Trackni tozalash
-        track.className = "roulette-track"; 
+        resultDisplay.style.display = 'none';
+        track.innerHTML = "";
         track.style.transition = "none";
         track.style.top = "0px";
-        track.innerHTML = "";
 
-        // G'olib skinni tanlash
-        let winnerIndex = 40; 
-        currentWinningSkin = budgetSkins[Math.floor(Math.random() * budgetSkins.length)];
-
-        // Skinlarni generatsiya qilish
-        for(let i=0; i<50; i++) {
-            let s = (i === winnerIndex) ? currentWinningSkin : budgetSkins[Math.floor(Math.random() * budgetSkins.length)];
-            track.innerHTML += `
-                <div class="roulette-item rarity-${s.rarity}">
-                    <div class="glow-circle"></div>
-                    <img src="${s.img}" onerror="this.src='img/default.png'">
-                </div>`;
+        // 4. Elementlarni yaratish
+        for (let i = 0; i < 60; i++) {
+            let s = budgetSkins[Math.floor(Math.random() * budgetSkins.length)];
+            track.innerHTML += `<div class="roulette-item"><img src="${s.img}"></div>`;
+            if (i === 50) currentWinningSkin = s;
         }
 
-        // Animatsiyani boshlash
+        // 5. Animatsiya
         setTimeout(() => {
-            track.classList.add("animate-track");
-            const ITEM_HEIGHT = 350; 
-            const VIEWPORT_HEIGHT = 350;
-            let offset = (winnerIndex * ITEM_HEIGHT) - (VIEWPORT_HEIGHT / 2) + (ITEM_HEIGHT / 2);
-            track.style.top = `-${offset}px`; 
+            if(!skipFlag) {
+                const ITEM_HEIGHT = 200;
+                let offset = (50 * ITEM_HEIGHT) - 100;
+                track.style.transition = "top 5s cubic-bezier(0.1, 0, 0.1, 1)";
+                track.style.top = `-${offset}px`;
+            }
         }, 100);
 
-        // 6.2 soniyadan keyin natijani ko'rsatish
+        // 6. Natija
         setTimeout(() => {
-            showWinnerCard(currentWinningSkin);
-            isSpinning = false;
-        }, 6200);
+            if(!skipFlag) showWinner();
+        }, 5200);
     });
 }
 
-// Yutuq oynasini ko'rsatish
-function showWinnerCard(winningSkin) {
-    const viewport = document.getElementById('roulette-viewport');
-    const resultDisplay = document.getElementById('result-display');
+function showWinner() {
+    if(!currentWinningSkin) return;
     
-    viewport.style.display = 'none';
-    resultDisplay.className = `result-display rarity-${winningSkin.rarity}`;
+    document.getElementById('roulette-viewport').style.display = 'none';
+    document.getElementById('result-display').style.display = 'block';
     
-    document.getElementById('won-skin-img').src = winningSkin.img;
-    document.getElementById('won-skin-name').innerText = winningSkin.name;
-    // Qo'shimcha ma'lumotlar
-    const qualityEl = document.querySelector('.result-display p'); // Oddiy tanlov
-    if(qualityEl) qualityEl.innerText = `Sifat: ${winningSkin.quality}`;
+    document.getElementById('won-skin-img').src = currentWinningSkin.img;
+    document.getElementById('won-skin-name').innerText = currentWinningSkin.name;
+    document.getElementById('won-skin-quality').innerText = "Sifat: " + currentWinningSkin.quality;
+    document.getElementById('won-skin-price-val').innerText = currentWinningSkin.price;
     
-    document.getElementById('won-skin-price').innerHTML = `
-        <img src="img/nav_diamond.png" class="coin-icon-small"> ${winningSkin.price} COIN
-    `;
-    
-    resultDisplay.style.display = 'flex';
-    
-    if(typeof addToInventory === 'function') addToInventory(winningSkin);
-    if(typeof playSound === 'function') playSound('win');
+    // Inventarga saqlash
+    addToInventory(currentWinningSkin);
 }
 
-// Yopish funksiyasi
-function closeRoulette() {
-    document.getElementById('roulette-modal').classList.remove('active');
-    document.getElementById('result-display').style.display = 'none';
-    document.getElementById('roulette-viewport').style.display = 'block';
+function skipRoulette() {
+    skipFlag = true;
+    showWinner();
 }
 
-function sellWonSkin() {
-    if (!currentWinningSkin) return;
-    updateBalance(currentWinningSkin.price);
-    closeRoulette();
+function addToInventory(item) {
+    const tg = window.Telegram.WebApp;
+    tg.CloudStorage.getItem('inventory', (err, val) => {
+        let inv = val ? JSON.parse(val) : [];
+        inv.push(item);
+        tg.CloudStorage.setItem('inventory', JSON.stringify(inv));
+    });
 }
