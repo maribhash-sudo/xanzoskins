@@ -21,7 +21,7 @@ function renderCases() {
     if (!container) return;
     container.innerHTML = caseData.map(c => `
         <div class="case-card" onclick="openCase(${c.id})">
-            <img src="img/${c.img}" class="case-img">
+            <img src="${c.img}" class="case-img">
             <div class="case-name">${c.name}</div>
         </div>
     `).join('');
@@ -34,14 +34,14 @@ function showPage(pageId, btn) {
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
     if(btn) btn.classList.add('active');
     
-    tg.HapticFeedback.impactOccurred('medium');
+    if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
 }
 
 function openCase(id) {
-    // Ruletka logikasi qo'shilguncha alert chiqarib turamiz
     alert("Keys ochilmoqda: " + id);
 }
 
 window.onload = () => {
     renderCases();
+    tg.ready();
 };
