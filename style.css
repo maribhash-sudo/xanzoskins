@@ -55,3 +55,37 @@ body, html { margin: 0; padding: 0; height: 100%; background: var(--bg); color: 
 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+/* --- 1. KATTA COIN UCHUN --- */
+.hero-coin-container {
+    text-align: center;
+    padding: 20px 0;
+}
+.hero-coin {
+    width: 100px !important;  /* Coinni kattalashtirdik */
+    height: 100px !important;
+    filter: drop-shadow(0 0 20px var(--tiffany));
+    margin-bottom: 10px;
+}
+.balance-text { font-size: 32px; font-weight: 800; color: white; }
+
+/* --- 2. PROFIL MENYUSI UCHUN (Rasmga moslab) --- */
+.profile-avatar {
+    width: 80px; height: 80px;
+    background: #333; border-radius: 50%;
+    margin: 20px auto; border: 2px solid var(--tiffany);
+}
+.menu-list {
+    background: var(--card-bg);
+    border-radius: 15px;
+    margin: 10px;
+    overflow: hidden;
+}
+.menu-item {
+    display: flex; align-items: center; padding: 15px;
+    border-bottom: 1px solid #222;
+    cursor: pointer; transition: 0.3s;
+}
+.menu-item:hover { background: #1a1a1a; }
+.menu-item img { width: 24px; margin-right: 15px; }
+.menu-item span { flex: 1; font-weight: 600; }
