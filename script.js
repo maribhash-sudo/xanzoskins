@@ -337,12 +337,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// Sozlamalarni ko'rsatish/yashirish
+// Sozlamalar menyusini ochish/yopish
 function toggleSettings() {
     const content = document.getElementById('settings-content');
-    content.style.display = content.style.display === 'none' ? 'block' : 'none';
+    content.classList.toggle('active'); // 'active' klassini qo'shadi yoki olib tashlaydi
 }
 
+// Tilni o'zgartirish funksiyasi (Agar hali yozmagan bo'lsang)
+function setLanguage(lang) {
+    localStorage.setItem('userLang', lang);
+    alert("Til " + lang.toUpperCase() + " ga o'zgartirildi!");
+    // Bu yerda sahifani yangilash yoki til fayllarini yuklash logikangni yozasan
+}
+
+// Trade link bo'limini ochish
+function toggleTrade() {
+    const tradeSection = document.getElementById('trade-input-section');
+    tradeSection.style.display = (tradeSection.style.display === 'none' || tradeSection.style.display === '') ? 'block' : 'none';
+}
 // Trade link bo'limini ko'rsatish
 document.getElementById('trade-link-trigger').onclick = function() {
     const inputSection = document.getElementById('trade-input-section');
