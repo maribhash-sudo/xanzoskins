@@ -14,14 +14,21 @@ const cases = [
 
 // --- 2. SAHIFA BOSHQARUVI ---
 function showPage(pageId, btn) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + pageId).classList.add('active');
+    // Hammasini yopish
+    document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+    });
     
-    // Tugma aktivligini almashtirish
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    if(btn) btn.classList.add('active');
-}
+    // Tanlanganini ochish
+    const targetPage = document.getElementById('page-' + pageId);
+    if (targetPage) {
+        targetPage.classList.add('active');
+    }
 
+    // Tugma rangini o'zgartirish
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+}
 // --- 3. CASES RENDER ---
 function renderCases() {
     const grid = document.getElementById('cases-grid');
