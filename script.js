@@ -28,22 +28,17 @@ function updateBalance(amount) {
 
 // TO'LDIRISH FUNKSIYASI
 function topUpBalance() {
-    console.log("To'ldirish tugmasi bosildi!"); // Konsolda shu yozuv chiqishi kerak
     const tg = window.Telegram.WebApp;
     const newBalance = 10000;
     
     tg.CloudStorage.setItem('userBalance', newBalance.toString(), (err, success) => {
-        if (err) {
-            console.error("Xatolik:", err);
-            alert("Xatolik yuz berdi: " + err);
-            return;
-        }
         if (success) {
-            console.log("Balans muvaffaqiyatli yangilandi!");
             let balEl = document.getElementById('balance');
             if(balEl) balEl.innerText = newBalance;
             updateUIBalance();
             alert("Balans 10 000 COIN ga to'ldirildi!");
+        } else {
+            alert("Xatolik yuz berdi!");
         }
     });
 }
@@ -332,12 +327,6 @@ function checkNickName() {
             alert("Ismingizda @" + requiredNick + " topilmadi.");
         }
     });
-}
-
-function closeRoulette() {
-    document.getElementById('roulette-modal').style.display = 'none';
-    document.getElementById('result-display').style.display = 'none';
-    document.getElementById('roulette-viewport').style.display = 'block'; // Keyingi safar uchun reset
 }
 
 document.addEventListener("DOMContentLoaded", () => {
