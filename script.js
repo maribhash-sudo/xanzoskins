@@ -1,32 +1,20 @@
 // A. Sahifalar va Header nazorati
 function showPage(pageId, element) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(`page-${pageId}`).classList.add('active');
+    const target = document.getElementById(`page-${pageId}`);
+    if (target) target.classList.add('active');
     
     const header = document.getElementById('main-header');
-    header.style.display = (pageId === 'cases') ? 'flex' : 'none';
+    if (header) header.style.display = (pageId === 'cases') ? 'flex' : 'none';
 
     document.querySelectorAll('.nav-btn').forEach(n => n.classList.remove('active'));
-    if(element) element.classList.add('active');
+    if (element) element.classList.add('active');
 
-    if(pageId === 'inventory') renderInventory();
+    if (pageId === 'inventory') renderInventory();
     updateUIBalance();
 }
 
-// BALANSNI SAQLASH VA YANGILASH (CloudStorage orqali)
-function updateBalance(amount) {
-    const tg = window.Telegram.WebApp;
-    tg.CloudStorage.getItem('userBalance', (err, val) => {
-        let currentBal = val ? parseInt(val) : 10000;
-        let newBal = currentBal + amount;
-        tg.CloudStorage.setItem('userBalance', newBal.toString());
-        let balEl = document.getElementById('balance');
-        if(balEl) balEl.innerText = newBal;
-        updateUIBalance();
-    });
-}
-
-// 1. 10 ta Keyslar
+// B. Ma'lumotlar
 const cases = [
     { name: {uz: "Budget", ru: "Бюджет", en: "Budget"}, price: 500, img: "case1.png" },
     { name: {uz: "Starter", ru: "Стартовый", en: "Starter"}, price: 1500, img: "case2.webp" },
@@ -40,9 +28,8 @@ const cases = [
     { name: {uz: "God", ru: "Бог", en: "God"}, price: 10000, img: "case10.png" }
 ];
 
-// 2. Vazifalar
 let tasks = [
-    { id: 'tg', name: {uz: "Telegram Obuna", ru: "Подписка Telegram", en: "Join Telegram"}, reward: 250, done: false, link: 'https://t.me/your_channel' },
+    { id: 'tg', name: {uz: "Telegram Obuna", ru: "Подписка Telegram", en: "Join Telegram"}, reward: 250, done: false, link: 'https://t.me/community' },
     { id: 'insta', name: {uz: "Instagram Obuna", ru: "Подписка Instagram", en: "Follow Instagram"}, reward: 250, done: false, link: 'https://instagram.com/' }
 ];
 
@@ -54,7 +41,8 @@ const translations = {
         referral_title: "Do'stlarni taklif qilish", referral_desc: "Har bir do'st uchun +500 COIN",
         link_btn: "LINK", nick_title: "Nikga bot nomini qo'shish", nick_desc: "Har 24 soatda +50 COIN",
         check_btn: "TEKSHIRISH", active_tasks: "ACTIVE TASKS", completed: "COMPLETED",
-        inventory_title: "INVENTORY", select_lang: "Tilni tanlang:", trade_link: "Steam Trade Link:", save_btn: "SAQLASH"
+        inventory_title: "INVENTORY", select_lang: "Tilni tanlang:", trade_link: "Steam Trade Link:", save_btn: "SAQLASH",
+        profile_title: "Mening profilim", upgrade_title: "Upgrade", trade_title: "Trade Link", community_title: "Hamjamiyat", settings_title: "Sozlamalar"
     },
     ru: {
         cases_title: "КЕЙСЫ", nav_bonus: "Бонус", nav_cases: "Кейсы", nav_inv: "Инв.", nav_profile: "Профиль",
@@ -63,7 +51,8 @@ const translations = {
         referral_title: "Пригласить друзей", referral_desc: "За каждого друга +500 COIN",
         link_btn: "ССЫЛКА", nick_title: "Добавить имя бота в ник", nick_desc: "Каждые 24 часа +50 COIN",
         check_btn: "ПРОВЕРИТЬ", active_tasks: "ЗАДАНИЯ", completed: "ВЫПОЛНЕНО",
-        inventory_title: "ИНВЕНТАРЬ", select_lang: "Выберите язык:", trade_link: "Steam Trade Link:", save_btn: "СОХРАНИТЬ"
+        inventory_title: "ИНВЕНТАРЬ", select_lang: "Выберите язык:", trade_link: "Steam Trade Link:", save_btn: "СОХРАНИТЬ",
+        profile_title: "Мой профиль", upgrade_title: "Апгрейд", trade_title: "Трейд ссылка", community_title: "Сообщество", settings_title: "Настройки"
     },
     en: {
         cases_title: "CASES", nav_bonus: "Bonus", nav_cases: "Cases", nav_inv: "Inv", nav_profile: "Profile",
@@ -72,65 +61,46 @@ const translations = {
         referral_title: "Invite friends", referral_desc: "Per friend +500 COIN",
         link_btn: "LINK", nick_title: "Add bot name to nickname", nick_desc: "Every 24h +50 COIN",
         check_btn: "CHECK", active_tasks: "ACTIVE TASKS", completed: "COMPLETED",
-        inventory_title: "INVENTORY", select_lang: "Select language:", trade_link: "Steam Trade Link:", save_btn: "SAVE"
-    }
-};
-   uz: {
-        profile_title: "Mening profilim",
-        upgrade_title: "Upgrade",
-        trade_title: "Trade Link",
-        community_title: "Hamjamiyat",
-        settings_title: "Sozlamalar",
-        select_lang: "Tilni tanlang:",
-        // ... boshqa tarjimalar
-    },
-    ru: {
-        profile_title: "Мой профиль",
-        upgrade_title: "Апгрейд",
-        trade_title: "Трейд ссылка",
-        community_title: "Сообщество",
-        settings_title: "Настройки",
-        select_lang: "Выберите язык:",
-        // ... boshqa tarjimalar
-    },
-    en: {
-        profile_title: "My Profile",
-        upgrade_title: "Upgrade",
-        trade_title: "Trade Link",
-        community_title: "Community",
-        settings_title: "Settings",
-        select_lang: "Select Language:",
-        // ... boshqa tarjimalar
+        inventory_title: "INVENTORY", select_lang: "Select language:", trade_link: "Steam Trade Link:", save_btn: "SAVE",
+        profile_title: "My Profile", upgrade_title: "Upgrade", trade_title: "Trade Link", community_title: "Community", settings_title: "Settings"
     }
 };
 
+// C. Funksiyalar
 function updateUIBalance() {
-    let bal = document.getElementById('balance').innerText;
+    let balEl = document.getElementById('balance');
+    if (!balEl) return;
+    let bal = balEl.innerText;
     let largeBal = document.getElementById('balance-large');
     if(largeBal) largeBal.innerText = bal;
 }
 
-function setLanguage(lang) {
-    localStorage.setItem('lang', lang);
+function applyLanguage(lang) {
     document.querySelectorAll('[data-lang]').forEach(el => {
         const key = el.getAttribute('data-lang');
-        if (translations[lang] && translations[lang][key]) el.innerText = translations[lang][key];
+        if (translations[lang] && translations[lang][key]) {
+            if (el.tagName === 'INPUT') el.placeholder = translations[lang][key];
+            else el.innerText = translations[lang][key];
+        }
     });
+}
+
+function setLanguage(lang) {
+    localStorage.setItem('userLang', lang); // Standart key: 'userLang'
+    applyLanguage(lang);
     renderCases();
     renderTasks();
+    const settingsContent = document.getElementById('settings-content');
+    if (settingsContent) settingsContent.style.display = 'none';
 }
 
 function renderCases() {
-    const lang = localStorage.getItem('userLang') || 'uz'; // 'userLang' kalitidan foydalanamiz
+    const lang = localStorage.getItem('userLang') || 'uz';
     const grid = document.getElementById('cases-grid');
     if (!grid) return;
-    
-    grid.innerHTML = ""; // Avvalgi ma'lumotni tozalash
-    
+    grid.innerHTML = "";
     cases.forEach(c => {
-        // Budget kesini tekshirish (o'zgarishsiz qoldi)
         let clickAction = (c.name.uz === "Budget") ? 'onclick="startBudgetRoulette()"' : '';
-        
         grid.innerHTML += `
             <div class="case-card">
                 <img src="img/${c.img}" class="case-img coin-glow">
@@ -147,18 +117,12 @@ function renderTasks() {
     const lang = localStorage.getItem('userLang') || 'uz';
     const activeCont = document.getElementById('active-tasks-list');
     const doneCont = document.getElementById('done-tasks-list');
-    
     if (!activeCont || !doneCont) return;
-
     activeCont.innerHTML = "";
     doneCont.innerHTML = "";
 
     tasks.forEach(t => {
-        // Tilga qarab tugma nomini aniqlash
-        const btnText = (lang === 'uz') ? (t.done ? 'BAJARILDI' : 'OLISH') :
-                        (lang === 'ru') ? (t.done ? 'ВЫПОЛНЕНО' : 'ЗАБРАТЬ') :
-                        (t.done ? 'DONE' : 'CLAIM');
-        
+        const btnText = (lang === 'uz') ? (t.done ? 'BAJARILDI' : 'OLISH') : (lang === 'ru') ? (t.done ? 'ВЫПОЛНЕНО' : 'ЗАБРАТЬ') : (t.done ? 'DONE' : 'CLAIM');
         const taskHTML = `
             <div class="task-card-pro">
                 <div class="task-info-main">
@@ -171,226 +135,36 @@ function renderTasks() {
                 <button onclick="${t.done ? '' : `completeTask('${t.id}')`}" class="btn-action-pro" ${t.done ? 'disabled style="background:#555!important; cursor:default;"' : ''}>
                     ${btnText}
                 </button>
-            </div>
-        `;
-        
-        if (t.done) {
-            doneCont.innerHTML += taskHTML;
-        } else {
-            activeCont.innerHTML += taskHTML;
-        }
+            </div>`;
+        t.done ? doneCont.innerHTML += taskHTML : activeCont.innerHTML += taskHTML;
     });
-
-// Vazifani bajarish funksiyasi
-function completeTask(taskId) {
-    const task = tasks.find(t => t.id === taskId);
-    if (task) {
-        window.open(task.link, '_blank'); // Linkga o'tish
-        task.done = true; // Vazifani bajardi deb belgilash
-        renderTasks(); // Ro'yxatni yangilash
-    }
 }
 
 function completeTask(taskId) {
     const task = tasks.find(t => t.id === taskId);
     if (task) {
         window.open(task.link, '_blank');
-        task.done = true; // Vazifani bajardi deb belgilash
-        renderTasks();    // Ro'yxatni yangilash
+        task.done = true;
+        renderTasks();
     }
 }
 
-function saveSteamLink() {
-    const link = document.getElementById('tradeLinkInput').value;
-    window.Telegram.WebApp.CloudStorage.setItem('tradeLink', link);
-    alert("Saqlandi!");
-}
-
-function renderInventory() {
-    const grid = document.getElementById('inventory-grid');
-    if(!grid) return;
-    grid.innerHTML = "";
-    window.Telegram.WebApp.CloudStorage.getItem('inventory', (err, val) => {
-        let inv = val ? JSON.parse(val) : [];
-        inv.forEach((item, index) => {
-            grid.innerHTML += `
-                <div class="case-card">
-                    <img src="${item.img}" style="width:60px">
-                    <p>${item.name}</p>
-                    <small style="display:flex; justify-content:center; align-items:center; gap:3px;">
-                        <img src="img/nav_diamond.png" style="width:12px;"> ${item.price}
-                    </small>
-                    <button onclick="withdrawItem(${index})" style="font-size:10px;">Steam</button>
-                </div>`;
-        });
-    });
-}
-
-function sellAllInventory() {
-    window.Telegram.WebApp.CloudStorage.getItem('inventory', (err, val) => {
-        let inv = val ? JSON.parse(val) : [];
-        if(inv.length === 0) { alert("Inventar bo'sh!"); return; }
-        let total = 0;
-        inv.forEach(i => total += i.price);
-        updateBalance(total);
-        window.Telegram.WebApp.CloudStorage.setItem('inventory', '[]');
-        renderInventory();
-        alert("Barchasi sotildi! +" + total + " COIN");
-    });
-}
-
-function withdrawItem(index) {
-    window.Telegram.WebApp.CloudStorage.getItem('inventory', (err, val) => {
-        let inv = val ? JSON.parse(val) : [];
-        alert("Steamga yuborildi!");
-        inv.splice(index, 1);
-        window.Telegram.WebApp.CloudStorage.setItem('inventory', JSON.stringify(inv));
-        renderInventory();
-    });
-}
-
-function claimDailyBonus() {
-    const tg = window.Telegram.WebApp;
-    tg.CloudStorage.getItem('lastClaimDate', (err, lastClaim) => {
-        let today = new Date().toDateString();
-        if (lastClaim === today) {
-            alert("Bugun bonusni olib bo'ldingiz!");
-            return;
-        }
-        tg.CloudStorage.getItem('streakDay', (err, streak) => {
-            let dayCount = streak ? parseInt(streak) : 0;
-            dayCount++;
-            if (dayCount > 30) dayCount = 1;
-            let reward = 50 + (dayCount - 1) * 163;
-            if (dayCount === 30) reward = 5000;
-            
-            updateBalance(Math.round(reward));
-            tg.CloudStorage.setItem('lastClaimDate', today);
-            tg.CloudStorage.setItem('streakDay', dayCount.toString());
-            
-            let msgEl = document.getElementById('bonus-message');
-            if(msgEl) msgEl.innerText = dayCount + "-kun: " + Math.round(reward) + " COIN olindi!";
-            alert("Tabriklaymiz!");
-            let btn = document.getElementById('bonus-btn');
-            if(btn) btn.disabled = true;
-        });
-    });
-}
-
-function copyRefLink() {
-    const refInput = document.getElementById('ref-link');
-    refInput.style.display = 'block';
-    refInput.select();
-    document.execCommand('copy');
-    refInput.style.display = 'none';
-    alert("Havola nusxalandi!");
-}
-
-function checkNickName() {
-    const tg = window.Telegram.WebApp;
-    const user = tg.initDataUnsafe?.user;
-    if (!user) { alert("Xatolik!"); return; }
-    const fullName = ((user.first_name || "") + " " + (user.last_name || "")).toLowerCase();
-    const requiredNick = "@xanzoskins_bot";
-    
-    tg.CloudStorage.getItem('lastNickCheck', (err, lastNickCheck) => {
-        let now = Date.now();
-        if (lastNickCheck && (now - parseInt(lastNickCheck) < 24 * 60 * 60 * 1000)) {
-            alert("Siz bugun tekshirdingiz!");
-            return;
-        }
-        
-        if (fullName.includes(requiredNick.toLowerCase())) {
-            updateBalance(50);
-            tg.CloudStorage.setItem('lastNickCheck', now.toString());
-            alert("Muofot olindi!");
-        } else {
-            alert("Ismingizda @" + requiredNick + " topilmadi.");
-        }
-    });
-}
-
-// BOT ISHGA TUSHGANDA MA'LUMOTLARNI YUKLASH
+// D. Init
 document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp;
     tg.expand();
-
-    // Balansni yuklash
-    tg.CloudStorage.getItem('userBalance', (err, val) => {
-        document.getElementById('balance').innerText = val ? val : '10000';
-        updateUIBalance();
-    });
-    
-    const lang = localStorage.getItem('lang') || 'uz';
-    setLanguage(lang);
-    renderCases();
-    renderTasks();
-    
-    if (tg.initDataUnsafe?.user) {
-        let userNameEl = document.getElementById('user-name');
-        if(userNameEl) userNameEl.innerText = tg.initDataUnsafe.user.first_name;
-        
-        let refInput = document.getElementById('ref-link');
-        if(refInput) refInput.value = "https://t.me/Xanzo_skins_bot?start=" + tg.initDataUnsafe.user.id;
-    }
-
-    tg.CloudStorage.getItem('lastClaimDate', (err, lastClaim) => {
-        let btn = document.getElementById('bonus-btn');
-        if (lastClaim === new Date().toDateString() && btn) {
-            btn.disabled = true;
-        }
-    });
-});
-
-// Sozlamalar menyusini ochish/yopish
-function toggleSettings() {
-    const content = document.getElementById('settings-content');
-    content.classList.toggle('active'); // 'active' klassini qo'shadi yoki olib tashlaydi
-}
-
-// Tilni sahifani yangilamasdan o'zgartirish
-function setLanguage(lang) {
-    localStorage.setItem('userLang', lang);
-    applyLanguage(lang);
-    renderCases();
-    renderTasks(); // Buni qo'shishni unutma!
-    
-    const settingsContent = document.getElementById('settings-content');
-    if (settingsContent) settingsContent.style.display = 'none';
-}
-
-// Sahifadagi barcha data-lang elementlarini yangilash
-function applyLanguage(lang) {
-    const elements = document.querySelectorAll('[data-lang]');
-    elements.forEach(el => {
-        const key = el.getAttribute('data-lang');
-        if (translations[lang] && translations[lang][key]) {
-            // Agar element INPUT bo'lsa placeholder-ni o'zgartiramiz
-            if (el.tagName === 'INPUT') {
-                el.placeholder = translations[lang][key];
-            } else {
-                el.innerText = translations[lang][key];
-            }
-        }
-    });
-}
-
-window.onload = () => {
-    renderCases();
-    renderTasks(); // Bu yerga ham qo'sh
-    tg.ready();
     const savedLang = localStorage.getItem('userLang') || 'uz';
     applyLanguage(savedLang);
-};
+    renderCases();
+    renderTasks();
+});
 
-// Trade link bo'limini ochish
-function toggleTrade() {
-    const tradeSection = document.getElementById('trade-input-section');
-    tradeSection.style.display = (tradeSection.style.display === 'none' || tradeSection.style.display === '') ? 'block' : 'none';
+// Sozlamalar va Trade
+function toggleSettings() {
+    const content = document.getElementById('settings-content');
+    if(content) content.classList.toggle('active');
 }
-
-// Trade link bo'limini ko'rsatish
-document.getElementById('trade-link-trigger').onclick = function() {
-    const inputSection = document.getElementById('trade-input-section');
-    inputSection.style.display = inputSection.style.display === 'none' ? 'block' : 'none';
-};
+document.getElementById('trade-link-trigger')?.addEventListener('click', () => {
+    const sec = document.getElementById('trade-input-section');
+    if(sec) sec.style.display = (sec.style.display === 'none') ? 'block' : 'none';
+});
