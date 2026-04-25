@@ -28,7 +28,7 @@ function updateBalance(amount) {
 
 // TO'LDIRISH FUNKSIYASI
 function topUpBalance() {
-    console.log("To'ldirish tugmasi bosildi!");
+    console.log("To'ldirish tugmasi bosildi!"); // Konsolda shu yozuv chiqishi kerak
     const tg = window.Telegram.WebApp;
     const newBalance = 10000;
     
