@@ -47,83 +47,32 @@ let tasks = [
 ];
 
 const translations = {
-    uz: { 
-        topup: "TO'LDIRISH", 
-        cases_title: "CASES", 
-        active_tasks: "FAOL VAZIFALAR", 
-        completed: "BAJARILGAN", 
-        inventory_title: "INVENTORY", 
-        nav_bonus: "Bonus", 
-        nav_cases: "Cases", 
-        nav_inv: "Inv", 
-        nav_profile: "Profile", 
-        select_lang: "Tilni tanlang:", 
-        trade_link: "Steam Trade Link:", 
-        save_btn: "SAQLASH", 
-        claim_btn: "OLISH", 
-        done_btn: "BAJARILDI",
-        balance_desc: "Sizning balansingiz",
-        bonus_title: "DOIMIY BONUSLAR",
-        daily_reward: "Kunlik mukofot",
-        daily_desc: "+50 dan 5000 COINgacha",
-        referral_title: "Do'stlarni taklif qilish",
-        referral_desc: "Har bir do'st uchun +500 COIN",
-        nick_title: "Nikga bot nomini qo'shish",
-        nick_desc: "Har 24 soatda +50 COIN",
-        link_btn: "LINK",
-        check_btn: "TEKSHIRISH"
+    uz: {
+        cases_title: "CASES", nav_bonus: "Bonus", nav_cases: "Cases", nav_inv: "Inv", nav_profile: "Profile",
+        topup: "TO'LDIRISH", balance_desc: "Sizning balansingiz", bonus_title: "DOIMIY BONUSLAR",
+        daily_reward: "Kunlik mukofot", daily_desc: "+50 dan 5000 COINgacha", claim_btn: "OLISH",
+        referral_title: "Do'stlarni taklif qilish", referral_desc: "Har bir do'st uchun +500 COIN",
+        link_btn: "LINK", nick_title: "Nikga bot nomini qo'shish", nick_desc: "Har 24 soatda +50 COIN",
+        check_btn: "TEKSHIRISH", active_tasks: "ACTIVE TASKS", completed: "COMPLETED",
+        inventory_title: "INVENTORY", select_lang: "Tilni tanlang:", trade_link: "Steam Trade Link:", save_btn: "SAQLASH"
     },
-    ru: { 
-        topup: "ПОПОЛНИТЬ", 
-        cases_title: "КЕЙСЫ", 
-        active_tasks: "ЗАДАНИЯ", 
-        completed: "ВЫПОЛНЕНО", 
-        inventory_title: "ИНВЕНТАРЬ", 
-        nav_bonus: "Бонус", 
-        nav_cases: "Кейсы", 
-        nav_inv: "Инв.", 
-        nav_profile: "Профиль", 
-        select_lang: "Выберите язык:", 
-        trade_link: "Steam Trade Link:", 
-        save_btn: "СОХРАНИТЬ", 
-        claim_btn: "ПОЛУЧИТЬ", 
-        done_btn: "ВЫПОЛНЕНО",
-        balance_desc: "Ваш баланс",
-        bonus_title: "ПОСТОЯННЫЕ БОНУСЫ",
-        daily_reward: "Ежедневная награда",
-        daily_desc: "От 50 до 5000 COIN",
-        referral_title: "Пригласить друзей",
-        referral_desc: "За каждого друга +500 COIN",
-        nick_title: "Добавить имя бота",
-        nick_desc: "Каждые 24 часа +50 COIN",
-        link_btn: "ССЫЛКА",
-        check_btn: "ПРОВЕРИТЬ"
+    ru: {
+        cases_title: "КЕЙСЫ", nav_bonus: "Бонус", nav_cases: "Кейсы", nav_inv: "Инв.", nav_profile: "Профиль",
+        topup: "ПОПОЛНИТЬ", balance_desc: "Ваш баланс", bonus_title: "БОНУСЫ",
+        daily_reward: "Ежедневная награда", daily_desc: "От +50 до 5000 COIN", claim_btn: "ЗАБРАТЬ",
+        referral_title: "Пригласить друзей", referral_desc: "За каждого друга +500 COIN",
+        link_btn: "ССЫЛКА", nick_title: "Добавить имя бота в ник", nick_desc: "Каждые 24 часа +50 COIN",
+        check_btn: "ПРОВЕРИТЬ", active_tasks: "ЗАДАНИЯ", completed: "ВЫПОЛНЕНО",
+        inventory_title: "ИНВЕНТАРЬ", select_lang: "Выберите язык:", trade_link: "Steam Trade Link:", save_btn: "СОХРАНИТЬ"
     },
-    en: { 
-        topup: "TOP UP", 
-        cases_title: "CASES", 
-        active_tasks: "ACTIVE TASKS", 
-        completed: "COMPLETED", 
-        inventory_title: "INVENTORY", 
-        nav_bonus: "Bonus", 
-        nav_cases: "Cases", 
-        nav_inv: "Inv", 
-        nav_profile: "Profile", 
-        select_lang: "Select Language:", 
-        trade_link: "Steam Trade Link:", 
-        save_btn: "SAVE", 
-        claim_btn: "CLAIM", 
-        done_btn: "DONE",
-        balance_desc: "Your balance",
-        bonus_title: "DAILY BONUSES",
-        daily_reward: "Daily Reward",
-        daily_desc: "+50 to 5000 COIN",
-        referral_title: "Invite Friends",
-        referral_desc: "Per friend +500 COIN",
-        nick_title: "Add Bot Name to Nick",
-        nick_desc: "Every 24h +50 COIN",
-        link_btn: "LINK",
-        check_btn: "CHECK"
+    en: {
+        cases_title: "CASES", nav_bonus: "Bonus", nav_cases: "Cases", nav_inv: "Inv", nav_profile: "Profile",
+        topup: "TOP UP", balance_desc: "Your balance", bonus_title: "DAILY BONUSES",
+        daily_reward: "Daily reward", daily_desc: "+50 to 5000 COIN", claim_btn: "CLAIM",
+        referral_title: "Invite friends", referral_desc: "Per friend +500 COIN",
+        link_btn: "LINK", nick_title: "Add bot name to nickname", nick_desc: "Every 24h +50 COIN",
+        check_btn: "CHECK", active_tasks: "ACTIVE TASKS", completed: "COMPLETED",
+        inventory_title: "INVENTORY", select_lang: "Select language:", trade_link: "Steam Trade Link:", save_btn: "SAVE"
     }
 };
 
@@ -343,13 +292,32 @@ function toggleSettings() {
     content.classList.toggle('active'); // 'active' klassini qo'shadi yoki olib tashlaydi
 }
 
-// Tilni o'zgartirish funksiyasi (Agar hali yozmagan bo'lsang)
+// Tilni sahifani yangilamasdan o'zgartirish
 function setLanguage(lang) {
     localStorage.setItem('userLang', lang);
-    alert("Til " + lang.toUpperCase() + " ga o'zgartirildi!");
-    // Bu yerda sahifani yangilash yoki til fayllarini yuklash logikangni yozasan
+    applyLanguage(lang);
 }
 
+// Sahifadagi barcha data-lang elementlarini yangilash
+function applyLanguage(lang) {
+    const elements = document.querySelectorAll('[data-lang]');
+    elements.forEach(el => {
+        const key = el.getAttribute('data-lang');
+        if (translations[lang] && translations[lang][key]) {
+            el.innerText = translations[lang][key];
+        }
+    });
+}
+
+// Boshlang'ich yuklanish
+window.onload = () => {
+    renderCases();
+    tg.ready();
+    
+    // Saqlangan tilni o'qib, avtomatik qo'llash
+    const savedLang = localStorage.getItem('userLang') || 'uz';
+    applyLanguage(savedLang);
+};
 // Trade link bo'limini ochish
 function toggleTrade() {
     const tradeSection = document.getElementById('trade-input-section');
