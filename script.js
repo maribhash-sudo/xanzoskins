@@ -75,31 +75,32 @@ const translations = {
         inventory_title: "INVENTORY", select_lang: "Select language:", trade_link: "Steam Trade Link:", save_btn: "SAVE"
     }
 };
-
-const translations = {
-    uz: {
-        // ... boshqalari ...
+   uz: {
         profile_title: "Mening profilim",
-        upgrade_title: "Up-grade",
+        upgrade_title: "Upgrade",
         trade_title: "Trade Link",
         community_title: "Hamjamiyat",
-        settings_title: "Sozlamalar"
+        settings_title: "Sozlamalar",
+        select_lang: "Tilni tanlang:",
+        // ... boshqa tarjimalar
     },
     ru: {
-        // ... boshqalari ...
         profile_title: "Мой профиль",
         upgrade_title: "Апгрейд",
         trade_title: "Трейд ссылка",
         community_title: "Сообщество",
-        settings_title: "Настройки"
+        settings_title: "Настройки",
+        select_lang: "Выберите язык:",
+        // ... boshqa tarjimalar
     },
     en: {
-        // ... boshqalari ...
-        profile_title: "My profile",
-        upgrade_title: "Up-grade",
+        profile_title: "My Profile",
+        upgrade_title: "Upgrade",
         trade_title: "Trade Link",
         community_title: "Community",
-        settings_title: "Settings"
+        settings_title: "Settings",
+        select_lang: "Select Language:",
+        // ... boshqa tarjimalar
     }
 };
 
