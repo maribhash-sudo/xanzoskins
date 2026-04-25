@@ -117,16 +117,21 @@ function renderCases() {
 
 function renderTasks() {
     const lang = localStorage.getItem('userLang') || 'uz';
-    const activeContainer = document.getElementById('active-tasks-list');
-    const doneContainer = document.getElementById('done-tasks-list');
+    const activeCont = document.getElementById('active-tasks-list');
+    const doneCont = document.getElementById('done-tasks-list');
     
-    if (!activeContainer || !doneContainer) return;
+    if (!activeCont || !doneCont) return;
 
-    activeContainer.innerHTML = "";
-    doneContainer.innerHTML = "";
+    activeCont.innerHTML = "";
+    doneCont.innerHTML = "";
 
     tasks.forEach(t => {
-        const html = `
+        // Tilga qarab tugma nomini aniqlash
+        const btnText = (lang === 'uz') ? (t.done ? 'BAJARILDI' : 'OLISH') :
+                        (lang === 'ru') ? (t.done ? 'ВЫПОЛНЕНО' : 'ЗАБРАТЬ') :
+                        (t.done ? 'DONE' : 'CLAIM');
+        
+        const taskHTML = `
             <div class="task-card-pro">
                 <div class="task-info-main">
                     <div class="task-icon-circle">${t.id === 'tg' ? '📱' : '📸'}</div>
@@ -135,19 +140,18 @@ function renderTasks() {
                         <p>+${t.reward} COIN</p>
                     </div>
                 </div>
-                <button onclick="${t.done ? '' : `completeTask('${t.id}')`}" class="btn-action-pro" ${t.done ? 'disabled style="background:#555!important"' : ''}>
-                    ${t.done ? (lang === 'uz' ? 'BAJARILDI' : lang === 'ru' ? 'ВЫПОЛНЕНО' : 'DONE') : (lang === 'uz' ? 'OLISH' : lang === 'ru' ? 'ЗАБРАТЬ' : 'CLAIM')}
+                <button onclick="${t.done ? '' : `completeTask('${t.id}')`}" class="btn-action-pro" ${t.done ? 'disabled style="background:#555!important; cursor:default;"' : ''}>
+                    ${btnText}
                 </button>
             </div>
         `;
-
+        
         if (t.done) {
-            doneContainer.innerHTML += html;
+            doneCont.innerHTML += taskHTML;
         } else {
-            activeContainer.innerHTML += html;
+            activeCont.innerHTML += taskHTML;
         }
     });
-}
 
 // Vazifani bajarish funksiyasi
 function completeTask(taskId) {
@@ -159,13 +163,12 @@ function completeTask(taskId) {
     }
 }
 
-function completeTask(id) {
-    const t = tasks.find(x => x.id === id);
-    if (!t.done) {
-        t.done = true;
-        updateBalance(t.reward);
-        if(t.link) window.open(t.link, '_blank');
-        renderTasks();
+function completeTask(taskId) {
+    const task = tasks.find(t => t.id === taskId);
+    if (task) {
+        window.open(task.link, '_blank');
+        task.done = true; // Vazifani bajardi deb belgilash
+        renderTasks();    // Ro'yxatni yangilash
     }
 }
 
