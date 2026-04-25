@@ -45,7 +45,7 @@ function startBudgetRoulette() {
 
         // Animatsiyani boshlash (Keys rasmi titrashi)
         const caseImg = document.querySelector('.case-img');
-        if(caseImg) caseImg.classList.add('case-shake');
+        if(caseImg) caseImg.classList.add('animate-case');
 
         modal.style.display = 'flex';
         viewport.style.display = 'block';
@@ -55,26 +55,18 @@ function startBudgetRoulette() {
         track.style.transition = "none";
         track.style.top = "0px";
 
-        // Ruletka elementlari
         for (let i = 0; i < 50; i++) {
             let s = budgetSkins[Math.floor(Math.random() * budgetSkins.length)];
             track.innerHTML += `<div class="roulette-item"><img src="${s.img}"></div>`;
             if (i === 40) currentWinningSkin = s;
         }
 
-        // Animatsiya hisob-kitobi (Item height = 200px)
         setTimeout(() => {
-            if(caseImg) caseImg.classList.remove('case-shake');
-            
-            const WINNER_INDEX = 40;
-            const ITEM_HEIGHT = 200; 
-            const VIEWPORT_HEIGHT = 200;
-            
-            // Aniqlik uchun formula: yutgan item o'rtaga tushishi uchun
-            let offset = (WINNER_INDEX * ITEM_HEIGHT) - (VIEWPORT_HEIGHT / 2) + (ITEM_HEIGHT / 2);
+            // Animatsiyani to'xtatish
+            if(caseImg) caseImg.classList.remove('animate-case');
             
             track.style.transition = "top 5s cubic-bezier(0.15, 0, 0.15, 1)";
-            track.style.top = `-${offset}px`; 
+            track.style.top = `-${40 * 160 - 80}px`; 
         }, 500);
 
         setTimeout(() => {
