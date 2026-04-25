@@ -1,7 +1,6 @@
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-// 10 ta keys ma'lumotlari
 const caseData = [
     { id: 1, name: "Chroma Case", img: "case1.png" },
     { id: 2, name: "Gamma Case", img: "case2.png" },
@@ -15,17 +14,12 @@ const caseData = [
     { id: 10, name: "Snakebite Case", img: "case10.png" }
 ];
 
-function initApp() {
-    renderCases();
-    showPage('cases', document.querySelector('.nav-btn[onclick*="cases"]'));
-}
-
-// Keyslarni ekranga chiqarish
 function renderCases() {
     const container = document.getElementById('cases-grid');
+    if (!container) return;
     container.innerHTML = caseData.map(c => `
         <div class="case-card" onclick="openCase(${c.id})">
-            <img src="img/${c.img}" class="case-img" alt="${c.name}">
+            <img src="img/${c.img}" class="case-img">
             <div class="case-name">${c.name}</div>
         </div>
     `).join('');
@@ -33,7 +27,8 @@ function renderCases() {
 
 function showPage(pageId, btn) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + pageId).classList.add('active');
+    const targetPage = document.getElementById('page-' + pageId);
+    if (targetPage) targetPage.classList.add('active');
     
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
     if(btn) btn.classList.add('active');
@@ -42,8 +37,9 @@ function showPage(pageId, btn) {
 }
 
 function openCase(id) {
-    console.log("Keys ochilmoqda: " + id);
-    // Ruletka logikasi shu yerga keladi
+    alert("Keys ochilmoqda: " + id);
 }
 
-window.onload = initApp;
+window.onload = () => {
+    renderCases();
+};
