@@ -76,6 +76,33 @@ const translations = {
     }
 };
 
+const translations = {
+    uz: {
+        // ... boshqalari ...
+        profile_title: "Mening profilim",
+        upgrade_title: "Up-grade",
+        trade_title: "Trade Link",
+        community_title: "Hamjamiyat",
+        settings_title: "Sozlamalar"
+    },
+    ru: {
+        // ... boshqalari ...
+        profile_title: "Мой профиль",
+        upgrade_title: "Апгрейд",
+        trade_title: "Трейд ссылка",
+        community_title: "Сообщество",
+        settings_title: "Настройки"
+    },
+    en: {
+        // ... boshqalari ...
+        profile_title: "My profile",
+        upgrade_title: "Up-grade",
+        trade_title: "Trade Link",
+        community_title: "Community",
+        settings_title: "Settings"
+    }
+};
+
 function updateUIBalance() {
     let bal = document.getElementById('balance').innerText;
     let largeBal = document.getElementById('balance-large');
