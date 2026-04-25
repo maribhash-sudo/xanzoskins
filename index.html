@@ -2,57 +2,76 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Xanzo Skins</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js?5"></script>
 </head>
 <body>
-    <div class="app-shell">
-        <main class="app-content">
-            <section id="page-bonus" class="page active">
-                <div class="hero-coin-container">
-                    <img src="./img/nav_diamond.png" class="hero-coin">
-                    <div class="balance-text" id="balance">10,000</div>
-                </div>
-                <h2 class="section-title">DOIMIY BONUSLAR</h2>
-                <div class="bonus-card">
-                    <div class="bonus-info">Kunlik mukofot</div>
-                    <button class="btn-neon">OLISH</button>
-                </div>
-            </section>
+    <div class="app-container">
+        <header class="header" id="main-header">
+            <div class="balance-box" style="display: flex; align-items: center;">
+                <img src="img/nav_diamond.png" class="coin-glow" alt="coin" style="width:30px; margin-right:8px;">
+                <span id="balance">10000</span>
+            </div>
+            <button class="btn-topup" onclick="alert('To\'ldirish tizimi ishga tushirilmagan')">TO'LDIRISH</button>
+        </header>
 
-            <section id="page-cases" class="page">
+        <main>
+            <div id="page-cases" class="page active">
                 <h2 class="section-title">CASES</h2>
                 <div id="cases-grid" class="grid"></div>
-            </section>
+            </div>
 
-            <section id="page-inventory" class="page">
-                <h2 class="section-title">INVENTAR</h2>
-                <div id="inventory-grid" class="grid"></div>
-            </section>
-
-            <section id="page-profile" class="page">
-                <div class="profile-avatar"></div>
-                <div class="menu-list">
-                    <div class="menu-item-card"><span class="menu-icon">👤</span><span class="menu-text">Mening profilim</span></div>
-                    <div class="menu-item-card"><span class="menu-icon">💎</span><span class="menu-text">Up-grade</span></div>
-                    <div class="menu-item-card"><span class="menu-icon">🔗</span><span class="menu-text">Trade Link</span></div>
-                    <div class="menu-item-card"><span class="menu-icon">👥</span><span class="menu-text">Hamjamiyat</span></div>
-                    <div class="menu-item-card"><span class="menu-icon">⚙️</span><span class="menu-text">Sozlamalar</span></div>
+            <div id="page-bonus" class="page">
+                <div class="bonus-hero" style="text-align: center; padding: 20px 0;">
+                    <img src="img/nav_diamond.png" class="coin-glow" style="width:80px; margin-bottom:10px;">
+                    <h2 id="balance-large" style="font-size: 32px; margin: 0;">10000</h2>
+                    <p style="color: #777; font-size: 14px; margin-top: 5px;">Sizning balansingiz</p>
                 </div>
-            </section>
+                <h2 class="section-title">DOIMIY BONUSLAR</h2>
+                <div class="task-card-pro">
+                    <div class="task-info-main">
+                        <div class="task-icon-circle">🎁</div>
+                        <div class="task-text-content"><h4>Kunlik mukofot</h4><p>+50 dan 5000 COINgacha</p></div>
+                    </div>
+                    <button id="bonus-btn" onclick="claimDailyBonus()" class="btn-action-pro">OLISH</button>
+                </div>
+            </div>
+
+            <div id="page-inventory" class="page">
+                <h2 class="section-title">INVENTORY</h2>
+                <div id="inventory-grid" class="grid"></div>
+            </div>
         </main>
 
-        <div class="nav-container">
-            <nav class="app-nav">
-                <button class="nav-btn active" onclick="showPage('bonus', this)"><img src="./img/nav_diamond.png"></button>
-                <button class="nav-btn" onclick="showPage('cases', this)"><img src="./img/nav_case.png"></button>
-                <button class="nav-btn" onclick="showPage('inventory', this)"><img src="./img/nav_inventory.png"></button>
-                <button class="nav-btn" onclick="showPage('profile', this)"><img src="./img/profile.png"></button>
-            </nav>
+        <nav class="bottom-nav">
+            <button class="nav-btn" onclick="showPage('bonus', this)"><span>Bonus</span></button>
+            <button class="nav-btn active" onclick="showPage('cases', this)"><span>Cases</span></button>
+            <button class="nav-btn" onclick="showPage('inventory', this)"><span>Inv</span></button>
+        </nav>
+    </div>
+
+    <div id="roulette-modal">
+        <div id="roulette-viewport" class="roulette-viewport">
+            <div id="roulette-track" class="roulette-track"></div>
+        </div>
+        <div id="result-display" class="result-display">
+            <h2 style="color: #FFD700; margin-bottom: 5px;">TABRIKLAYMIZ!</h2>
+            <img id="won-skin-img" src="" alt="Skin Image">
+            <h3 id="won-skin-name" style="margin: 10px 0; font-size: 20px;">AK-47</h3>
+            <p id="won-skin-quality" style="color: #ccc; margin-bottom: 5px;">Sifat: Factory New</p>
+            <div id="won-skin-price" style="font-weight: bold; color: #FFD700; margin-bottom: 20px; font-size: 18px;"></div>
+            <div class="modal-btns">
+                <button class="btn-main btn-blue" onclick="withdrawWonSkin()">Steamga yuborish</button>
+                <button class="btn-main btn-dark" onclick="startBudgetRoulette()">Yana aylantirish</button>
+                <button class="btn-main btn-upg" onclick="sellWonSkin()">Sotish</button>
+            </div>
         </div>
     </div>
+
     <script src="script.js"></script>
+    <script src="roulette.js"></script>
 </body>
 </html>
