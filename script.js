@@ -319,17 +319,11 @@ function toggleSettings() {
 
 // Tilni sahifani yangilamasdan o'zgartirish
 function setLanguage(lang) {
-    localStorage.setItem('userLang', lang); // Endi bu yerda ham 'userLang'
+    localStorage.setItem('userLang', lang);
+    applyLanguage(lang);
+    renderCases();
+    renderTasks(); // Buni qo'shishni unutma!
     
-    // 1. Matnlarni yangilash (applyLanguage funksiyang bo'lsa)
-    if(typeof applyLanguage === 'function') {
-        applyLanguage(lang);
-    }
-    
-    // 2. Keys nomlarini darhol yangilash
-    renderCases(); 
-    
-    // 3. Sozlamalar menyusini yopish
     const settingsContent = document.getElementById('settings-content');
     if (settingsContent) settingsContent.style.display = 'none';
 }
@@ -345,16 +339,13 @@ function applyLanguage(lang) {
     });
 }
 
-window.addEventListener('load', () => {
-    // Saqlangan tilni olamiz, agar yo'q bo'lsa 'uz'
+window.onload = () => {
+    renderCases();
+    renderTasks(); // Bu yerga ham qo'sh
+    tg.ready();
     const savedLang = localStorage.getItem('userLang') || 'uz';
-    
-    // HECH QANDAY ALERTSIZ tilni qo'llaymiz
     applyLanguage(savedLang);
-    
-    // Boshqa funksiyalaringiz bo'lsa:
-    if (typeof renderCases === "function") renderCases();
-});
+};
 
 // Trade link bo'limini ochish
 function toggleTrade() {
