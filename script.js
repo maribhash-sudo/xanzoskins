@@ -1,6 +1,7 @@
 const tg = window.Telegram.WebApp;
 tg.expand();
 
+// Keyslar datasi
 const caseData = [
     { id: 1, name: "Chroma Case", img: "case1.png" },
     { id: 2, name: "Gamma Case", img: "case2.png" },
@@ -19,7 +20,7 @@ function renderCases() {
     if (!container) return;
     container.innerHTML = caseData.map(c => `
         <div class="case-card" onclick="openCase(${c.id})">
-            <img src="img/${c.img}" class="case-img">
+            <img src="img/${c.img}" class="case-img" style="width:100%;">
             <div class="case-name">${c.name}</div>
         </div>
     `).join('');
@@ -27,8 +28,7 @@ function renderCases() {
 
 function showPage(pageId, btn) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    const targetPage = document.getElementById('page-' + pageId);
-    if (targetPage) targetPage.classList.add('active');
+    document.getElementById('page-' + pageId).classList.add('active');
     
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
     if(btn) btn.classList.add('active');
