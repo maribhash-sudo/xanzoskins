@@ -31,8 +31,8 @@
 
 /* Har bir rasm uchun */
 .roulette-item {
-    width: 150%;
-    height: 200px; /* Rasmlar bo'yiga qator bo'lib tushadi */
+    width: 100%;
+    height: 100px; /* Rasmlar bo'yiga qator bo'lib tushadi */
     display: flex;
     justify-content: center;
     align-items: center;
