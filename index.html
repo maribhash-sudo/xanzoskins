@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="uz">
 <head>
@@ -11,13 +10,14 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
+    <div class="firefly-bg"></div>
     <div class="app-container">
         <header class="header" id="main-header">
             <div class="balance-box" style="display: flex; align-items: center;">
                 <img src="img/nav_diamond.png" class="coin-glow" alt="coin" style="width:30px; margin-right:8px;">
                 <span id="balance">10000</span>
             </div>
-            <button class="btn-topup" data-lang="topup">TO'LDIRISH</button>
+            <button class="btn-topup" data-lang="topup" onclick="showPage('topup-menu', this)">TO'LDIRISH</button>
         </header>
 
         <main>
@@ -40,12 +40,6 @@
                 <div class="task-card-pro"><div class="task-info-main"><div class="task-icon-circle">🏷️</div><div class="task-text-content"><h4 data-lang="nick_title">Nikga bot nomini qo'shish</h4><p data-lang="nick_desc">Har 24 soatda +50 COIN</p></div></div><button onclick="checkNickName()" class="btn-action-pro" data-lang="check_btn">TEKSHIRISH</button></div>
                 <h2 class="section-title" data-lang="active_tasks">ACTIVE TASKS</h2>
                 <div id="active-tasks-list" class="task-container"></div>
-                <h2 class="section-title" style="margin-top:30px;" data-lang="completed">COMPLETED</h2>
-                <div id="done-tasks-list" class="task-container"></div>
-            </div>
-                 <h2 class="section-title" data-lang="active_tasks">ACTIVE TASKS</h2>
-                <div id="active-tasks-list" class="task-container"></div>
-                
                 <h2 class="section-title" style="margin-top:30px;" data-lang="completed">COMPLETED</h2>
                 <div id="done-tasks-list" class="task-container"></div>
             </div>
@@ -73,41 +67,44 @@
                     <button onclick="saveSteamLink()" class="btn-action-pro" style="width: 100%; margin-top: 5px;">SAQLASH</button>
                 </div>
             </div>
-                <div class="card">
-                    <p data-lang="trade_link">Steam Trade Link:</p>
-                    <input type="text" id="tradeLinkInput" placeholder="https://steamcommunity.com/...">
-                    <button onclick="saveSteamLink()" data-lang="save_btn" class="btn-action-pro" style="width: 100%; margin-top: 10px;">SAQLASH</button>
-                </div>
+
+            <div id="page-topup-menu" class="page">
+                <h2 class="section-title">TO'LDIRISH</h2>
+                <button class="btn-action-pro" style="width: 90%; margin: 10px;" onclick="showPage('topup-uzs', this)">🇺🇿 SO'M (UZS)</button>
+                <button class="btn-action-pro" style="width: 90%; margin: 10px;" onclick="showPage('topup-usd', this)">🇺🇸 DOLLAR (USD)</button>
+            </div>
+            <div id="page-topup-uzs" class="page">
+                <button class="btn-back" onclick="showPage('topup-menu', this)">⬅️ ORTGA</button>
+                <div id="uzs-list" class="topup-packages-list"></div>
+            </div>
+            <div id="page-topup-usd" class="page">
+                <button class="btn-back" onclick="showPage('topup-menu', this)">⬅️ ORTGA</button>
+                <div id="usd-list" class="topup-packages-list"></div>
             </div>
         </main>
 
         <nav class="bottom-nav">
-            <button class="nav-btn" onclick="showPage('bonus', this)"><img src="img/nav_diamond.png"><span data-lang="nav_bonus">Bonus</span></button>
-            <button class="nav-btn active" onclick="showPage('cases', this)"><img src="img/nav_case.png"><span data-lang="nav_cases">Cases</span></button>
-            <button class="nav-btn" onclick="showPage('inventory', this)"><img src="img/nav_inventory.png"><span data-lang="nav_inv">Inv</span></button>
-            <button class="nav-btn" onclick="showPage('profile', this)"><img src="img/profile.png"><span data-lang="nav_profile">Profile</span></button>
+            <button class="nav-btn" onclick="showPage('bonus', this)"><span data-lang="nav_bonus">Bonus</span></button>
+            <button class="nav-btn active" onclick="showPage('cases', this)"><span data-lang="nav_cases">Cases</span></button>
+            <button class="nav-btn" onclick="showPage('inventory', this)"><span data-lang="nav_inv">Inv</span></button>
+            <button class="nav-btn" onclick="showPage('profile', this)"><span data-lang="nav_profile">Profile</span></button>
         </nav>
     </div>
 
-    <div id="roulette-modal" class="roulette-modal" style="display: none;">
-        <div id="roulette-viewport" class="roulette-viewport">
-            <div id="roulette-track" class="roulette-track"></div>
+    <div id="roulette-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:9999; justify-content:center; align-items:center; flex-direction:column;">
+        <div id="roulette-viewport" style="width:100%; overflow:hidden; height:160px;">
+            <div id="roulette-track" style="position:relative; top:0; display:flex; flex-direction:column; align-items:center;"></div>
         </div>
-        <div id="result-display" class="result-display" style="display: none;">
+        <div id="result-display" style="display:none; text-align:center; color:#fff; padding:20px;">
             <h3>YUTUQ!</h3>
-            <img id="won-skin-img" src="" alt="Winner">
-            <p id="won-skin-name"></p>
-            <p id="won-skin-price"></p>
-            <div class="modal-btns">
-                <button onclick="withdrawWonSkin()">STEAMGA YUBORISH</button>
-                <button onclick="sellWonSkin()" style="background:#444;">SOTISH</button>
-                <button onclick="startBudgetRoulette()" style="background:linear-gradient(to bottom, #ff8c00, #ff4500);">YANA AYLANTIRISH</button>
-            </div>
+            <img id="won-skin-img" style="width:150px; border-radius:10px;">
+            <p id="won-skin-name" style="font-size:20px; font-weight:bold;"></p>
+            <button onclick="document.getElementById('roulette-modal').style.display='none'" style="margin-top:20px; padding:10px 30px; background:#ff00ff; border:none; color:white; font-weight:bold; border-radius:5px;">YOPISH</button>
         </div>
     </div>
-
+    
     <script src="script.js"></script>
     <script src="audio.js"></script>
     <script src="roulette.js"></script>
-</body>
+</body> 
 </html>
