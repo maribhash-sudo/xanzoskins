@@ -10,61 +10,55 @@
     align-items: center;
 }
 
-/* Oyna 9:16 formatda */
+/* Faqat ramka (viewport) uchun */
 #roulette-viewport {
-    width: 200px; /* Eni */
-    height: 350px; /* Bo'yi */
+    width: 150px !important;    /* Ramka eni (tor) */
+    height: 450px !important;   /* Ramka bo'yi (uzun) */
     border: 3px solid #ff00ff; 
     border-radius: 20px; 
     overflow: hidden; 
-    background: #000; 
     position: relative;
+    background: #000;
 }
 
-/* ENG MUHIM QISM: BU YO'LNI BO'YIGA QARATADI */
+/* Rasmlar joylashgan yo'l (faqat bo'yiga) */
 #roulette-track {
-    position: absolute; 
-    top: 0; 
-    left: 0;
-    width: 100%;
-    display: flex !important; 
+    display: flex !important;
     flex-direction: column !important; /* MAJBURAN BO'YIGA */
     align-items: center;
+    width: 100%;
 }
 
-/* Har bir rasm */
+/* Har bir rasm uchun */
 .roulette-item {
     width: 100%;
-    height: 150px; /* Har bir rasm uchun joy */
-    min-height: 150px;
-    display: flex; 
-    justify-content: center; 
+    height: 150px; /* Rasmlar bo'yiga qator bo'lib tushadi */
+    display: flex;
+    justify-content: center;
     align-items: center;
     border-bottom: 1px solid #333;
 }
-
 .roulette-item img {
     width: 100px; 
     height: 100px; 
     object-fit: contain;
 }
 
-/* Markaziy chiziq */
+/* O'rtadagi markaziy chiziq (Reels'dagi "safe area" kabi) */
 #roulette-viewport::after {
     content: "";
     position: absolute;
     top: 50%;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.5);
+    left: 10%;
+    width: 80%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #ff00ff, transparent);
     z-index: 10;
     transform: translateY(-50%);
-    pointer-events: none;
 }
 /* Natija oynasi */
 #result-display {
-    width: 80%;
+    background: transparent;
     text-align: center;
     color: #fff;
     padding: 20px;
