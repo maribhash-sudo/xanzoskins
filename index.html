@@ -85,54 +85,54 @@
             </div>
 
             <div id="page-profile" class="page">
-    <div class="profile-header" style="text-align: center; padding: 20px 0;">
-        <div class="avatar-glow-large">
-            <img src="img/profile.png" alt="User Avatar" style="width: 100%; border-radius: 50%;">
-        </div>
-    </div>
+                <div class="profile-header" style="text-align: center; padding: 20px 0;">
+                    <div class="avatar-glow-large">
+                        <img src="img/profile.png" alt="User Avatar" style="width: 100%; border-radius: 50%;">
+                    </div>
+                </div>
 
-    <div class="profile-menu">
-    <div class="menu-item-card">
-        <span class="menu-icon">👤</span> 
-        <span class="menu-text" data-lang="profile_title">Mening profilim</span>
-    </div>
-    
-    <div class="menu-item-card">
-        <span class="menu-icon">💎</span> 
-        <span class="menu-text" data-lang="upgrade_title">Up-grade</span>
-    </div>
+                <div class="profile-menu">
+                    <div class="menu-item-card">
+                        <span class="menu-icon">👤</span> 
+                        <span class="menu-text" data-lang="profile_title">Mening profilim</span>
+                    </div>
+                    
+                    <div class="menu-item-card">
+                        <span class="menu-icon">💎</span> 
+                        <span class="menu-text" data-lang="upgrade_title">Up-grade</span>
+                    </div>
 
-    <div class="menu-item-card" id="trade-link-trigger">
-        <span class="menu-icon">🔗</span> 
-        <span class="menu-text" data-lang="trade_title">Trade Link</span>
-    </div>
+                    <div class="menu-item-card" id="trade-link-trigger" onclick="toggleTrade()">
+                        <span class="menu-icon">🔗</span> 
+                        <span class="menu-text" data-lang="trade_title">Trade Link</span>
+                    </div>
 
-    <div class="menu-item-card">
-        <span class="menu-icon">👥</span> 
-        <span class="menu-text" data-lang="community_title">Hamjamiyat</span>
-    </div>
+                    <div class="menu-item-card">
+                        <span class="menu-icon">👥</span> 
+                        <span class="menu-text" data-lang="community_title">Hamjamiyat</span>
+                    </div>
 
-    <div class="menu-item-card" onclick="toggleSettings()">
-        <span class="menu-icon">⚙️</span> 
-        <span class="menu-text" data-lang="settings_title">Sozlamalar</span>
-    </div>
-</div>
-        
-        <div id="settings-content" class="settings-drawer" style="display: none;">
-            <p data-lang="select_lang" style="font-size: 12px; color: #888; margin-bottom: 10px;">Tilni tanlang:</p>
-            <div class="grid-buttons">
-                <button class="lang-btn" onclick="setLanguage('uz')">🇺🇿 UZ</button>
-                <button class="lang-btn" onclick="setLanguage('ru')">🇷🇺 RU</button>
-                <button class="lang-btn" onclick="setLanguage('en')">🇺🇸 EN</button>
+                    <div class="menu-item-card" onclick="toggleSettings()">
+                        <span class="menu-icon">⚙️</span> 
+                        <span class="menu-text" data-lang="settings_title">Sozlamalar</span>
+                    </div>
+                </div>
+                        
+                <div id="settings-content" class="settings-drawer" style="display: none;">
+                    <p data-lang="select_lang" style="font-size: 12px; color: #888; margin-bottom: 10px;">Tilni tanlang:</p>
+                    <div class="grid-buttons">
+                        <button class="lang-btn" onclick="setLanguage('uz')">🇺🇿 UZ</button>
+                        <button class="lang-btn" onclick="setLanguage('ru')">🇷🇺 RU</button>
+                        <button class="lang-btn" onclick="setLanguage('en')">🇺🇸 EN</button>
+                    </div>
+                </div>
+
+                <div id="trade-input-section" class="settings-drawer" style="display: none; margin-top: 10px;">
+                    <input type="text" id="tradeLinkInput" placeholder="https://steamcommunity.com/tradeoffer/new/..." style="font-size: 12px;">
+                    <button onclick="saveSteamLink()" class="btn-action-pro" style="width: 100%; margin-top: 5px;">SAQLASH</button>
+                </div>
             </div>
-        </div>
-
-        <div id="trade-input-section" class="settings-drawer" style="display: none; margin-top: 10px;">
-            <input type="text" id="tradeLinkInput" placeholder="https://steamcommunity.com/tradeoffer/new/..." style="font-size: 12px;">
-            <button onclick="saveSteamLink()" class="btn-action-pro" style="width: 100%; margin-top: 5px;">SAQLASH</button>
-        </div>
-    </div>
-</div>
+        </main>
 
         <nav class="bottom-nav">
             <button class="nav-btn" onclick="showPage('bonus', this)"><img src="img/nav_diamond.png"><span data-lang="nav_bonus">Bonus</span></button>
