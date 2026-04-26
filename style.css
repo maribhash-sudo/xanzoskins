@@ -162,3 +162,10 @@ input { width: 100%; padding: 12px; background: #000; border: 1px solid var(--bo
 .package-item:hover { box-shadow: 0 0 20px rgba(138, 43, 226, 0.3); border-color: var(--fire); }
 .package-info { display: flex; align-items: center; gap: 12px; color: white; font-weight: 700; }
 .package-price { color: #ffd700; font-weight: 800; }
+
+.case-buy-btn {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    position: relative;
+    z-index: 100 !important;
+}
