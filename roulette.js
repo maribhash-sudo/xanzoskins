@@ -28,12 +28,10 @@ function startBudgetRoulette() {
     tg.CloudStorage.getItem('userBalance', (err, val) => {
         let bal = val ? parseInt(val) : 10000;
         
+        // --- Sening balans tekshiruvchi koding ---
         if (bal < 500) { alert("Balans yetarli emas!"); return; }
-        
-        // Balansdan 500 ayiramiz (updateBalance funksiyasi script.js da bor)
         updateBalance(-500); 
         
-        // Ovoz effekti
         if(typeof playSound === 'function') playSound('spin');
 
         const modal = document.getElementById('roulette-modal');
@@ -41,7 +39,10 @@ function startBudgetRoulette() {
         const viewport = document.getElementById('roulette-viewport');
         const resultDisplay = document.getElementById('result-display');
         
-        if (!modal || !track || !viewport || !resultDisplay) return;
+        if (!modal || !track || !viewport || !resultDisplay) {
+            console.error("Modal elementlari topilmadi!");
+            return;
+        }
 
         // Animatsiyani boshlash (Keys rasmi titrashi)
         const caseImg = document.querySelector('.case-img');
@@ -55,20 +56,43 @@ function startBudgetRoulette() {
         track.style.transition = "none";
         track.style.top = "0px";
 
-        for (let i = 0; i < 50; i++) {
+        // Rasmlarni to'ldirish (40 ta element)
+        for (let i = 0; i < 40; i++) {
             let s = budgetSkins[Math.floor(Math.random() * budgetSkins.length)];
-            track.innerHTML += `<div class="roulette-item"><img src="${s.img}"></div>`;
-            if (i === 40) currentWinningSkin = s;
+            let div = document.createElement('div');
+            div.className = 'roulette-item';
+            div.innerHTML = `<img src="${s.img}">`;
+            track.appendChild(div);
+            if (i === 30) currentWinningSkin = s; // 30-o'rinda to'xtaydi
         }
 
+        // Spin animatsiyasini ishga tushirish
         setTimeout(() => {
-            // Animatsiyani to'xtatish
             if(caseImg) caseImg.classList.remove('animate-case');
             
             track.style.transition = "top 5s cubic-bezier(0.15, 0, 0.15, 1)";
-            track.style.top = `-${40 * 160 - 80}px`; 
+            // Trackni 30-elementga moslab to'xtatamiz
+            track.style.top = `-${30 * 160 - 80}px`; 
         }, 500);
 
+        // Natijani ko'rsatish
+        setTimeout(() => {
+            viewport.style.display = 'none';
+            resultDisplay.style.display = 'block';
+            document.getElementById('won-skin-img').src = currentWinningSkin.img;
+            document.getElementById('won-skin-name').innerText = currentWinningSkin.name;
+            
+            const priceEl = document.getElementById('won-skin-price');
+            if(priceEl) {
+                priceEl.innerHTML = `<img src="img/nav_diamond.png" style="width:16px; vertical-align:middle;"> ${currentWinningSkin.price} COIN`;
+            }
+            
+            addToInventory(currentWinningSkin);
+            
+            if(typeof playSound === 'function') playSound('win');
+        }, 500); 
+    });
+}
         setTimeout(() => {
             viewport.style.display = 'none';
             resultDisplay.style.display = 'block';
