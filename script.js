@@ -53,6 +53,24 @@ let tasks = [
     { id: 'insta', name: {uz: "Instagram Obuna", ru: "Подписка Instagram", en: "Follow Instagram"}, reward: 250, done: false, link: 'https://instagram.com/' }
 ];
 
+// --- TO'LOV PAKETLARI (10 tadan) ---
+const uzsPackages = [
+    { coins: 25000, price: "15 000 UZS" }, { coins: 62500, price: "35 000 UZS" },
+    { coins: 125000, price: "70 000 UZS" }, { coins: 312500, price: "170 000 UZS" },
+    { coins: 625000, price: "340 000 UZS" }, { coins: 1250000, price: "680 000 UZS" },
+    { coins: 2500000, price: "1 300 000 UZS" }, { coins: 5000000, price: "2 500 000 UZS" },
+    { coins: 10000000, price: "4 800 000 UZS" }, { coins: 12000000, price: "5 500 000 UZS" }
+];
+
+const usdPackages = [
+    { coins: 25000, price: "1.8 $" }, { coins: 62500, price: "4.05 $" },
+    { coins: 125000, price: "7.8 $" }, { coins: 312500, price: "18.75 $" },
+    { coins: 625000, price: "37.5 $" }, { coins: 1250000, price: "75.0 $" },
+    { coins: 2500000, price: "150.0 $" }, { coins: 5000000, price: "260.0 $" },
+    { coins: 10000000, price: "500.0 $" }, { coins: 12000000, price: "750.0 $" }
+];
+
+// Sening yuborgan tarjimalar obyekting
 const translations = {
     uz: { 
         topup: "TO'LDIRISH", cases_title: "CASES", active_tasks: "FAOL VAZIFALAR", completed: "BAJARILGAN", 
@@ -149,6 +167,20 @@ function renderTasks() {
     });
 }
 
+// TO'LOV FUNKSIYALARI
+function renderTopUpList(containerId, data) {
+    const list = document.getElementById(containerId);
+    if (!list) return;
+    list.innerHTML = "";
+    data.forEach(p => {
+        list.innerHTML += `
+            <div class="package-item" onclick="alert('Demo: ${p.coins} Coin olindi!'); updateBalance(${p.coins}); showPage('cases', document.querySelector('.nav-btn[onclick*=\\'cases\\']'));">
+                <div class="package-info">${p.coins.toLocaleString()} Coin</div>
+                <div class="package-price">${p.price}</div>
+            </div>`;
+    });
+}
+
 // E. Interfeys funksiyalari
 function toggleSettings() {
     const content = document.getElementById('settings-content');
@@ -175,6 +207,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp;
     tg.expand();
     
+    // To'lov paketlarini chizish
+    renderTopUpList('uzs-list', uzsPackages);
+    renderTopUpList('usd-list', usdPackages);
+
     const lang = localStorage.getItem('lang') || 'uz';
     applyLanguage(lang);
     renderCases();
