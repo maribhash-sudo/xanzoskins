@@ -1,67 +1,49 @@
 /* Asosiy Modal - Fonni xiralashtirish (Glassmorphism) */
-/* 1. Modal oynaning butun ekranni egallashi va xiralashishi */
 #roulette-modal {
     display: none; 
     position: fixed; 
     top: 0; left: 0; 
-    width: 100vw; height: 100vh; 
-    background: rgba(0, 0, 0, 0.7); /* Qora fonni 70% shaffof qildik */
-    backdrop-filter: blur(15px);   /* Orqa fonni xiralashtirish (Glassmorphism) */
+    width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.95); 
     z-index: 9999; 
     justify-content: center; 
     align-items: center; 
     flex-direction: column;
 }
 
-/* 2. Asosiy "Oyna" (Viewport) - Kattaroq va chiroyli */
 #roulette-viewport {
-    width: 300px;
-    height: 180px;
-    background: rgba(255, 255, 255, 0.05); /* Oynani yengil shaffof qildik */
-    border: 3px solid #ff00ff; /* Neon pushti ramka */
-    border-radius: 20px;
-    overflow: hidden;
+    width: 180px;   /* Eni toraytirildi */
+    height: 450px;  /* Bo'yi cho'zildi (Vertikal) */
+    overflow: hidden; 
+    border: 3px solid #ff00ff; 
+    border-radius: 10px; 
+    background: #111; 
     position: relative;
-    box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
 }
 
-/* O'rtadagi chiziq (Win-line) */
-#roulette-viewport::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: rgba(255, 255, 255, 0.5);
-    z-index: 10;
-    transform: translateY(-50%);
-}
-
-/* 3. Aylanadigan track */
 #roulette-track {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+    position: absolute; 
+    top: 0; 
+    width: 100%; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
 }
 
-/* 4. Har bir skin bloki */
 .roulette-item {
-    height: 180px; /* Viewport balandligiga teng */
-    min-height: 180px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    height: 150px; /* Har bir element bo'yi */
+    min-height: 150px; 
+    width: 100%;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    border-bottom: 1px solid #333;
 }
 
 .roulette-item img {
-    width: 120px; /* Rasmni kattalashtirdik */
-    height: 120px;
+    width: 100px; 
+    height: 100px; 
     object-fit: contain;
-    filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
 }
 /* Natija chiqish qismi */
 .result-display { 
