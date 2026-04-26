@@ -1,0 +1,140 @@
+/* Asosiy Modal - Fonni xiralashtirish (Glassmorphism) */
+.roulette-modal { 
+    display: none; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100vw; 
+    height: 100vh; 
+    background: rgba(0, 0, 0, 0.85); 
+    z-index: 99999; 
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column; 
+    backdrop-filter: blur(15px); /* Orqa fonni chiroyli xiralashtiradi */
+    -webkit-backdrop-filter: blur(15px);
+}
+
+/* Roulette Oynasi - Neon effekt va ramka */
+.roulette-viewport { 
+    width: 320px; 
+    height: 180px; 
+    border: 3px solid #FFD700; 
+    border-radius: 20px; 
+    overflow: hidden; 
+    position: relative; 
+    background: radial-gradient(circle, #222 0%, #000 100%); 
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.2), inset 0 0 20px rgba(0,0,0,1);
+}
+
+/* O'rtadagi qizil chiziq (Win-line) */
+.roulette-viewport::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: rgba(255, 69, 0, 0.8);
+    box-shadow: 0 0 10px #FF4500;
+    z-index: 10;
+    transform: translateY(-50%);
+}
+
+.roulette-track { 
+    position: absolute; 
+    top: 0; 
+    width: 100%; 
+    display: flex; 
+    flex-direction: column; 
+}
+
+/* Har bir skin bloki */
+.roulette-item { 
+    height: 180px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    background: rgba(255, 255, 255, 0.02);
+    transition: transform 0.3s;
+}
+
+.roulette-item img { 
+    width: 80%; 
+    height: 80%; 
+    object-fit: contain; 
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.1));
+}
+
+/* Natija chiqish qismi */
+.result-display { 
+    display: none; 
+    text-align: center; 
+    color: white; 
+    padding: 25px;
+    animation: zoomIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.result-display img { 
+    width: 200px; 
+    filter: drop-shadow(0 0 25px #FFD700);
+    margin-bottom: 15px; 
+}
+
+.result-display h3 { 
+    color: #FFD700; 
+    font-size: 28px; 
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0; 
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+}
+
+/* Tugmalar - Premium ko'rinish */
+.modal-btns { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 12px; 
+    margin-top: 20px; 
+    width: 80%;
+}
+
+.modal-btns button { 
+    padding: 15px; 
+    border: none; 
+    border-radius: 12px; 
+    color: white; 
+    cursor: pointer; 
+    font-weight: 800; 
+    text-transform: uppercase;
+    background: linear-gradient(45deg, #FF4500, #FF8C00); 
+    box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
+    transition: 0.2s;
+}
+
+.modal-btns button:active {
+    transform: scale(0.95);
+}
+
+.withdraw-btn {
+    background: linear-gradient(45deg, #32CD32, #228B22) !important;
+}
+
+/* Keys titrash animatsiyasi */
+.case-shake {
+    animation: shake 0.2s infinite;
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    20% { transform: translate(-1px, -2px) rotate(-1deg); }
+    40% { transform: translate(-3px, 0px) rotate(1deg); }
+    60% { transform: translate(3px, 2px) rotate(0deg); }
+    80% { transform: translate(1px, -1px) rotate(1deg); }
+    100% { transform: translate(-1px, 2px) rotate(-1deg); }
+}
