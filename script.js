@@ -131,12 +131,14 @@ function renderCases() {
     if(!grid) return;
     grid.innerHTML = "";
     cases.forEach(c => {
-        let clickAction = (c.name.uz === "Budget") ? 'onclick="startBudgetRoulette()"' : '';
+        // Budget keysi uchun maxsus funksiyani aniq chaqiramiz
+        let clickAttr = (c.name.en === "Budget") ? 'onclick="startBudgetRoulette()"' : '';
+        
         grid.innerHTML += `
             <div class="case-card">
                 <img src="img/${c.img}" class="case-img coin-glow">
                 <p class="case-name">${c.name[lang]}</p>
-                <button class="case-buy-btn" ${clickAction}>
+                <button class="case-buy-btn" ${clickAttr}>
                     <span>${c.price}</span>
                     <img src="img/nav_diamond.png" style="width:24px; height:24px; object-fit:contain; aspect-ratio:1/1; vertical-align:middle;">
                 </button>
