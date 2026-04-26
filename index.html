@@ -32,21 +32,17 @@
                     <h2 id="balance-large" style="font-size: 32px; margin: 0;">10000</h2>
                     <p style="color: #777; font-size: 14px; margin-top: 5px;" data-lang="balance_desc">Sizning balansingiz</p>
                 </div>
-
                 <h2 class="section-title" data-lang="bonus_title">DOIMIY BONUSLAR</h2>
-
-                <div class="task-card-pro">
-                    <div class="task-info-main">
-                        <div class="task-icon-circle">🎁</div>
-                        <div class="task-text-content">
-                            <h4 data-lang="daily_reward">Kunlik mukofot</h4>
-                            <p data-lang="daily_desc">+50 dan 5000 COINgacha</p>
-                        </div>
-                    </div>
-                    <button id="bonus-btn" onclick="claimDailyBonus()" class="btn-action-pro" data-lang="claim_btn">OLISH</button>
-                </div>
+                <div class="task-card-pro"><div class="task-info-main"><div class="task-icon-circle">🎁</div><div class="task-text-content"><h4 data-lang="daily_reward">Kunlik mukofot</h4><p data-lang="daily_desc">+50 dan 5000 COINgacha</p></div></div><button id="bonus-btn" onclick="claimDailyBonus()" class="btn-action-pro" data-lang="claim_btn">OLISH</button></div>
                 <p id="bonus-message" style="text-align:center; font-size: 12px; margin-top: -5px; margin-bottom: 15px;"></p>
-
+                <div class="task-card-pro"><div class="task-info-main"><div class="task-icon-circle">👥</div><div class="task-text-content"><h4 data-lang="referral_title">Do'stlarni taklif qilish</h4><p data-lang="referral_desc">Har bir do'st uchun +500 COIN</p></div></div><button onclick="copyRefLink()" class="btn-action-pro" data-lang="link_btn">LINK</button></div>
+                <input type="text" id="ref-link" readonly style="display:none;">
+                <div class="task-card-pro"><div class="task-info-main"><div class="task-icon-circle">🏷️</div><div class="task-text-content"><h4 data-lang="nick_title">Nikga bot nomini qo'shish</h4><p data-lang="nick_desc">Har 24 soatda +50 COIN</p></div></div><button onclick="checkNickName()" class="btn-action-pro" data-lang="check_btn">TEKSHIRISH</button></div>
+                <h2 class="section-title" data-lang="active_tasks">ACTIVE TASKS</h2>
+                <div id="active-tasks-list" class="task-container"></div>
+                <h2 class="section-title" style="margin-top:30px;" data-lang="completed">COMPLETED</h2>
+                <div id="done-tasks-list" class="task-container"></div>
+            </div>
                 <div class="task-card-pro">
                     <div class="task-info-main">
                         <div class="task-icon-circle">👥</div>
@@ -84,14 +80,22 @@
             </div>
 
             <div id="page-profile" class="page">
-                <div class="card">
-                    <p data-lang="select_lang">Tilni tanlang:</p>
-                    <div class="grid-buttons">
-                        <button class="lang-btn" onclick="setLanguage('uz')">🇺🇿 UZ</button>
-                        <button class="lang-btn" onclick="setLanguage('ru')">🇷🇺 RU</button>
-                        <button class="lang-btn" onclick="setLanguage('en')">🇺🇸 EN</button>
-                    </div>
+                <div class="profile-header" style="text-align: center; padding: 20px 0;"><div class="avatar-glow-large"><img src="img/profile.png" style="width: 100%; border-radius: 50%;"></div></div>
+                <div class="profile-menu">
+                    <div class="menu-item-card"><span class="menu-icon">👤</span> <span class="menu-text" data-lang="profile_title">Mening profilim</span></div>
+                    <div class="menu-item-card"><span class="menu-icon">💎</span> <span class="menu-text" data-lang="upgrade_title">Up-grade</span></div>
+                    <div class="menu-item-card" id="trade-link-trigger" onclick="toggleTrade()"><span class="menu-icon">🔗</span> <span class="menu-text" data-lang="trade_title">Trade Link</span></div>
+                    <div class="menu-item-card"><span class="menu-icon">👥</span> <span class="menu-text" data-lang="community_title">Hamjamiyat</span></div>
+                    <div class="menu-item-card" onclick="toggleSettings()"><span class="menu-icon">⚙️</span> <span class="menu-text" data-lang="settings_title">Sozlamalar</span></div>
                 </div>
+                <div id="settings-content" class="settings-drawer" style="display: none;">
+                    <button class="lang-btn" onclick="setLanguage('uz')">🇺🇿 UZ</button><button class="lang-btn" onclick="setLanguage('ru')">🇷🇺 RU</button><button class="lang-btn" onclick="setLanguage('en')">🇺🇸 EN</button>
+                </div>
+                <div id="trade-input-section" class="settings-drawer" style="display: none; margin-top: 10px;">
+                    <input type="text" id="tradeLinkInput" placeholder="https://steamcommunity.com/..." style="font-size: 12px;">
+                    <button onclick="saveSteamLink()" class="btn-action-pro" style="width: 100%; margin-top: 5px;">SAQLASH</button>
+                </div>
+            </div>
                 <div class="card">
                     <p data-lang="trade_link">Steam Trade Link:</p>
                     <input type="text" id="tradeLinkInput" placeholder="https://steamcommunity.com/...">
