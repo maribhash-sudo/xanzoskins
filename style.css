@@ -1,15 +1,15 @@
 :root { 
-    --fire: #FF4500; 
+    --fire: #8A2BE2; /* Olov rang o'rniga Neon Purple */
     --bg: #000; 
-    --card: rgba(20, 20, 20, 0.6); /* Shaffof kartalar */
-    --border: rgba(255, 69, 0, 0.3); /* Olov rangli shaffof chegara */
+    --card: rgba(30, 20, 40, 0.6); /* Shaffof kartalar (binafsha tusda) */
+    --border: rgba(138, 43, 226, 0.3); /* Neon chegara */
     --green: #2ecc71; 
 }
 
 * { box-sizing: border-box; }
 
 body { 
-    background: radial-gradient(circle at top, #1a0505 0%, #000 100%); 
+    background: radial-gradient(circle at top, #1a052e 0%, #000 100%); 
     color: #fff; 
     font-family: 'Montserrat', sans-serif; 
     margin: 0; 
@@ -21,22 +21,22 @@ body {
 /* HEADER */
 .header { 
     display: flex; justify-content: space-between; align-items: center; 
-    background: rgba(20,20,20,0.8); padding: 15px; border-radius: 12px; 
+    background: rgba(20, 20, 30, 0.8); padding: 15px; border-radius: 12px; 
     border-bottom: 2px solid var(--fire); 
-    box-shadow: 0 0 10px rgba(255, 69, 0, 0.2);
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.4);
 }
-#balance { color: var(--fire); font-size: 22px; font-weight: 800; }
+#balance { color: var(--fire); font-size: 22px; font-weight: 800; text-shadow: 0 0 10px var(--fire); }
 
 /* NAVIGATSIYA */
 .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 85px; background: #000; border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index: 1000; }
 .nav-btn { background: none; border: none; color: #777; display: flex; flex-direction: column; align-items: center; width: 25%; gap: 5px; cursor: pointer; }
 .nav-btn img { width: 36px; height: 36px; object-fit: contain; }
-.nav-btn.active { color: var(--fire); }
+.nav-btn.active { color: var(--fire); text-shadow: 0 0 8px var(--fire); }
 
-/* GRID VA KARTALAR (Shaffof va Nurlanuvchi) */
+/* GRID VA KARTALAR */
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
 
-/* KEYS KARTASI (Animatsiya qo'shildi) */
+/* KEYS KARTASI */
 .case-card { 
     background: transparent !important; 
     border: none !important; 
@@ -44,16 +44,15 @@ body {
     text-align: center;
     box-shadow: none !important;
     backdrop-filter: none !important;
-    /* Animatsiya qo'shildi */
     animation: floatEffect 3s ease-in-out infinite;
 }
 .case-card img { 
     width: 80%; 
     margin-bottom: 10px; 
-    filter: drop-shadow(0 0 10px var(--fire)); /* GLOW EFEKTI */
+    filter: drop-shadow(0 0 15px var(--fire)); /* Neon Glow */
 }
 
-/* QOLGAN KARTALAR (Bonus va vazifalar uchun o'zgarishsiz) */
+/* QOLGAN KARTALAR */
 .card, .task-card, .task-card-pro { 
     background: var(--card); 
     border: 1px solid var(--border); 
@@ -61,10 +60,9 @@ body {
     border-radius: 15px; 
     text-align: center;
     backdrop-filter: blur(10px);
-    box-shadow: 0 0 15px rgba(255, 69, 0, 0.1);
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.2);
 }
 
-/* --- KEYS QISMI KOINNI KATTALASHTIRISH VA DUMALOQ QILISH --- */
 .case-card button {
     display: flex !important;
     justify-content: center;
@@ -74,15 +72,15 @@ body {
 }
 
 .case-card button img {
-    width: 24px !important;    /* O'lcham */
-    height: 24px !important;   /* O'lcham */
-    object-fit: contain !important; /* Rasm cho'zilmasligi uchun */
-    aspect-ratio: 1 / 1 !important; /* Mukammal kvadrat/dumaloq shakl uchun */
+    width: 24px !important;    
+    height: 24px !important;   
+    object-fit: contain !important; 
+    aspect-ratio: 1 / 1 !important; 
     margin-bottom: 0 !important;
     vertical-align: middle;
 }
 
-/* TASK CARD PRO (Bonus sahifasi uchun) */
+/* TASK CARD PRO */
 .task-card-pro {
     display: flex; justify-content: space-between; align-items: center;
     text-align: left; margin-bottom: 15px;
@@ -90,13 +88,13 @@ body {
 .task-info-main { display: flex; align-items: center; gap: 15px; }
 .task-icon-circle {
     width: 40px; height: 40px;
-    background: rgba(255, 69, 0, 0.1);
+    background: rgba(138, 43, 226, 0.15);
     border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
     font-size: 18px; border: 1px solid var(--border);
 }
 .task-text-content h4 { margin: 0; font-size: 14px; color: #fff; }
-.task-text-content p { margin: 3px 0 0; font-size: 12px; color: #ff8c00; font-weight: 600; }
+.task-text-content p { margin: 3px 0 0; font-size: 12px; color: var(--fire); font-weight: 600; }
 
 /* KICHIKROQ TUGMALAR */
 .btn-action-pro {
@@ -109,222 +107,58 @@ body {
     text-transform: uppercase;
     font-weight: 800 !important;
     cursor: pointer;
-    box-shadow: 0 0 10px rgba(255, 69, 0, 0.4);
-    width: auto !important; /* Tugma kartani yirtmasligi uchun */
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+    width: auto !important;
 }
 .btn-action-pro:active { transform: scale(0.95); }
 
 /* QOLGAN ELEMENTLAR */
-button { width: 100%; padding: 12px; background: var(--fire); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
+button { width: 100%; padding: 12px; background: var(--fire); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; box-shadow: 0 0 10px rgba(138, 43, 226, 0.3); }
 input { width: 100%; padding: 12px; background: #000; border: 1px solid var(--border); color: #fff; border-radius: 8px; margin-bottom: 10px; }
 .page { display: none; }
 .page.active { display: block; }
-.section-title { color: var(--fire); border-bottom: 2px solid var(--fire); padding-bottom: 5px; font-size: 16px; font-weight: 800; margin-top: 20px; text-transform: uppercase; }
+.section-title { color: var(--fire); border-bottom: 2px solid var(--fire); padding-bottom: 5px; font-size: 16px; font-weight: 800; margin-top: 20px; text-transform: uppercase; text-shadow: 0 0 8px var(--fire); }
 .lang-btn { background: #222 !important; }
 
-/* --- INVENTAR (MARKET) UCHUN QO'SHIMCHA CS2 STILI --- */
-
-#inventory-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    padding: 10px;
-}
-
-.inventory-card {
-    background: rgba(30, 30, 30, 0.7);
-    border-radius: 8px;
-    padding: 10px;
-    position: relative;
-    text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    overflow: hidden;
-}
-
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    font-size: 10px;
-    color: #888;
-}
-
-.quality-badge {
-    background: rgba(0, 0, 0, 0.5);
-    padding: 1px 4px;
-    border-radius: 3px;
-    font-weight: bold;
-}
-
-.skin-thumb {
-    width: 90%;
-    margin: 10px auto;
-    display: block;
-    filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
-}
-
-.card-footer {
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    padding-top: 5px;
-}
-
-.skin-name {
-    font-size: 11px;
-    margin: 3px 0;
-    color: #eee;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.skin-price {
-    font-size: 12px;
-    color: #ffd700;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
-}
-
+/* INVENTAR */
+#inventory-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; }
+.inventory-card { background: rgba(30, 20, 40, 0.7); border-radius: 8px; padding: 10px; position: relative; text-align: center; border: 1px solid rgba(138, 43, 226, 0.2); overflow: hidden; }
+.card-header { display: flex; justify-content: space-between; font-size: 10px; color: #888; }
+.quality-badge { background: rgba(0, 0, 0, 0.5); padding: 1px 4px; border-radius: 3px; font-weight: bold; }
+.skin-thumb { width: 90%; margin: 10px auto; display: block; filter: drop-shadow(0 0 8px var(--fire)); }
+.card-footer { border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 5px; }
+.skin-name { font-size: 11px; margin: 3px 0; color: #eee; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.skin-price { font-size: 12px; color: #ffd700; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 3px; }
 .coin-icon-small { width: 12px; height: 12px; }
 
-/* RARITY TAGLARI (PASTKI CHIZIQLAR) */
-.rarity-cover { border-bottom: 3px solid #eb4b4b; }
-.rarity-classified { border-bottom: 3px solid #d32ce6; }
-.rarity-restricted { border-bottom: 3px solid #8847ff; }
-.rarity-milspec { border-bottom: 3px solid #4b69ff; }
-
 /* ANIMATSIYA */
-@keyframes floatEffect {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
-    100% { transform: translateY(0px); }
-}
+@keyframes floatEffect { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
 
-/* Profil Avatar qismi */
+/* Profil */
 .avatar-glow-large {
-    width: 90px;
-    height: 90px;
-    margin: 0 auto;
-    border: 3px solid var(--tiffany); /* Rasmdagi tiffany rangi */
-    border-radius: 50%;
-    padding: 3px;
-    box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+    width: 90px; height: 90px; margin: 0 auto; border: 3px solid var(--fire); border-radius: 50%; padding: 3px;
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.6);
 }
-
-/* Rasmdagi menyu stili */
-.profile-menu {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 10px;
-}
-
+.profile-menu { display: flex; flex-direction: column; gap: 12px; padding: 10px; }
 .menu-item-card {
-    display: flex;
-    align-items: center;
-    background: rgba(20, 20, 20, 0.8);
-    border: 1px solid var(--tiffany-border); /* Tiffany ramka */
-    border-radius: 15px; /* Yumaloq burchaklar */
-    padding: 15px 20px;
-    cursor: pointer;
-    transition: 0.3s;
+    display: flex; align-items: center; background: rgba(20, 20, 30, 0.8);
+    border: 1px solid var(--border); border-radius: 15px; padding: 15px 20px; cursor: pointer; transition: 0.3s;
 }
+.menu-item-card:hover { background: rgba(138, 43, 226, 0.1); transform: translateX(5px); }
+.menu-icon { font-size: 20px; margin-right: 15px; filter: drop-shadow(0 0 5px var(--fire)); }
+.menu-text { font-size: 16px; font-weight: 600; color: #fff; }
 
-.menu-item-card:hover {
-    background: rgba(0, 242, 255, 0.1);
-    transform: translateX(5px);
-}
-
-.menu-icon {
-    font-size: 20px;
-    margin-right: 15px;
-    filter: drop-shadow(0 0 5px var(--tiffany));
-}
-
-.menu-text {
-    font-size: 16px;
-    font-weight: 600;
-    color: #fff;
-}
-
-/* Sozlamalar menyusi yashirin holatda */
-.settings-drawer {
-    display: none; 
-    margin-top: 10px;
-    padding: 15px;
-    background: rgba(30, 30, 30, 0.5);
-    border: 1px dashed var(--tiffany-border);
-    border-radius: 15px;
-}
-
-/* Faol holat (JS orqali qo'shiladi) */
-.settings-drawer.active {
-    display: block !important;
-}
-
-.grid-buttons {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-}
-
-/* To'lov sahifasi uchun Glow Card dizayni */
-.topup-packages-list {
-    margin-top: 20px;
-    padding: 0 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
+/* Settings / TopUp */
+.settings-drawer { display: none; margin-top: 10px; padding: 15px; background: rgba(30, 20, 40, 0.5); border: 1px dashed var(--fire); border-radius: 15px; }
+.settings-drawer.active { display: block !important; }
+.grid-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.topup-packages-list { margin-top: 20px; padding: 0 15px; display: flex; flex-direction: column; gap: 12px; }
 .package-item {
-    background: linear-gradient(145deg, #1c1c1c, #121212);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    transition: all 0.3s ease;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
+    background: linear-gradient(145deg, #1c1c25, #121215);
+    border: 1px solid var(--border); border-radius: 16px; padding: 20px;
+    display: flex; justify-content: space-between; align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); transition: all 0.3s ease;
 }
-
-/* Glow effekti */
-.package-item:hover {
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); /* Tilla rang nur */
-    border-color: rgba(255, 215, 0, 0.3);
-    transform: translateY(-2px);
-}
-
-.package-item.xit {
-    border: 1px solid #ff4500;
-}
-
-.package-info {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: white;
-    font-weight: 700;
-    font-size: 16px;
-}
-
-.package-price {
-    color: #ffd700; /* Tilla rang narx */
-    font-weight: 800;
-    font-size: 16px;
-}
-
-.xit-badge {
-    background: #ff4500;
-    color: white;
-    font-size: 10px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    margin-left: 8px;
-    font-weight: 800;
-}
+.package-item:hover { box-shadow: 0 0 20px rgba(138, 43, 226, 0.3); border-color: var(--fire); }
+.package-info { display: flex; align-items: center; gap: 12px; color: white; font-weight: 700; }
+.package-price { color: #ffd700; font-weight: 800; }
