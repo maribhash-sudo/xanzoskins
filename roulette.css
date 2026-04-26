@@ -12,10 +12,10 @@
 
 /* Faqat ramka (viewport) uchun */
 #roulette-viewport {
-    width: 150px !important;    /* Ramka eni (tor) */
-    height: 450px !important;   /* Ramka bo'yi (uzun) */
+    width: 280px !important;    /* Ramka eni (tor) */
+    height: 455px !important;   /* Ramka bo'yi (uzun) */
     border: 3px solid #ff00ff; 
-    border-radius: 20px; 
+    border-radius: 30px; 
     overflow: hidden; 
     position: relative;
     background: #000;
@@ -31,8 +31,8 @@
 
 /* Har bir rasm uchun */
 .roulette-item {
-    width: 100%;
-    height: 150px; /* Rasmlar bo'yiga qator bo'lib tushadi */
+    width: 150%;
+    height: 200px; /* Rasmlar bo'yiga qator bo'lib tushadi */
     display: flex;
     justify-content: center;
     align-items: center;
