@@ -3,22 +3,38 @@
     display: none; 
     position: fixed; 
     top: 0; left: 0; 
-    width: 100%; height: 100%; 
-    background: rgba(0,0,0,0.95); 
+    width: 100vw; height: 100vh; 
+    background: rgba(0, 0, 0, 0.85); /* Qora fonni yengil qildik */
+    backdrop-filter: blur(20px);      /* Orqani xiralashtirish (Glassmorphism) */
     z-index: 9999; 
     justify-content: center; 
     align-items: center; 
     flex-direction: column;
 }
 
+/* Viewport - Reel'dek ingichka va bo'yi uzun */
 #roulette-viewport {
-    width: 180px;   /* Eni toraytirildi */
-    height: 450px;  /* Bo'yi cho'zildi (Vertikal) */
+    width: 240px; 
+    height: 420px; /* 9:16 formatiga yaqinroq */
     overflow: hidden; 
-    border: 3px solid #ff00ff; 
-    border-radius: 10px; 
-    background: #111; 
+    border-radius: 25px; /* Yumaloq burchaklar */
+    background: linear-gradient(180deg, #1a1a1a 0%, #000 100%);
     position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* O'rtadagi markaziy chiziq (Reels'dagi "safe area" kabi) */
+#roulette-viewport::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    width: 80%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #ff00ff, transparent);
+    z-index: 10;
+    transform: translateY(-50%);
 }
 
 #roulette-track {
@@ -31,27 +47,26 @@
 }
 
 .roulette-item {
-    height: 150px; /* Har bir element bo'yi */
-    min-height: 150px; 
-    width: 100%;
+    height: 140px; /* Itemlar balandligi */
     display: flex; 
     justify-content: center; 
     align-items: center; 
-    border-bottom: 1px solid #333;
+    width: 100%;
 }
 
 .roulette-item img {
-    width: 100px; 
-    height: 100px; 
+    width: 110px; 
+    height: 110px; 
     object-fit: contain;
+    transition: transform 0.2s;
 }
-/* Natija chiqish qismi */
-.result-display { 
-    display: none; 
-    text-align: center; 
-    color: white; 
-    padding: 25px;
-    animation: zoomIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+/* Natija oynasi */
+#result-display {
+    background: transparent;
+    text-align: center;
+    color: #fff;
+    padding: 20px;
 }
 
 @keyframes zoomIn {
