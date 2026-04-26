@@ -48,12 +48,27 @@ const cases = [
     { name: {uz: "God", ru: "Бог", en: "God"}, price: 10000, img: "case10.png" }
 ];
 
+// --- 500 LIK KEYS UCHUN SKINLAR ---
+const budgetSkins = [
+    { name: "AK-47", img: "img/AK47.png", price: 500 },
+    { name: "Deagle White", img: "img/DEAGLEWHITE.png", price: 700 },
+    { name: "Five Seven", img: "img/FIVESEVEN.png", price: 300 },
+    { name: "Glock White", img: "img/GLOCKWHITE.png", price: 200 },
+    { name: "M4A1-S Paint", img: "img/M4A1-SPAINT.png", price: 900 },
+    { name: "M4A1-S Red", img: "img/M4A1-SRED.png", price: 850 },
+    { name: "Mac 10", img: "img/MAC10.png", price: 400 },
+    { name: "MP5", img: "img/MP5.png", price: 350 },
+    { name: "USP Camo", img: "img/USP-CAMO.png", price: 250 },
+    { name: "USP Tropic", img: "img/USP-TOPIC.png", price: 1500 }
+];
+let currentWinningSkin = null;
+
 let tasks = [
     { id: 'tg', name: {uz: "Telegram Obuna", ru: "Подписка Telegram", en: "Join Telegram"}, reward: 250, done: false, link: 'https://t.me/community' },
     { id: 'insta', name: {uz: "Instagram Obuna", ru: "Подписка Instagram", en: "Follow Instagram"}, reward: 250, done: false, link: 'https://instagram.com/' }
 ];
 
-// --- TO'LOV PAKETLARI (10 tadan) ---
+// --- TO'LOV PAKETLARI ---
 const uzsPackages = [
     { coins: 25000, price: "15 000 UZS" }, { coins: 62500, price: "35 000 UZS" },
     { coins: 125000, price: "70 000 UZS" }, { coins: 312500, price: "170 000 UZS" },
@@ -70,7 +85,6 @@ const usdPackages = [
     { coins: 10000000, price: "500.0 $" }, { coins: 12000000, price: "750.0 $" }
 ];
 
-// Sening yuborgan tarjimalar obyekting
 const translations = {
     uz: { 
         topup: "TO'LDIRISH", cases_title: "CASES", active_tasks: "FAOL VAZIFALAR", completed: "BAJARILGAN", 
@@ -103,6 +117,7 @@ const translations = {
         trade_title: "Trade Link", community_title: "Community", settings_title: "Settings"
     }
 };
+
 
 // C. Tilni boshqarish
 function applyLanguage(lang) {
@@ -181,36 +196,69 @@ function renderTopUpList(containerId, data) {
     });
 }
 
+// ROULETTE FUNKSIYASI (QO'SHILDI)
+function addToInventory(item) {
+    const tg = window.Telegram.WebApp;
+    tg.CloudStorage.getItem('inventory', (err, val) => {
+        let inv = val ? JSON.parse(val) : [];
+        inv.push(item);
+        tg.CloudStorage.setItem('inventory', JSON.stringify(inv));
+    });
+}
+
+function startBudgetRoulette() {
+    const tg = window.Telegram.WebApp;
+    tg.CloudStorage.getItem('userBalance', (err, val) => {
+        let bal = val ? parseInt(val) : 10000;
+        if (bal < 500) { alert("Balans yetarli emas!"); return; }
+        updateBalance(-500); 
+        
+        const modal = document.getElementById('roulette-modal');
+        const track = document.getElementById('roulette-track');
+        const viewport = document.getElementById('roulette-viewport');
+        const resultDisplay = document.getElementById('result-display');
+        
+        if (!modal || !track) { console.log("Modal yoki track topilmadi"); return; }
+
+        modal.style.display = 'flex';
+        viewport.style.display = 'block';
+        resultDisplay.style.display = 'none';
+        track.innerHTML = "";
+        track.style.transition = "none";
+        track.style.top = "0px";
+        
+        for (let i = 0; i < 50; i++) {
+            let s = budgetSkins[Math.floor(Math.random() * budgetSkins.length)];
+            track.innerHTML += `<div class="roulette-item"><img src="${s.img}" style="width:100px;"></div>`;
+            if (i === 40) currentWinningSkin = s;
+        }
+
+        setTimeout(() => {
+            track.style.transition = "top 5s cubic-bezier(0.15, 0, 0.15, 1)";
+            track.style.top = `-${40 * 160 - 80}px`; 
+        }, 100);
+
+        setTimeout(() => {
+            viewport.style.display = 'none';
+            resultDisplay.style.display = 'block';
+            document.getElementById('won-skin-img').src = currentWinningSkin.img;
+            document.getElementById('won-skin-name').innerText = currentWinningSkin.name;
+            addToInventory(currentWinningSkin);
+        }, 5200);
+    });
+}
+
 // E. Interfeys funksiyalari
-function toggleSettings() {
-    const content = document.getElementById('settings-content');
-    if(content) content.style.display = (content.style.display === 'none' || content.style.display === '') ? 'block' : 'none';
-}
-
-function toggleTrade() {
-    const section = document.getElementById('trade-input-section');
-    if(section) section.style.display = (section.style.display === 'none' || section.style.display === '') ? 'block' : 'none';
-}
-
-function completeTask(id) {
-    const t = tasks.find(x => x.id === id);
-    if (t && !t.done) {
-        t.done = true;
-        updateBalance(t.reward);
-        if(t.link) window.open(t.link, '_blank');
-        renderTasks();
-    }
-}
+function toggleSettings() { const content = document.getElementById('settings-content'); if(content) content.style.display = (content.style.display === 'none' || content.style.display === '') ? 'block' : 'none'; }
+function toggleTrade() { const section = document.getElementById('trade-input-section'); if(section) section.style.display = (section.style.display === 'none' || section.style.display === '') ? 'block' : 'none'; }
+function completeTask(id) { const t = tasks.find(x => x.id === id); if (t && !t.done) { t.done = true; updateBalance(t.reward); if(t.link) window.open(t.link, '_blank'); renderTasks(); } }
 
 // F. Init
 document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp;
     tg.expand();
-    
-    // To'lov paketlarini chizish
     renderTopUpList('uzs-list', uzsPackages);
     renderTopUpList('usd-list', usdPackages);
-
     const lang = localStorage.getItem('lang') || 'uz';
     applyLanguage(lang);
     renderCases();
