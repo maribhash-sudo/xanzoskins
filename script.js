@@ -174,8 +174,12 @@ function renderTopUpList(containerId, data) {
     list.innerHTML = "";
     data.forEach(p => {
         list.innerHTML += `
-            <div class="package-item" onclick="alert('Demo: ${p.coins} Coin olindi!'); updateBalance(${p.coins}); showPage('cases', document.querySelector('.nav-btn[onclick*=\\'cases\\']'));">
-                <div class="package-info">${p.coins.toLocaleString()} Coin</div>
+            <div class="package-item ${p.hot ? 'xit' : ''}" onclick="showDemoPaymentAlert('${p.coins}', '${p.price}')">
+                <div class="package-info">
+                    <img src="img/nav_diamond.png" style="width: 22px;">
+                    <span>${p.coins.toLocaleString()} Coin</span>
+                    ${p.hot ? '<span class="xit-badge">HOT 🔥</span>' : ''}
+                </div>
                 <div class="package-price">${p.price}</div>
             </div>`;
     });
