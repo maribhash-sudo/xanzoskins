@@ -39,8 +39,8 @@
     border-bottom: 1px solid #333;
 }
 .roulette-item img {
-    width: 120px; 
-    height: 120px; 
+    width: 100px; 
+    height: 100px; 
     object-fit: contain;
 }
 
