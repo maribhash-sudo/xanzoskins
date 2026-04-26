@@ -207,44 +207,28 @@ function addToInventory(item) {
 }
 
 function startBudgetRoulette() {
+    console.log("Budget tugmasi bosildi!"); // 1-tekshiruv
     const tg = window.Telegram.WebApp;
     tg.CloudStorage.getItem('userBalance', (err, val) => {
+        if (err) { console.log("Telegram xatosi:", err); return; }
+        
         let bal = val ? parseInt(val) : 10000;
+        console.log("Hozirgi balans:", bal); // 2-tekshiruv
+        
         if (bal < 500) { alert("Balans yetarli emas!"); return; }
+        
         updateBalance(-500); 
         
         const modal = document.getElementById('roulette-modal');
         const track = document.getElementById('roulette-track');
-        const viewport = document.getElementById('roulette-viewport');
-        const resultDisplay = document.getElementById('result-display');
         
-        if (!modal || !track) { console.log("Modal yoki track topilmadi"); return; }
+        console.log("Modal topildi:", !!modal); // 3-tekshiruv
+        console.log("Track topildi:", !!track); // 4-tekshiruv
+
+        if (!modal || !track) { alert("Xatolik: Roulette elementlari topilmadi!"); return; }
 
         modal.style.display = 'flex';
-        viewport.style.display = 'block';
-        resultDisplay.style.display = 'none';
-        track.innerHTML = "";
-        track.style.transition = "none";
-        track.style.top = "0px";
-        
-        for (let i = 0; i < 50; i++) {
-            let s = budgetSkins[Math.floor(Math.random() * budgetSkins.length)];
-            track.innerHTML += `<div class="roulette-item"><img src="${s.img}" style="width:100px;"></div>`;
-            if (i === 40) currentWinningSkin = s;
-        }
-
-        setTimeout(() => {
-            track.style.transition = "top 5s cubic-bezier(0.15, 0, 0.15, 1)";
-            track.style.top = `-${40 * 160 - 80}px`; 
-        }, 100);
-
-        setTimeout(() => {
-            viewport.style.display = 'none';
-            resultDisplay.style.display = 'block';
-            document.getElementById('won-skin-img').src = currentWinningSkin.img;
-            document.getElementById('won-skin-name').innerText = currentWinningSkin.name;
-            addToInventory(currentWinningSkin);
-        }, 5200);
+        // ... qolgan kodlari ...
     });
 }
 
