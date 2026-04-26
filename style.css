@@ -268,3 +268,63 @@ input { width: 100%; padding: 12px; background: #000; border: 1px solid var(--bo
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
 }
+
+/* To'lov sahifasi uchun Glow Card dizayni */
+.topup-packages-list {
+    margin-top: 20px;
+    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.package-item {
+    background: linear-gradient(145deg, #1c1c1c, #121212);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Glow effekti */
+.package-item:hover {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); /* Tilla rang nur */
+    border-color: rgba(255, 215, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+.package-item.xit {
+    border: 1px solid #ff4500;
+}
+
+.package-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.package-price {
+    color: #ffd700; /* Tilla rang narx */
+    font-weight: 800;
+    font-size: 16px;
+}
+
+.xit-badge {
+    background: #ff4500;
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 8px;
+    font-weight: 800;
+}
