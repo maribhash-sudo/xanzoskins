@@ -288,11 +288,11 @@ function sellAllInventory() {
 }
 
 function withdrawWonSkin() {
-    if (currentWinningSkin) {
-        // Inventarga qo'shamiz
+    if (typeof currentWinningSkin !== 'undefined' && currentWinningSkin) {
+        // Inventarga qo'shish funksiyasini chaqiramiz
         addToInventory(currentWinningSkin);
         
-        alert("Skin inventaringizga saqlandi!");
+        // Oynani yopamiz
         closeResultModal();
     } else {
         alert("Xatolik: Skin topilmadi.");
@@ -424,26 +424,27 @@ function closeResultModal() {
 }
 
 // Inventarga saqlash uchun yordamchi funksiya
-function addToInventory(item) {
+function addToInventory(skin) {
     const tg = window.Telegram.WebApp;
     
-    // 1. Eski inventarni olish
+    // 1. Avval bor inventarni olamiz
     tg.CloudStorage.getItem('inventory', (err, val) => {
-        let inventory = val ? JSON.parse(val) : [];
+        let inventory = val ? JSON.parse(val) : []; // Agar bo'sh bo'lsa, massiv yaratadi
         
-        // 2. Yangi skinni qo'shish
+        // 2. Yangi skinni qo'shamiz
         inventory.push({
-            name: item.name.uz, // Yoki .ru, .en (tilga qarab)
-            price: item.price,
-            img: item.img
+            name: skin.name.uz || skin.name, 
+            price: skin.price,
+            img: skin.img
         });
         
-        // 3. Yangilangan ro'yxatni saqlash
+        // 3. String formatida saqlaymiz (JSON.stringify shart!)
         tg.CloudStorage.setItem('inventory', JSON.stringify(inventory), (err) => {
             if (err) {
-                alert("Xatolik: Inventarga saqlanmadi!");
+                alert("Xatolik: Saqlanmadi!");
             } else {
-                console.log("Inventarga saqlandi!");
+                alert("Inventarga muvaffaqiyatli saqlandi!");
+                renderInventory(); // Saqlangandan keyin inventar sahifasini yangilaydi
             }
         });
     });
