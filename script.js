@@ -287,14 +287,16 @@ function sellAllInventory() {
     });
 }
 
-function withdrawItem(index) {
-    window.Telegram.WebApp.CloudStorage.getItem('inventory', (err, val) => {
-        let inv = val ? JSON.parse(val) : [];
-        alert("Steamga yuborildi!");
-        inv.splice(index, 1);
-        window.Telegram.WebApp.CloudStorage.setItem('inventory', JSON.stringify(inv));
-        renderInventory();
-    });
+function withdrawWonSkin() {
+    if (currentWinningSkin) {
+        // Inventarga qo'shamiz
+        addToInventory(currentWinningSkin);
+        
+        alert("Skin inventaringizga saqlandi!");
+        closeResultModal();
+    } else {
+        alert("Xatolik: Skin topilmadi.");
+    }
 }
 
 function claimDailyBonus() {
