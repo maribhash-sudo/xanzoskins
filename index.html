@@ -96,12 +96,17 @@
             <div id="roulette-track" style="position:relative; top:0; display:flex; flex-direction:column; align-items:center;"></div>
         </div>
         <div id="result-display" style="display:none; text-align:center; color:#fff; padding:20px;">
-            <h3>YUTUQ!</h3>
-            <img id="won-skin-img" style="width:150px; border-radius:10px;">
-            <p id="won-skin-name" style="font-size:20px; font-weight:bold;"></p>
-            <button onclick="document.getElementById('roulette-modal').style.display='none'" style="margin-top:20px; padding:10px 30px; background:#ff00ff; border:none; color:white; font-weight:bold; border-radius:5px;">YOPISH</button>
-        </div>
+    <h3>YUTUQ!</h3>
+    <img id="won-skin-img" style="width:150px; border-radius:10px; margin-bottom:10px;">
+    <p id="won-skin-name" style="font-size:20px; font-weight:bold; margin-bottom:20px;"></p>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <button onclick="sellWonSkin()" style="padding:10px; background:#e74c3c; border:none; color:white; border-radius:5px; font-weight:bold;">SOTISH</button>
+        <button onclick="withdrawWonSkin()" style="padding:10px; background:#2ecc71; border:none; color:white; border-radius:5px; font-weight:bold;">STEAM</button>
+        <button onclick="startBudgetRoulette()" style="padding:10px; background:#3498db; border:none; color:white; border-radius:5px; font-weight:bold; grid-column: span 2;">YANA AYLANTIRISH</button>
+        <button onclick="closeResultModal()" style="padding:10px; background:#7f8c8d; border:none; color:white; border-radius:5px; font-weight:bold; grid-column: span 2;">CHIQISH</button>
     </div>
+</div>
     
     <script src="script.js"></script>
     <script src="audio.js"></script>
