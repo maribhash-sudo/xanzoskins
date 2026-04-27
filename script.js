@@ -229,11 +229,11 @@ function startRoulette(caseId) {
         track.style.transition = "none";
 
         // 3. Tasodifiy skinlarni aylantirish
-        for (let i = 0; i < 40; i++) {
-            let s = skins[Math.floor(Math.random() * skins.length)];
-            track.innerHTML += `<div class="roulette-item"><img src="${s.img}"></div>`;
-            if (i === 35) currentWinningSkin = s; // 35-o'rindagi skin yutadi
-        }
+        let htmlContent = "";
+for (let i = 0; i < 40; i++) {
+    let s = skins[Math.floor(Math.random() * skins.length)];
+    htmlContent += `<div class="roulette-item"><img src="${s.img}"></div>`;
+}
 
         // 4. Animatsiyani boshlash
         setTimeout(() => {
