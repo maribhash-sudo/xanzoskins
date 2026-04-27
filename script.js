@@ -78,6 +78,8 @@ const topupPackages = {
     ]
 };
 
+let currentWinningSkin = null;
+
 const translations = {
     uz: { 
         topup: "TO'LDIRISH", 
@@ -159,7 +161,6 @@ const translations = {
     }
 };
 
-
 function updateUIBalance() {
     let balEl = document.getElementById('balance');
     let bal = balEl ? balEl.innerText : "10000";
@@ -219,7 +220,7 @@ function renderTasks() {
     });
 }
 
-// YANGI FUNKSIYA: TOPUP RENDER
+// RENDER TOPUP
 function renderTopup(currency) {
     const container = document.getElementById(`${currency}-list`);
     if (!container) return;
@@ -295,6 +296,27 @@ function withdrawItem(index) {
         window.Telegram.WebApp.CloudStorage.setItem('inventory', JSON.stringify(inv));
         renderInventory();
     });
+}
+
+// YUTUQNI BOSHQARISH FUNKSIYALARI
+function sellWonSkin() {
+    if (currentWinningSkin) {
+        updateBalance(currentWinningSkin.price);
+        alert("Sotildi! Balansga +" + currentWinningSkin.price + " COIN qo'shildi.");
+        closeResultModal();
+    }
+}
+
+function withdrawWonSkin() {
+    if (currentWinningSkin) {
+        alert("Skin Steam inventaringizga yuborildi!");
+        closeResultModal();
+    }
+}
+
+function closeResultModal() {
+    document.getElementById('roulette-modal').style.display = 'none';
+    document.getElementById('result-display').style.display = 'none';
 }
 
 function claimDailyBonus() {
