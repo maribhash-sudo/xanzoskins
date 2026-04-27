@@ -1,4 +1,4 @@
-// A. Sahifalar va Header nazorati
+// A. Sahifalar va Header nazorati 
 function showPage(pageId, element) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById(`page-${pageId}`).classList.add('active');
