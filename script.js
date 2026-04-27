@@ -663,20 +663,52 @@ function addToInventory(skin) {
         });
     });
 }
-
-// Yana aylantirish va saqlash
-function spinAgainAndSave() {
-    if (currentWinningSkin) {
-        addToInventory(currentWinningSkin); // Avval inventarga qo'shadi
-    }
-    closeResultModal();    // Oynani yopadi
-    startBudgetRoulette(); // Keyin yangi spin boshlaydi
+// 1. SOTISH (Yutgan skinni sotib, balansni oshirish)
+function sellWonSkin() {
+    if (!currentWinningSkin) return;
+    
+    // Balansni oshiramiz
+    updateBalance(currentWinningSkin.price);
+    
+    // Modalni yopamiz
+    document.getElementById('roulette-modal').style.display = 'none';
+    alert("Skin sotildi! +" + currentWinningSkin.price + " COIN");
 }
 
-// Chiqish va saqlash
+// 2. STEAMGA YUBORISH (Hozircha oddiy xabar)
+function withdrawWonSkin() {
+    alert("Skin Steam profilingizga yuborish uchun navbatga qo'yildi!");
+    document.getElementById('roulette-modal').style.display = 'none';
+}
+
+// 3. CHIQISH (Inventarga saqlab, yopish)
 function exitAndSave() {
     if (currentWinningSkin) {
-        addToInventory(currentWinningSkin); // Avval inventarga qo'shadi
+        addToInventory(currentWinningSkin);
     }
-    closeResultModal(); // Oynani yopadi
+    document.getElementById('roulette-modal').style.display = 'none';
+}
+
+// 4. YANA AYLANTIRISH
+function spinAgainAndSave() {
+    // 1. Eski yutug'ni saqlaymiz
+    if (currentWinningSkin) {
+        addToInventory(currentWinningSkin);
+    }
+    
+    // 2. Natijani yashiramiz, ruletkani qayta ko'rsatamiz
+    document.getElementById('result-display').style.display = 'none';
+    document.getElementById('roulette-viewport').style.display = 'block';
+    
+    // 3. Yana startRoulette ni chaqiramiz (qaysi keys ekanini bilish uchun 
+    // ozgina o'zgartirish kerak, kel, oddiyroq yo'li: 
+    // "Yana aylantirish" uchun foydalanuvchidan qayta keys tanlashini so'raymiz
+    // yoki startRoulette funksiyasini qayta chaqiramiz)
+    document.getElementById('roulette-modal').style.display = 'none';
+    alert("Yana keys tanlab aylantiring!");
+}
+
+// Modalni yopish uchun yordamchi funksiya
+function closeResultModal() {
+    document.getElementById('roulette-modal').style.display = 'none';
 }
