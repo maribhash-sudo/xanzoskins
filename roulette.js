@@ -112,7 +112,7 @@ function initCaseDatabase() {
     casesDatabase["tactical"] = tacticalSkins.map(skin => ({
         name: skin.name,
         price: Math.floor(Math.random() * 5000) + 1000,
-        img: `img/tatcial/${skin.img}`
+        img: `img/tactical/${skin.img}`
     }));
 
     // Boshqalar uchun
