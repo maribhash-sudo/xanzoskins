@@ -337,3 +337,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+function toggleSettings() {
+    const settingsDrawer = document.getElementById('settings-content');
+    if (settingsDrawer) {
+        // Agar yashirin bo'lsa - ko'rsat, agar ko'rinib turgan bo'lsa - yashir
+        if (settingsDrawer.style.display === 'none' || settingsDrawer.style.display === '') {
+            settingsDrawer.style.display = 'block'; // Yoki 'flex', dizayningizga qarab
+        } else {
+            settingsDrawer.style.display = 'none';
+        }
+    }
+}
