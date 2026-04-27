@@ -170,7 +170,7 @@ input { width: 100%; padding: 12px; background: #000; border: 1px solid var(--bo
     z-index: 100 !important;
 }
 .topup-row { background: #1a1a1a; border-radius: 12px; padding: 15px 20px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #333; cursor: pointer; }
-.topup-coin { width: 20px; margin-right: 10px; }
+.topup-coin { width: 10px; margin-right: 10px; }
 .topup-left { display: flex; align-items: center; font-weight: bold; color: #fff; }
 .topup-right { color: #fff; font-weight: bold; }
 .hit-badge { background: #ff4500; color: white; font-size: 10px; padding: 2px 6px; border-radius: 4px; margin-left: 8px; }
