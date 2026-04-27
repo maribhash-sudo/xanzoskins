@@ -33,7 +33,7 @@ function updateBalance(amount) {
 
 // Har bir keysning sozlamalari (iconlar o'z fayl nomlari bilan)
 const casesConfig = [
-    { id: "tactical", folder: "tatcial", price: 3000, count: 98, icon: "case1.png" },
+    { id: "tactical", folder: "tactical", price: 3000, count: 98, icon: "case1.png" },
     { id: "spectrum", folder: "spectrum", price: 4000, count: 100, icon: "case2.webp" },
     { id: "clutch", folder: "clutch", price: 5000, count: 100, icon: "case3.webp" },
     { id: "urban", folder: "urban", price: 7000, count: 99, icon: "case4.webp" },
@@ -160,7 +160,7 @@ function initCaseDatabase() {
     casesDatabase["tactical"] = tacticalSkins.map(skin => ({
         name: skin.name,
         price: 3000,
-        img: `img/tatcial/${skin.img}`
+        img: `img/tactical/${skin.img}`
     }));
 
     // Boshqalar uchun
