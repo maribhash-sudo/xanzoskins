@@ -399,3 +399,24 @@ function toggleSettings() {
         }
     }
 }
+
+function closeResultModal() {
+    console.log("Tugma bosildi!"); // Bu konsolda chiqishi kerak
+    
+    const modal = document.getElementById('roulette-modal');
+    const result = document.getElementById('result-display');
+    
+    if (modal) {
+        modal.style.display = 'none';
+        console.log("Modal yopildi");
+    } else {
+        console.error("XATOLIK: 'roulette-modal' ID si topilmadi!");
+    }
+    
+    if (result) {
+        result.style.display = 'none';
+        console.log("Natija oynasi yopildi");
+    } else {
+        console.error("XATOLIK: 'result-display' ID si topilmadi!");
+    }
+}
