@@ -10,10 +10,15 @@ function showPage(pageId, element) {
     if(element) element.classList.add('active');
 
     if(pageId === 'inventory') renderInventory();
+    
+    // Top-up sahifalari uchun
+    if(pageId === 'topup-uzs') renderTopup('uzs');
+    if(pageId === 'topup-usd') renderTopup('usd');
+
     updateUIBalance();
 }
 
-// BALANSNI SAQLASH VA YANGILASH (CloudStorage orqali)
+// BALANSNI SAQLASH VA YANGILASH
 function updateBalance(amount) {
     const tg = window.Telegram.WebApp;
     tg.CloudStorage.getItem('userBalance', (err, val) => {
@@ -26,7 +31,7 @@ function updateBalance(amount) {
     });
 }
 
-// 1. 10 ta Keyslar
+// 1. Keyslar
 const cases = [
     { name: {uz: "Budget", ru: "Бюджет", en: "Budget"}, price: 500, img: "case1.png" },
     { name: {uz: "Starter", ru: "Стартовый", en: "Starter"}, price: 1500, img: "case2.webp" },
@@ -45,6 +50,33 @@ let tasks = [
     { id: 'tg', name: {uz: "Telegram Obuna", ru: "Подписка Telegram", en: "Join Telegram"}, reward: 250, done: false, link: 'https://t.me/community' },
     { id: 'insta', name: {uz: "Instagram Obuna", ru: "Подписка Instagram", en: "Follow Instagram"}, reward: 250, done: false, link: 'https://instagram.com/' }
 ];
+
+// 3. Top-up Paketlari
+const topupPackages = {
+    uzs: [
+        { amount: 25000, price: "22 500 UZS" },
+        { amount: 62500, price: "56 250 UZS", badge: "Хит 🔥" },
+        { amount: 125000, price: "112 500 UZS" },
+        { amount: 312500, price: "281 250 UZS" },
+        { amount: 625000, price: "562 500 UZS" },
+        { amount: 1250000, price: "1 125 000 UZS" },
+        { amount: 2000000, price: "1 800 000 UZS" },
+        { amount: 4375000, price: "3 937 500 UZS" },
+        { amount: 6250000, price: "5 625 000 UZS" },
+        { amount: 12500000, price: "11 250 000 UZS" },
+        { amount: 15000000, price: "13 500 000 UZS" }
+    ],
+    usd: [
+        { amount: 25000, price: "1.8 $" },
+        { amount: 62500, price: "4.05 $", badge: "Хит 🔥" },
+        { amount: 125000, price: "7.8 $" },
+        { amount: 312500, price: "18.75 $" },
+        { amount: 625000, price: "37.5 $" },
+        { amount: 1250000, price: "75 $" },
+        { amount: 4375000, price: "262.5 $" },
+        { amount: 12500000, price: "750 $" }
+    ]
+};
 
 const translations = {
     uz: { 
@@ -127,6 +159,7 @@ const translations = {
     }
 };
 
+
 function updateUIBalance() {
     let balEl = document.getElementById('balance');
     let bal = balEl ? balEl.innerText : "10000";
@@ -183,6 +216,25 @@ function renderTasks() {
             <button class="btn-action-pro" onclick="completeTask('${t.id}')">${btnText}</button>
         </div>`;
         t.done ? done.innerHTML += card : active.innerHTML += card;
+    });
+}
+
+// YANGI FUNKSIYA: TOPUP RENDER
+function renderTopup(currency) {
+    const container = document.getElementById(`${currency}-list`);
+    if (!container) return;
+    container.innerHTML = ""; 
+    topupPackages[currency].forEach(pkg => {
+        let badgeHtml = pkg.badge ? `<span class="hit-badge">${pkg.badge}</span>` : '';
+        container.innerHTML += `
+            <div class="topup-row" onclick="alert('To\\'lov: ${pkg.price}')">
+                <div class="topup-left">
+                    <img src="img/nav_diamond.png" class="topup-coin">
+                    <span>${pkg.amount.toLocaleString()}</span> ${badgeHtml}
+                </div>
+                <div class="topup-right">${pkg.price}</div>
+            </div>
+        `;
     });
 }
 
@@ -306,7 +358,6 @@ function checkNickName() {
     });
 }
 
-// BOT ISHGA TUSHGANDA MA'LUMOTLARNI YUKLASH
 document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp;
     tg.expand();
@@ -341,9 +392,8 @@ document.addEventListener("DOMContentLoaded", () => {
 function toggleSettings() {
     const settingsDrawer = document.getElementById('settings-content');
     if (settingsDrawer) {
-        // Agar yashirin bo'lsa - ko'rsat, agar ko'rinib turgan bo'lsa - yashir
         if (settingsDrawer.style.display === 'none' || settingsDrawer.style.display === '') {
-            settingsDrawer.style.display = 'block'; // Yoki 'flex', dizayningizga qarab
+            settingsDrawer.style.display = 'block'; 
         } else {
             settingsDrawer.style.display = 'none';
         }
