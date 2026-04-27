@@ -100,6 +100,35 @@ const tacticalSkins = [
     { name: "Zeus x27 | Tosai (Well-Worn)", img: "Zeus x27 _ Tosai (Well-Worn).webp" }
 ];
 
+let casesDatabase = {}; // Bu yerda hammasi saqlanadi
+
+// --- 2. O'RTADA (Funksiya) ---
+function initCaseDatabase() {
+    casesConfig.forEach(c => {
+        casesDatabase[c.id] = [];
+    });
+
+    // Tactical uchun
+    casesDatabase["tactical"] = tacticalSkins.map(skin => ({
+        name: skin.name,
+        price: Math.floor(Math.random() * 5000) + 1000,
+        img: `img/tatcial/${skin.img}`
+    }));
+
+    // Boshqalar uchun
+    casesConfig.forEach(c => {
+        if (c.id !== "tactical") {
+            for (let i = 1; i <= c.count; i++) {
+                casesDatabase[c.id].push({
+                    name: "Skin " + i,
+                    price: Math.floor(Math.random() * 3000) + 100,
+                    img: `img/${c.folder}/${i}.png`
+                });
+            }
+        }
+    });
+}
+
 let currentWinningSkin = null;
 
 // Inventarga qo'shish uchun yordamchi funksiya
