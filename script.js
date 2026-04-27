@@ -128,7 +128,8 @@ const translations = {
 };
 
 function updateUIBalance() {
-    let bal = document.getElementById('balance').innerText;
+    let balEl = document.getElementById('balance');
+    let bal = balEl ? balEl.innerText : "10000";
     let largeBal = document.getElementById('balance-large');
     if(largeBal) largeBal.innerText = bal;
 }
@@ -310,9 +311,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    // Balansni yuklash
     tg.CloudStorage.getItem('userBalance', (err, val) => {
-        document.getElementById('balance').innerText = val ? val : '10000';
+        let balEl = document.getElementById('balance');
+        if(balEl) balEl.innerText = val ? val : '10000';
         updateUIBalance();
     });
     
