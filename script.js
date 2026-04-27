@@ -194,39 +194,66 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // --- 4. ROULETTE LOGIC (Shu yerga qo'sh) ---
 function startRoulette(caseId) {
+    const tg = window.Telegram.WebApp;
+    const caseData = casesConfig.find(c => c.id === caseId);
     const skins = casesDatabase[caseId];
-    if (!skins || skins.length === 0) {
+
+    if (!caseData || !skins || skins.length === 0) {
         alert("Xatolik: Bu keys bazasi topilmadi!");
         return;
     }
 
-    const tg = window.Telegram.WebApp;
     tg.CloudStorage.getItem('userBalance', (err, val) => {
         let balance = val ? parseInt(val) : 10000;
-        const caseData = casesConfig.find(c => c.id === caseId);
 
         if (balance < caseData.price) {
             alert("Balans yetarli emas!");
             return;
         }
 
-        // Balansni ayirish
+        // 1. Balansni ayirish
         updateBalance(-caseData.price);
 
-        // Tasodifiy skin
-        const winner = skins[Math.floor(Math.random() * skins.length)];
-
-        // Modalni ko'rsatish
+        // 2. Animatsiya oynasini ochish
         const modal = document.getElementById('roulette-modal');
+        const track = document.getElementById('roulette-track');
+        const viewport = document.getElementById('roulette-viewport');
+        const resultDisplay = document.getElementById('result-display');
+        
         modal.style.display = 'flex';
-        document.getElementById('won-skin-img').src = winner.img;
-        document.getElementById('won-skin-name').innerText = winner.name;
+        viewport.style.display = 'block';
+        resultDisplay.style.display = 'none';
+        
+        track.innerHTML = "";
+        track.style.top = "0px";
+        track.style.transition = "none";
 
-        // Inventarga qo'shish
-        addToInventory(winner);
+        // 3. Tasodifiy skinlarni aylantirish
+        for (let i = 0; i < 40; i++) {
+            let s = skins[Math.floor(Math.random() * skins.length)];
+            track.innerHTML += `<div class="roulette-item"><img src="${s.img}"></div>`;
+            if (i === 35) currentWinningSkin = s; // 35-o'rindagi skin yutadi
+        }
+
+        // 4. Animatsiyani boshlash
+        setTimeout(() => {
+            track.style.transition = "top 4s cubic-bezier(0.15, 0, 0.15, 1)";
+            track.style.top = `-${35 * 100}px`; // Bu yerda 100px - har bir item balandligi
+        }, 50);
+
+        // 5. Natijani ko'rsatish
+        setTimeout(() => {
+            viewport.style.display = 'none';
+            resultDisplay.style.display = 'block';
+            
+            document.getElementById('won-skin-img').src = currentWinningSkin.img;
+            document.getElementById('won-skin-name').innerText = currentWinningSkin.name;
+            
+            // Inventarga saqlash
+            addToInventory(currentWinningSkin);
+        }, 4500);
     });
 }
-
 // 4. ISHGA TUSHIRISH (Sahifa yuklanganda)
 document.addEventListener("DOMContentLoaded", () => {
     initCaseDatabase(); // ENG BIRINCHI BAZANI YUKLAYDI
