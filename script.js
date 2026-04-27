@@ -449,3 +449,20 @@ function addToInventory(skin) {
         });
     });
 }
+
+// Yana aylantirish va saqlash
+function spinAgainAndSave() {
+    if (currentWinningSkin) {
+        addToInventory(currentWinningSkin); // Avval inventarga qo'shadi
+    }
+    closeResultModal();    // Oynani yopadi
+    startBudgetRoulette(); // Keyin yangi spin boshlaydi
+}
+
+// Chiqish va saqlash
+function exitAndSave() {
+    if (currentWinningSkin) {
+        addToInventory(currentWinningSkin); // Avval inventarga qo'shadi
+    }
+    closeResultModal(); // Oynani yopadi
+}
