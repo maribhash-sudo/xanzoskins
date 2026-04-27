@@ -45,6 +45,68 @@ const casesConfig = [
     { id: "stattrack", folder: "stattrack", price: 50000, count: 68, icon: "case10.png" }
 ];
 
+let casesDatabase = {}; 
+
+const tacticalSkins = [ 
+    // Sening 98 ta skin ro'yxating shu yerda tursin
+];
+
+// --- 2. BAZANI YARATISH (Bu funksiya ham script.js da tursin) ---
+function initCaseDatabase() {
+    casesDatabase = {}; // Tozalash
+    casesConfig.forEach(c => {
+        casesDatabase[c.id] = [];
+    });
+
+    // Tactical uchun
+    casesDatabase["tactical"] = tacticalSkins.map(skin => ({
+        name: skin.name,
+        price: 3000,
+        img: `img/tatcial/${skin.img}`
+    }));
+
+    // Boshqalar uchun
+    casesConfig.forEach(c => {
+        if (c.id !== "tactical") {
+            for (let i = 1; i <= c.count; i++) {
+                casesDatabase[c.id].push({
+                    name: "Skin " + i,
+                    price: c.price,
+                    img: `img/${c.folder}/${i}.png`
+                });
+            }
+        }
+    });
+}
+
+// --- 3. ENG MUHIMI: ISHGA TUSHIRISH (DOMContentLoaded ichida) ---
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. Bazani tayyorla (Bu birinchi bo'lishi shart!)
+    initCaseDatabase(); 
+
+    // 2. Keyin boshqa funksiyalarni ishga tushir
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+    
+    renderCases(); // Bu funksiya endi bazani ko'radi
+    renderTasks();
+    // ... qolgan kodlaring ...
+});
+
+// --- 4. ROULETTE LOGIC (Shu yerga qo'sh) ---
+function startRoulette(caseId) {
+    console.log("Bosilgan ID:", caseId);
+    console.log("Mavjud baza:", casesDatabase);
+    
+    const skins = casesDatabase[caseId];
+    if (!skins || skins.length === 0) {
+        alert("Xatolik: Bu keys bazasi topilmadi!");
+        return;
+    }
+    
+    // ... aylantirish logikasi ...
+}
+
 // 2. Vazifalar
 let tasks = [
     { id: 'tg', name: {uz: "Telegram Obuna", ru: "Подписка Telegram", en: "Join Telegram"}, reward: 250, done: false, link: 'https://t.me/community' },
