@@ -134,13 +134,14 @@ function updateUIBalance() {
 }
 
 function setLanguage(lang) {
-    localStorage.setItem('lang', lang);
+    localStorage.setItem('userLang', lang); // Tanlovni eslab qolish
+    
     document.querySelectorAll('[data-lang]').forEach(el => {
         const key = el.getAttribute('data-lang');
-        if (translations[lang] && translations[lang][key]) el.innerText = translations[lang][key];
+        if (translations[lang] && translations[lang][key]) {
+            el.textContent = translations[lang][key];
+        }
     });
-    renderCases();
-    renderTasks();
 }
 
 function renderCases() {
@@ -307,8 +308,9 @@ function checkNickName() {
 
 // BOT ISHGA TUSHGANDA MA'LUMOTLARNI YUKLASH
 document.addEventListener("DOMContentLoaded", () => {
-    const tg = window.Telegram.WebApp;
-    tg.expand();
+    const savedLang = localStorage.getItem('userLang') || 'uz';
+    setLanguage(savedLang);
+});
 
     // Balansni yuklash
     tg.CloudStorage.getItem('userBalance', (err, val) => {
