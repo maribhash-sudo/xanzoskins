@@ -31,18 +31,18 @@ function updateBalance(amount) {
     });
 }
 
-// 1. Keyslar
-const cases = [
-    { name: {uz: "Budget", ru: "Бюджет", en: "Budget"}, price: 500, img: "case1.png" },
-    { name: {uz: "Starter", ru: "Стартовый", en: "Starter"}, price: 1500, img: "case2.webp" },
-    { name: {uz: "Basic", ru: "Базовый", en: "Basic"}, price: 2500, img: "case3.webp" },
-    { name: {uz: "Silver", ru: "Серебро", en: "Silver"}, price: 3500, img: "case4.webp" },
-    { name: {uz: "Gold", ru: "Золото", en: "Gold"}, price: 4500, img: "case5.png" },
-    { name: {uz: "Elite", ru: "Элита", en: "Elite"}, price: 5500, img: "case6.webp" },
-    { name: {uz: "Master", ru: "Мастер", en: "Master"}, price: 6500, img: "case7.webp" },
-    { name: {uz: "Pro", ru: "Профи", en: "Pro"}, price: 7500, img: "case8.png" },
-    { name: {uz: "Legend", ru: "Легенда", en: "Legend"}, price: 8500, img: "case9.png" },
-    { name: {uz: "God", ru: "Бог", en: "God"}, price: 10000, img: "case10.png" }
+// Har bir keysning sozlamalari (iconlar o'z fayl nomlari bilan)
+const casesConfig = [
+    { id: "tactical", folder: "tatcial", price: 3000, count: 98, icon: "case1.png" },
+    { id: "spectrum", folder: "spectrum", price: 4000, count: 100, icon: "case2.webp" },
+    { id: "clutch", folder: "clutch", price: 5000, count: 100, icon: "case3.webp" },
+    { id: "urban", folder: "urban", price: 7000, count: 99, icon: "case4.webp" },
+    { id: "all_in", folder: "all_in", price: 10000, count: 39, icon: "case5.png" },
+    { id: "military", folder: "military", price: 15000, count: 99, icon: "case6.webp" },
+    { id: "smg", folder: "smg", price: 20000, count: 100, icon: "case7.webp" },
+    { id: "carbon", folder: "carbon", price: 25000, count: 80, icon: "case8.png" },
+    { id: "armory", folder: "armory", price: 30000, count: 83, icon: "case9.png" },
+    { id: "stattrack", folder: "stattrack", price: 50000, count: 68, icon: "case10.png" }
 ];
 
 // 2. Vazifalar
@@ -178,19 +178,18 @@ function setLanguage(lang) {
 }
 
 function renderCases() {
-    const lang = localStorage.getItem('lang') || 'uz';
     const grid = document.getElementById('cases-grid');
-    if(!grid) return;
+    if (!grid) return;
     grid.innerHTML = "";
-    cases.forEach(c => {
-        let clickAction = (c.name.uz === "Budget") ? 'onclick="startBudgetRoulette()"' : '';
+    
+    casesConfig.forEach(c => {
         grid.innerHTML += `
             <div class="case-card">
-                <img src="img/${c.img}" class="case-img coin-glow">
-                <p class="case-name">${c.name[lang]}</p>
-                <button class="case-buy-btn" ${clickAction}>
-                    <span>${c.price}</span>
-                    <img src="img/nav_diamond.png" style="width:24px; height:24px; object-fit:contain; aspect-ratio:1/1; vertical-align:middle;">
+                <img src="img/${c.icon}" class="case-img coin-glow">
+                <p class="case-name">${c.id.toUpperCase()}</p>
+                <button class="case-buy-btn" onclick="startRoulette('${c.id}')">
+                    <span>${c.price.toLocaleString()}</span>
+                    <img src="img/nav_diamond.png" style="width:20px;">
                 </button>
             </div>`;
     });
