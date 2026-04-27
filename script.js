@@ -420,3 +420,29 @@ function closeResultModal() {
         console.error("XATOLIK: 'result-display' ID si topilmadi!");
     }
 }
+
+// Inventarga saqlash uchun yordamchi funksiya
+function addToInventory(item) {
+    const tg = window.Telegram.WebApp;
+    
+    // 1. Eski inventarni olish
+    tg.CloudStorage.getItem('inventory', (err, val) => {
+        let inventory = val ? JSON.parse(val) : [];
+        
+        // 2. Yangi skinni qo'shish
+        inventory.push({
+            name: item.name.uz, // Yoki .ru, .en (tilga qarab)
+            price: item.price,
+            img: item.img
+        });
+        
+        // 3. Yangilangan ro'yxatni saqlash
+        tg.CloudStorage.setItem('inventory', JSON.stringify(inventory), (err) => {
+            if (err) {
+                alert("Xatolik: Inventarga saqlanmadi!");
+            } else {
+                console.log("Inventarga saqlandi!");
+            }
+        });
+    });
+}
