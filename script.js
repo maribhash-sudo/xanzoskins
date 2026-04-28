@@ -46,6 +46,33 @@ let tasks = [
     { id: 'insta', name: {uz: "Instagram Obuna", ru: "Подписка Instagram", en: "Follow Instagram"}, reward: 250, done: false, link: 'https://instagram.com/' }
 ];
 
+// 3. Top-up Paketlari
+const topupPackages = {
+    uzs: [
+        { amount: 25000, price: "22 500 UZS" },
+        { amount: 62500, price: "56 250 UZS", badge: "Хит 🔥" },
+        { amount: 125000, price: "112 500 UZS" },
+        { amount: 312500, price: "281 250 UZS" },
+        { amount: 625000, price: "562 500 UZS" },
+        { amount: 1250000, price: "1 125 000 UZS" },
+        { amount: 2000000, price: "1 800 000 UZS" },
+        { amount: 4375000, price: "3 937 500 UZS" },
+        { amount: 6250000, price: "5 625 000 UZS" },
+        { amount: 12500000, price: "11 250 000 UZS" },
+        { amount: 15000000, price: "13 500 000 UZS" }
+    ],
+    usd: [
+        { amount: 25000, price: "1.8 $" },
+        { amount: 62500, price: "4.05 $", badge: "Хит 🔥" },
+        { amount: 125000, price: "7.8 $" },
+        { amount: 312500, price: "18.75 $" },
+        { amount: 625000, price: "37.5 $" },
+        { amount: 1250000, price: "75 $" },
+        { amount: 4375000, price: "262.5 $" },
+        { amount: 12500000, price: "750 $" }
+    ]
+};
+
 const translations = {
     uz: { 
         topup: "TO'LDIRISH", 
@@ -182,6 +209,25 @@ function renderTasks() {
             <button class="btn-action-pro" onclick="completeTask('${t.id}')">${btnText}</button>
         </div>`;
         t.done ? done.innerHTML += card : active.innerHTML += card;
+    });
+}
+
+// YANGI FUNKSIYA: TOPUP RENDER
+function renderTopup(currency) {
+    const container = document.getElementById(`${currency}-list`);
+    if (!container) return;
+    container.innerHTML = ""; 
+    topupPackages[currency].forEach(pkg => {
+        let badgeHtml = pkg.badge ? `<span class="hit-badge">${pkg.badge}</span>` : '';
+        container.innerHTML += `
+            <div class="topup-row" onclick="alert('To\\'lov: ${pkg.price}')">
+                <div class="topup-left">
+                    <img src="img/nav_diamond.png" class="topup-coin">
+                    <span>${pkg.amount.toLocaleString()}</span> ${badgeHtml}
+                </div>
+                <div class="topup-right">${pkg.price}</div>
+            </div>
+        `;
     });
 }
 
