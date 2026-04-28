@@ -86,8 +86,9 @@ setTimeout(() => {
     
     addToInventory(currentWinningSkin);
     
-    if(typeof playSound === 'function') playSound('win');
-}, 5700);
+     if(typeof playSound === 'function') playSound('win');
+  }, 5700);
+}        
 
 function sellWonSkin() {
     if (!currentWinningSkin) return;
