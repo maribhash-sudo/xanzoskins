@@ -19,9 +19,8 @@ function showPage(pageId, element) {
     updateUIBalance();
 }
 
-let roulette_WinningSkin = null;
-let currentCaseId = null; // Buni qo'shib qo'ying
-
+let currentWinningSkin = null; // Bu yerda o'zgaruvchini yaratamiz
+let currentCaseId = null;
 // Narxlarni avtomatik hisoblash: Bozor narxi * 19500 (1$ = 13k + 50% foyda)
 const p = (usd) => Math.round(usd * 19500);
 
@@ -135,11 +134,7 @@ const skinsDatabase = [
     { name: "Zeus x27 | Electric Blue (MW)", img: "img/Zeus x27 _ Electric Blue (Minimal Wear).webp", price: 35000 },
     { name: "Zeus x27 | Tosai (WW)", img: "img/Zeus x27 _ Tosai (Well-Worn).webp", price: 10000 }
 ];
-
-let currentWinningSkin = null;
-
 // --- 2. LOGIC FUNCTIONS ---
-
 function updateUIBalance() {
     let balEl = document.getElementById('balance');
     let bal = balEl ? balEl.innerText : "10000";
