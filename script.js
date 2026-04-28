@@ -18,6 +18,9 @@ function showPage(pageId, element) {
     updateUIBalance();
 }
 
+let currentWinningSkin = null;
+let currentCaseId = null; // Buni qo'shib qo'ying
+
 // Narxlarni avtomatik hisoblash: Bozor narxi * 19500 (1$ = 13k + 50% foyda)
 const p = (usd) => Math.round(usd * 19500);
 
