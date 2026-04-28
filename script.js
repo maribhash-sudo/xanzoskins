@@ -18,11 +18,6 @@ function showPage(pageId, element) {
     updateUIBalance();
 }
 
-// --- 1. GLOBAL O'ZGARUVCHILAR (Eng tepada) ---
-let currentWonSkin = null; 
-let currentCaseId = null;
-
-// --- 1. CONFIGURATION & DATABASES ---
 // Narxlarni avtomatik hisoblash: Bozor narxi * 19500 (1$ = 13k + 50% foyda)
 const p = (usd) => Math.round(usd * 19500);
 
