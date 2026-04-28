@@ -1,4 +1,4 @@
-let casesDatabase = {}; // Bu yerda hammasi saqlanadi
+let casesDatabase = {}; 
 
 // --- 2. O'RTADA (Funksiya) ---
 function initCaseDatabase() {
