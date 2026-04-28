@@ -37,16 +37,16 @@ let currentCaseId = null;
 
 // 1. Keyslar
 const cases = [
-    { name: {uz: "Budget", ru: "Бюджет", en: "Budget"}, price: 500, img: "case1.png" },
-    { name: {uz: "Starter", ru: "Стартовый", en: "Starter"}, price: 1500, img: "case2.webp" },
-    { name: {uz: "Basic", ru: "Базовый", en: "Basic"}, price: 2500, img: "case3.webp" },
-    { name: {uz: "Silver", ru: "Серебро", en: "Silver"}, price: 3500, img: "case4.webp" },
-    { name: {uz: "Gold", ru: "Золото", en: "Gold"}, price: 4500, img: "case5.png" },
-    { name: {uz: "Elite", ru: "Элита", en: "Elite"}, price: 5500, img: "case6.webp" },
-    { name: {uz: "Master", ru: "Мастер", en: "Master"}, price: 6500, img: "case7.webp" },
-    { name: {uz: "Pro", ru: "Профи", en: "Pro"}, price: 7500, img: "case8.png" },
-    { name: {uz: "Legend", ru: "Легенда", en: "Legend"}, price: 8500, img: "case9.png" },
-    { name: {uz: "God", ru: "Бог", en: "God"}, price: 10000, img: "case10.png" }
+    { id: "tactical", name: {uz: "Tactical", ru: "Тактический", en: "Tactical"}, price: 4000, img: "case1.png" },
+    { id: "spectrum", name: {uz: "Spectrum", ru: "Спектр", en: "Spectrum"}, price: 5000, img: "case2.webp" },
+    { id: "clutch", name: {uz: "Clutch", ru: "Clutch", en: "Clutch"}, price: 6000, img: "case3.webp" },
+    { id: "urban", name: {uz: "Urban", ru: "Городской", en: "Urban"}, price: 8000, img: "case4.webp" },
+    { id: "all_in", name: {uz: "All In", ru: "Все или ничего", en: "All In"}, price: 15000, img: "case5.png" },
+    { id: "military", name: {uz: "Military", ru: "Военный", en: "Military"}, price: 17000, img: "case6.webp" },
+    { id: "smg", name: {uz: "SMG", ru: "SMG", en: "SMG"}, price: 20000, img: "case7.webp" },
+    { id: "carbon_fiber", name: {uz: "Carbon Fiber", ru: "Карбон", en: "Carbon Fiber"}, price: 25000, img: "case8.png" },
+    { id: "armory", name: {uz: "Armory", ru: "Арсенал", en: "Armory"}, price: 30000, img: "case9.png" },
+    { id: "stattrack", name: {uz: "StatTrak", ru: "StatTrak", en: "StatTrak"}, price: 50000, img: "case10.png" }
 ];
 
 // 2. Vazifalar
