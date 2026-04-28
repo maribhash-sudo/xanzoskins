@@ -181,9 +181,12 @@ function renderCases() {
     const lang = localStorage.getItem('lang') || 'uz';
     const grid = document.getElementById('cases-grid');
     if(!grid) return;
+    if (!container) return;
     grid.innerHTML = "";
+    container.innerHTML = "";
     cases.forEach(c => {
-        let clickAction = (c.name.uz === "Budget") ? 'onclick="startBudgetRoulette()"' : '';
+        const path = `img/${c.img}`;
+        let clickAction = (c.name.uz === "tactical") ? 'onclick="startBudgetRoulette()"' : '';
         grid.innerHTML += `
             <div class="case-card">
                 <img src="img/${c.img}" class="case-img coin-glow">
