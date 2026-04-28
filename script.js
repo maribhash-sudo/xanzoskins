@@ -18,24 +18,14 @@ function showPage(pageId, element) {
     updateUIBalance();
 }
 
-// BALANSNI SAQLASH VA YANGILASH
-function updateBalance(amount) {
-    const tg = window.Telegram.WebApp;
-    tg.CloudStorage.getItem('userBalance', (err, val) => {
-        let currentBal = val ? parseInt(val) : 10000;
-        let newBal = currentBal + amount;
-        tg.CloudStorage.setItem('userBalance', newBal.toString());
-        let balEl = document.getElementById('balance');
-        if(balEl) balEl.innerText = newBal;
-        updateUIBalance();
-    });
-}
-
 // --- 1. GLOBAL O'ZGARUVCHILAR (Eng tepada) ---
 let currentWonSkin = null; 
 let currentCaseId = null;
 
-// 1. Keyslar
+// --- 1. CONFIGURATION & DATABASES ---
+// Narxlarni avtomatik hisoblash: Bozor narxi * 19500 (1$ = 13k + 50% foyda)
+const p = (usd) => Math.round(usd * 19500);
+
 const cases = [
     { id: "tactical", name: {uz: "Tactical", ru: "Тактический", en: "Tactical"}, price: 4000, img: "case1.png" },
     { id: "spectrum", name: {uz: "Spectrum", ru: "Спектр", en: "Spectrum"}, price: 5000, img: "case2.webp" },
@@ -50,15 +40,12 @@ const cases = [
 ];
 
 const skinsDatabase = [
-    // --- AK-47 & AWP ---
     { name: "AK-47 | Olive Polycam (FT)", img: "img/AK-47 _ Olive Polycam (Field-Tested).webp", price: 3000 },
     { name: "AK-47 | Olive Polycam (WW)", img: "img/AK-47 _ Olive Polycam (Well-Worn).webp", price: 2500 },
     { name: "AK-47 | Slate (WW)", img: "img/AK-47 _ Slate (Well-Worn).webp", price: 55000 },
     { name: "AK-47 | VariCamo Grey (FT)", img: "img/AK-47 _ VariCamo Grey (Field-Tested).webp", price: 8000 },
     { name: "AWP | Capillary (WW)", img: "img/AWP _ Capillary (Well-Worn).webp", price: 10000 },
     { name: "AWP | Safari Mesh (WW)", img: "img/AWP _ Safari Mesh (Well-Worn).webp", price: 30000 },
-
-    // --- Desert Eagle & Glock ---
     { name: "Desert Eagle | Blue Ply (WW)", img: "img/Desert Eagle _ Blue Ply (Well-Worn).webp", price: 5000 },
     { name: "Desert Eagle | Bronze Deco (FT)", img: "img/Desert Eagle _ Bronze Deco (Field-Tested).webp", price: 6000 },
     { name: "Desert Eagle | Serpent Strike (FT)", img: "img/Desert Eagle _ Serpent Strike (Field-Tested).webp", price: 70000 },
@@ -69,8 +56,6 @@ const skinsDatabase = [
     { name: "Glock-18 | Shinobu (WW)", img: "img/Glock-18 _ Shinobu (Well-Worn).webp", price: 9000 },
     { name: "Glock-18 | Umbral Rabbit (FT)", img: "img/Glock-18 _ Umbral Rabbit (Field-Tested).webp", price: 6000 },
     { name: "Glock-18 | Winterized (FT)", img: "img/Glock-18 _ Winterized (Field-Tested).webp", price: 2500 },
-
-    // --- M4A1-S & M4A4 ---
     { name: "M4A1-S | Boreal Forest (FT)", img: "img/M4A1-S _ Boreal Forest (Field-Tested).webp", price: 5000 },
     { name: "M4A1-S | Nitro (FT)", img: "img/M4A1-S _ Nitro (Field-Tested).webp", price: 25000 },
     { name: "M4A1-S | Wash me plz (FT)", img: "img/M4A1-S _ Wash me plz (Field-Tested).webp", price: 8000 },
@@ -82,8 +67,6 @@ const skinsDatabase = [
     { name: "M4A4 | Poly Mag (BS)", img: "img/M4A4 _ Poly Mag (Battle-Scarred).webp", price: 2000 },
     { name: "M4A4 | Poly Mag (WW)", img: "img/M4A4 _ Poly Mag (Well-Worn).webp", price: 2500 },
     { name: "M4A4 | Steel Work (FT)", img: "img/M4A4 _ Steel Work (Field-Tested).webp", price: 5000 },
-
-    // --- Stickers, Caps, Charms ---
     { name: "Austin 2025 Challengers Capsule", img: "img/Austin 2025 Challengers Sticker Capsule.webp", price: 40000 },
     { name: "Paris 2023 Challengers Capsule", img: "img/Paris 2023 Challengers Sticker Capsule.webp", price: 30000 },
     { name: "Charm | Baby's AK", img: "img/Charm _ Baby's AK.webp", price: 12000 },
@@ -94,8 +77,6 @@ const skinsDatabase = [
     { name: "Sticker | Aim And Fire", img: "img/Sticker _ Aim And Fire.webp", price: 10000 },
     { name: "Sticker | Angry T", img: "img/Sticker _ Angry T.webp", price: 7000 },
     { name: "Sticker | Hot Rod Heat", img: "img/Sticker _ Hot Rod Heat.webp", price: 8000 },
-
-    // --- Galil & FAMAS ---
     { name: "Galil AR | Acid Dart (MW)", img: "img/Galil AR _ Acid Dart (Minimal Wear).webp", price: 2000 },
     { name: "Galil AR | Connexion (BS)", img: "img/Galil AR _ Connexion (Battle-Scarred).webp", price: 3000 },
     { name: "Galil AR | Control (FT)", img: "img/Galil AR _ Control (Field-Tested).webp", price: 2500 },
@@ -106,8 +87,6 @@ const skinsDatabase = [
     { name: "Galil AR | Sage Spray (FT)", img: "img/Galil AR _ Sage Spray (Field-Tested).webp", price: 1000 },
     { name: "FAMAS | Cyanospatter (FT)", img: "img/FAMAS _ Cyanospatter (Field-Tested).webp", price: 2500 },
     { name: "FAMAS | Meow 36 (WW)", img: "img/FAMAS _ Meow 36 (Well-Worn).webp", price: 5000 },
-
-    // --- Boshqalar (Pistol, Shotgun, SMG) ---
     { name: "AUG | Storm (FT)", img: "img/AUG _ Storm (Field-Tested).webp", price: 1500 },
     { name: "Five-SeveN | Flame Test (FT)", img: "img/Five-SeveN _ Flame Test (Field-Tested).webp", price: 3500 },
     { name: "Five-SeveN | Forest Night (FT)", img: "img/Five-SeveN _ Forest Night (Field-Tested).webp", price: 1500 },
@@ -158,7 +137,10 @@ const skinsDatabase = [
     { name: "Zeus x27 | Tosai (WW)", img: "img/Zeus x27 _ Tosai (Well-Worn).webp", price: 10000 }
 ];
 
-// 2. UI YANGILOVCHI FUNKSIYA (Siz so'ragan kod)
+let currentWinningSkin = null;
+
+// --- 2. LOGIC FUNCTIONS ---
+
 function updateUIBalance() {
     let balEl = document.getElementById('balance');
     let bal = balEl ? balEl.innerText : "10000";
@@ -166,19 +148,25 @@ function updateUIBalance() {
     if(largeBal) largeBal.innerText = bal;
 }
 
-// 3. BALANSNI O'ZGARTIRUVCHI FUNKSIYA (Buni shunday o'zgartiring)
 function updateBalance(amount) {
     const tg = window.Telegram.WebApp;
     tg.CloudStorage.getItem('userBalance', (err, val) => {
         let bal = val ? parseInt(val) : 10000;
         let newBal = bal + amount;
         tg.CloudStorage.setItem('userBalance', newBal.toString());
-        
-        // Balans o'zgarganda, UI ham avtomatik yangilanadi
         if(document.getElementById('balance')) {
             document.getElementById('balance').innerText = newBal;
         }
-        updateUIBalance(); // Mana bu yerda chaqiramiz!
+        updateUIBalance();
+    });
+}
+
+function addToInventory(item) {
+    const tg = window.Telegram.WebApp;
+    tg.CloudStorage.getItem('inventory', (err, val) => {
+        let inv = val ? JSON.parse(val) : [];
+        inv.push(item);
+        tg.CloudStorage.setItem('inventory', JSON.stringify(inv));
     });
 }
 
@@ -527,14 +515,6 @@ function toggleSettings() {
             settingsDrawer.style.display = 'none';
         }
     }
-}
-
-function addToInventory(skin) {
-    window.Telegram.WebApp.CloudStorage.getItem('inventory', (err, val) => {
-        let inv = val ? JSON.parse(val) : [];
-        inv.push(skin);
-        window.Telegram.WebApp.CloudStorage.setItem('inventory', JSON.stringify(inv));
-    });
 }
 
 // "YANA AYLANTIRISH" tugmasi uchun
