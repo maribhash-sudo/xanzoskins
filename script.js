@@ -19,7 +19,7 @@ function showPage(pageId, element) {
     updateUIBalance();
 }
 
-let currentWinningSkin = null;
+let roulette_WinningSkin = null;
 let currentCaseId = null; // Buni qo'shib qo'ying
 
 // Narxlarni avtomatik hisoblash: Bozor narxi * 19500 (1$ = 13k + 50% foyda)
