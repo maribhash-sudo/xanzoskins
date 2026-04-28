@@ -27,9 +27,6 @@ function initCaseDatabase() {
     });
 }
 
-// roulette.js - TO'LIQ YANGILANGAN VARIANT
-// DIQQAT: Bu yerda 'let currentWinningSkin' yozuvi yo'q!
-
 // Inventarga qo'shish
 function addToInventory(item) {
     const tg = window.Telegram.WebApp;
@@ -39,8 +36,6 @@ function addToInventory(item) {
         tg.CloudStorage.setItem('inventory', JSON.stringify(inv));
     });
 }
-
-// --- ROULETTE.JS ---
 
 // Global o'zgaruvchilarni to'qnashmasligi uchun bitta obyektga yig'amiz
 window.appData = window.appData || {
