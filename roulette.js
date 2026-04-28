@@ -1,4 +1,4 @@
-const skinsDatabase = [
+const  = [
     // --- AK-47 & AWP ---
     { name: "AK-47 | Olive Polycam (FT)", img: "img/AK-47 _ Olive Polycam (Field-Tested).webp", price: 3000 },
     { name: "AK-47 | Olive Polycam (WW)", img: "img/AK-47 _ Olive Polycam (Well-Worn).webp", price: 2500 },
@@ -120,7 +120,7 @@ function addToInventory(item) {
 }
 
 function startRoulette(caseId) {
-    // 1. Tanlangan keysni bazadan topamiz
+    currentCaseId = caseId;
     const selectedCase = cases.find(c => c.id === caseId);
     if (!selectedCase) {
         console.error("Keys topilmadi!");
