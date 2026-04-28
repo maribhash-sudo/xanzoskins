@@ -298,16 +298,18 @@ function renderCases() {
     const lang = localStorage.getItem('lang') || 'uz';
     const grid = document.getElementById('cases-grid');
     if(!grid) return;
-    grid.innerHTML = "";
+    
+    grid.innerHTML = ""; // Avvalgi ma'lumotlarni tozalaydi
+    
+    // cases massividan har birini olib, tugma bilan birga chizadi
     cases.forEach(c => {
-        let clickAction = (c.name.uz === "Budget") ? 'onclick="startBudgetRoulette()"' : '';
         grid.innerHTML += `
             <div class="case-card">
                 <img src="img/${c.img}" class="case-img coin-glow">
                 <p class="case-name">${c.name[lang]}</p>
-                <button class="case-buy-btn" ${clickAction}>
+                <button class="case-buy-btn" onclick="startRoulette('${c.id}')">
                     <span>${c.price}</span>
-                    <img src="img/nav_diamond.png" style="width:24px; height:24px; object-fit:contain; aspect-ratio:1/1; vertical-align:middle;">
+                    <img src="img/nav_diamond.png" style="width:24px; height:24px; vertical-align:middle;">
                 </button>
             </div>`;
     });
