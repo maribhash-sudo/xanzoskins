@@ -69,21 +69,25 @@ function startBudgetRoulette() {
             track.style.top = `-${40 * 160 - 80}px`; 
         }, 500);
 
-        setTimeout(() => {
-            viewport.style.display = 'none';
-            resultDisplay.style.display = 'block';
-            document.getElementById('won-skin-img').src = currentWinningSkin.img;
-            document.getElementById('won-skin-name').innerText = currentWinningSkin.name;
-            document.getElementById('won-skin-price').innerHTML = 
-                `<img src="img/nav_diamond.png" style="width:16px; vertical-align:middle;"> ${currentWinningSkin.price} COIN`;
-            
-            // Inventarga CloudStorage orqali qo'shish
-            addToInventory(currentWinningSkin);
-            
-            if(typeof playSound === 'function') playSound('win');
-        }, 5700); // Spin tugagach natija
-    });
-}
+        // ... oldingi kodlar ...
+setTimeout(() => {
+    viewport.style.display = 'none';
+    resultDisplay.style.display = 'block';
+    
+    // Rasm va nomni o'rnatamiz
+    document.getElementById('won-skin-img').src = currentWinningSkin.img;
+    document.getElementById('won-skin-name').innerText = currentWinningSkin.name;
+    
+    // XAVFSIZLASHIRISH: Agar element bo'lsa - yoz, bo'lmasa - o'tkazib yubor
+    const priceEl = document.getElementById('won-skin-price');
+    if (priceEl) {
+        priceEl.innerHTML = `<img src="img/nav_diamond.png" style="width:16px; vertical-align:middle;"> ${currentWinningSkin.price} COIN`;
+    }
+    
+    addToInventory(currentWinningSkin);
+    
+    if(typeof playSound === 'function') playSound('win');
+}, 5700);
 
 function sellWonSkin() {
     if (!currentWinningSkin) return;
