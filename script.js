@@ -1,3 +1,4 @@
+console.log("SCRIPT.JS YUKLANDI!");
 // A. Sahifalar va Header nazorati
 function showPage(pageId, element) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
