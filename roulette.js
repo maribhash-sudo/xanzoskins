@@ -1,6 +1,6 @@
 let currentWinningSkin = null;
-
-// Inventarga qo'shish uchun yordamchi funksiya
+let currentCaseId = null; // Buni qo'shib qo'ying
+// Inventarga qo'shish uchun yordamchi funksiya...
 function addToInventory(item) {
     const tg = window.Telegram.WebApp;
     tg.CloudStorage.getItem('inventory', (err, val) => {
