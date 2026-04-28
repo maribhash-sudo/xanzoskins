@@ -31,6 +31,10 @@ function updateBalance(amount) {
     });
 }
 
+// --- 1. GLOBAL O'ZGARUVCHILAR (Eng tepada) ---
+let currentWonSkin = null; 
+let currentCaseId = null;
+
 // 1. Keyslar
 const cases = [
     { name: {uz: "Budget", ru: "Бюджет", en: "Budget"}, price: 500, img: "case1.png" },
@@ -398,4 +402,39 @@ function toggleSettings() {
             settingsDrawer.style.display = 'none';
         }
     }
+}
+
+function addToInventory(skin) {
+    window.Telegram.WebApp.CloudStorage.getItem('inventory', (err, val) => {
+        let inv = val ? JSON.parse(val) : [];
+        inv.push(skin);
+        window.Telegram.WebApp.CloudStorage.setItem('inventory', JSON.stringify(inv));
+    });
+}
+
+// "YANA AYLANTIRISH" tugmasi uchun
+function spinAgainAndSave() {
+    if (currentWonSkin) {
+        addToInventory(currentWonSkin); // Avto inventarga qo'shish
+        
+        // Modalni yopish
+        document.getElementById('roulette-modal').style.display = 'none';
+        
+        // Bir zumda yana spinningni boshlash
+        setTimeout(() => {
+            startRoulette(currentCaseId); 
+        }, 500);
+    }
+}
+
+// "CHIQISH" tugmasi uchun
+function exitAndSave() {
+    if (currentWonSkin) {
+        addToInventory(currentWonSkin); // Avto inventarga qo'shish
+    }
+    // Modalni yopish
+    document.getElementById('roulette-modal').style.display = 'none';
+    
+    // Asosiy sahifaga qaytish (ixtiyoriy)
+    showPage('cases', document.querySelector('[onclick*="cases"]'));
 }
