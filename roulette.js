@@ -1,4 +1,4 @@
-console.log("ROULETTE.JS YUKLANDI!");
+console.log("ROULETTE.JS YUKLANDI!"); 
 // Inventarga qo'shish uchun yordamchi funksiya...
 function addToInventory(item) {
     const tg = window.Telegram.WebApp;
