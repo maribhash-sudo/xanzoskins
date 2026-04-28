@@ -1,4 +1,4 @@
-const  = [
+const tacticalskin = [
     // --- AK-47 & AWP ---
     { name: "AK-47 | Olive Polycam (FT)", img: "img/AK-47 _ Olive Polycam (Field-Tested).webp", price: 3000 },
     { name: "AK-47 | Olive Polycam (WW)", img: "img/AK-47 _ Olive Polycam (Well-Worn).webp", price: 2500 },
