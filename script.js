@@ -32,17 +32,17 @@ function updateBalance(amount) {
 }
 
 // 1. Keyslar
-const cases = [
-    { name: {uz: "Budget", ru: "Бюджет", en: "Budget"}, price: 500, img: "case1.png" },
-    { name: {uz: "Starter", ru: "Стартовый", en: "Starter"}, price: 1500, img: "case2.webp" },
-    { name: {uz: "Basic", ru: "Базовый", en: "Basic"}, price: 2500, img: "case3.webp" },
-    { name: {uz: "Silver", ru: "Серебро", en: "Silver"}, price: 3500, img: "case4.webp" },
-    { name: {uz: "Gold", ru: "Золото", en: "Gold"}, price: 4500, img: "case5.png" },
-    { name: {uz: "Elite", ru: "Элита", en: "Elite"}, price: 5500, img: "case6.webp" },
-    { name: {uz: "Master", ru: "Мастер", en: "Master"}, price: 6500, img: "case7.webp" },
-    { name: {uz: "Pro", ru: "Профи", en: "Pro"}, price: 7500, img: "case8.png" },
-    { name: {uz: "Legend", ru: "Легенда", en: "Legend"}, price: 8500, img: "case9.png" },
-    { name: {uz: "God", ru: "Бог", en: "God"}, price: 10000, img: "case10.png" }
+const casesConfig = [
+    { id: "tactical", price: 3000, img: "case1.png", name: { uz: "Tactical", ru: "Tactical", en: "Tactical" } },
+    { id: "spectrum", price: 4000, img: "case2.webp", name: { uz: "Spectrum", ru: "Spectrum", en: "Spectrum" } },
+    { id: "clutch", price: 5000, img: "case3.webp", name: { uz: "Clutch", ru: "Clutch", en: "Clutch" } },
+    { id: "urban", price: 7000, img: "case4.webp", name: { uz: "Urban", ru: "Urban", en: "Urban" } },
+    { id: "all_in", price: 10000, img: "case5.png", name: { uz: "All In", ru: "All In", en: "All In" } },
+    { id: "military", price: 15000, img: "case6.webp", name: { uz: "Military", ru: "Military", en: "Military" } },
+    { id: "smg", price: 17000, img: "case7.webp", name: { uz: "SMG", ru: "SMG", en: "SMG" } },
+    { id: "carbon_fiber", price: 25000, img: "case8.png", name: { uz: "Carbon Fiber", ru: "Carbon Fiber", en: "Carbon Fiber" } },
+    { id: "armory", price: 30000, img: "case9.png", name: { uz: "Armory", ru: "Armory", en: "Armory" } },
+    { id: "stattrack", price: 50000, img: "case10.png", name: { uz: "StatTrak", ru: "StatTrak", en: "StatTrak" } }
 ];
 
 // 2. Vazifalar
