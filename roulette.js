@@ -37,12 +37,6 @@ function addToInventory(item) {
     });
 }
 
-// Global o'zgaruvchilarni to'qnashmasligi uchun bitta obyektga yig'amiz
-window.appData = window.appData || {
-    currentWinningSkin: null,
-    currentCaseId: null
-};
-
 function startRoulette(caseId) {
     const selectedCase = cases.find(c => c.id === caseId);
     if (!selectedCase) return;
