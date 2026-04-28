@@ -30,10 +30,8 @@ function startBudgetRoulette() {
         
         if (bal < 500) { alert("Balans yetarli emas!"); return; }
         
-        // Balansdan 500 ayiramiz (updateBalance funksiyasi script.js da bor)
         updateBalance(-500); 
         
-        // Ovoz effekti
         if(typeof playSound === 'function') playSound('spin');
 
         const modal = document.getElementById('roulette-modal');
@@ -43,7 +41,6 @@ function startBudgetRoulette() {
         
         if (!modal || !track || !viewport || !resultDisplay) return;
 
-        // Animatsiyani boshlash (Keys rasmi titrashi)
         const caseImg = document.querySelector('.case-img');
         if(caseImg) caseImg.classList.add('animate-case');
 
@@ -62,33 +59,29 @@ function startBudgetRoulette() {
         }
 
         setTimeout(() => {
-            // Animatsiyani to'xtatish
             if(caseImg) caseImg.classList.remove('animate-case');
             
             track.style.transition = "top 5s cubic-bezier(0.15, 0, 0.15, 1)";
             track.style.top = `-${40 * 160 - 80}px`; 
         }, 500);
 
-        // ... oldingi kodlar ...
-setTimeout(() => {
-    viewport.style.display = 'none';
-    resultDisplay.style.display = 'block';
-    
-    // Rasm va nomni o'rnatamiz
-    document.getElementById('won-skin-img').src = currentWinningSkin.img;
-    document.getElementById('won-skin-name').innerText = currentWinningSkin.name;
-    
-    // XAVFSIZLASHIRISH: Agar element bo'lsa - yoz, bo'lmasa - o'tkazib yubor
-    const priceEl = document.getElementById('won-skin-price');
-    if (priceEl) {
-        priceEl.innerHTML = `<img src="img/nav_diamond.png" style="width:16px; vertical-align:middle;"> ${currentWinningSkin.price} COIN`;
-    }
-    
-    addToInventory(currentWinningSkin);
-    
-     if(typeof playSound === 'function') playSound('win');
-  }, 5700);
-}        
+        setTimeout(() => {
+            viewport.style.display = 'none';
+            resultDisplay.style.display = 'block';
+            document.getElementById('won-skin-img').src = currentWinningSkin.img;
+            document.getElementById('won-skin-name').innerText = currentWinningSkin.name;
+            
+            const priceEl = document.getElementById('won-skin-price');
+            if (priceEl) {
+                priceEl.innerHTML = `<img src="img/nav_diamond.png" style="width:16px; vertical-align:middle;"> ${currentWinningSkin.price} COIN`;
+            }
+            
+            addToInventory(currentWinningSkin);
+            
+            if(typeof playSound === 'function') playSound('win');
+        }, 5700); 
+    }); 
+} // <--- MANA SHU QAVS FUNKSIYANI YOPADI (Buni unutma!)
 
 function sellWonSkin() {
     if (!currentWinningSkin) return;
