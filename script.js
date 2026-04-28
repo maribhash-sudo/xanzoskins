@@ -336,3 +336,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+function toggleSettings() {
+    const settings = document.getElementById('settings-content');
+    if (settings.style.display === 'none') {
+        settings.style.display = 'block';
+    } else {
+        settings.style.display = 'none';
+    }
+}
+
+function toggleTrade() {
+    const tradeSection = document.getElementById('trade-input-section');
+    if (tradeSection.style.display === 'none') {
+        tradeSection.style.display = 'block';
+    } else {
+        tradeSection.style.display = 'none';
+    }
+}
