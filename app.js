@@ -360,3 +360,75 @@ function toggleTradeSection() {
         section.style.display = (section.style.display === 'none') ? 'block' : 'none';
     }
 }
+
+// Vazifalar ro'yxatini chiqarish
+function renderTasks() {
+    const lang = localStorage.getItem('lang') || 'uz';
+    const activeList = document.getElementById('active-tasks-list');
+    const doneList = document.getElementById('done-tasks-list');
+    
+    if(!activeList || !doneList) return;
+    
+    activeList.innerHTML = ""; 
+    doneList.innerHTML = "";
+    
+    tasks.forEach(t => {
+        const btnText = t.done ? translations[lang].done_btn : translations[lang].claim_btn;
+        const taskHtml = `
+            <div class="task-card-pro">
+                <div class="task-info-main">
+                    <div class="task-icon-circle">📱</div>
+                    <div class="task-text-content">
+                        <h4>${t.name[lang]}</h4>
+                        <p style="color: #2ecc71;">+${t.reward} COIN</p>
+                    </div>
+                </div>
+                <button class="btn-action-pro" onclick="completeTask('${t.id}')">${btnText}</button>
+            </div>`;
+        
+        if(t.done) {
+            doneList.innerHTML += taskHtml;
+        } else {
+            activeList.innerHTML += taskHtml;
+        }
+    });
+}
+
+// To'ldirish (Top-up) qismida narxlarni ko'rsatish
+function renderTopup(currency) {
+    const container = document.getElementById(`${currency}-list`);
+    if (!container) return;
+    
+    container.innerHTML = "";
+    topupPackages[currency].forEach(pkg => {
+        let badgeHtml = pkg.badge ? `<span class="hit-badge" style="background:red; color:white; padding:2px 5px; border-radius:4px; font-size:10px; margin-left:5px;">${pkg.badge}</span>` : '';
+        
+        container.innerHTML += `
+            <div class="topup-row" onclick="alert('To\\'lov ulanmoqda: ${pkg.price}')" style="display:flex; justify-content:space-between; align-items:center; padding:15px; background:rgba(255,255,255,0.05); margin-bottom:8px; border-radius:10px; border: 1px solid #333;">
+                <div style="display:flex; align-items:center;">
+                    <img src="img/nav_diamond.png" style="width:20px; margin-right:8px;">
+                    <span style="font-weight:bold;">${pkg.amount.toLocaleString()} COIN</span>
+                    ${badgeHtml}
+                </div>
+                <div style="color:#2ecc71; font-weight:800;">${pkg.price}</div>
+            </div>
+        `;
+    });
+}
+
+// Vazifani bajarish funksiyasi (Telegram/Instagram tugmasi bosilganda)
+function completeTask(id) {
+    const t = tasks.find(x => x.id === id);
+    if (t && !t.done) {
+        // Havolani ochish
+        if(t.link) window.open(t.link, '_blank');
+        
+        // 5 soniyadan keyin bonusni berish (tekshirish simulyatsiyasi)
+        setTimeout(() => {
+            t.done = true;
+            updateBalance(t.reward);
+            renderTasks();
+            alert(t.reward + " COIN hisobingizga qo'shildi!");
+        }, 2000);
+    }
+}
