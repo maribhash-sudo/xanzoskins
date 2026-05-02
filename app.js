@@ -181,6 +181,10 @@ const translations = {
     }
 };
 
+let tasks = [
+    { id: 'tg', name: {uz: "Telegram Obuna", ru: "Подписка Telegram", en: "Join Telegram"}, reward: 250, done: false, link: 'https://t.me/community' },
+    { id: 'insta', name: {uz: "Instagram Obuna", ru: "Подписка Instagram", en: "Follow Instagram"}, reward: 250, done: false, link: 'https://instagram.com/' }
+];
 // ==========================================
 // 2. FUNKSIYALAR
 // ==========================================
@@ -438,4 +442,60 @@ function completeTask(id) {
             alert(t.reward + " COIN hisobingizga qo'shildi!");
         }, 2000);
     }
+}
+
+// 1. Sotish tugmasi (Yutuqni balansga qaytaradi)
+function sellWonSkin() {
+    const win = window.appData.currentWinningSkin;
+    if (!win) {
+        console.error("Yutuq ma'lumoti topilmadi!");
+        return;
+    }
+
+    // Balansni yangilash
+    updateBalance(win.price);
+    
+    // Inventardan oxirgi qo'shilgan skinni olib tashlash (chunki u yutganda avto-qo'shiladi)
+    const tg = window.Telegram.WebApp;
+    tg.CloudStorage.getItem('inventory', (err, val) => {
+        let inv = val ? JSON.parse(val) : [];
+        if (inv.length > 0) {
+            inv.pop(); // Oxirgi elementni o'chirish
+            tg.CloudStorage.setItem('inventory', JSON.stringify(inv));
+        }
+    });
+
+    // Modalni yopish va xabar berish
+    document.getElementById('roulette-modal').style.display = 'none';
+    alert(`Sotildi! +${win.price} COIN balansga qo'shildi.`);
+}
+
+// 2. Steam tugmasi (Yutuqni chiqarish simulyatsiyasi)
+function withdrawWonSkin() {
+    const win = window.appData.currentWinningSkin;
+    if (!win) return;
+
+    alert(`${win.name} Steam profilingizga yuborildi! (Trade Link tekshirilmoqda...)`);
+    document.getElementById('roulette-modal').style.display = 'none';
+}
+
+// 3. Yana aylantirish tugmasi
+function spinAgainAndSave() {
+    // Joriy modalni yopish
+    document.getElementById('roulette-modal').style.display = 'none';
+    
+    // Kichik tanaffus bilan ruletkani qayta ishga tushirish
+    setTimeout(() => {
+        if (window.appData.currentCaseId) {
+            startRoulette(window.appData.currentCaseId);
+        } else {
+            showPage('cases');
+        }
+    }, 300);
+}
+
+// 4. Chiqish tugmasi
+function exitAndSave() {
+    document.getElementById('roulette-modal').style.display = 'none';
+    showPage('cases');
 }
