@@ -1,24 +1,8 @@
 console.log("XANZO SKINS: INTEGRATED SCRIPT YUKLANDI!");
 
-function showPage(pageId, element) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(`page-${pageId}`).classList.add('active');
-    
-    const header = document.getElementById('main-header');
-    header.style.display = (pageId === 'cases') ? 'flex' : 'none';
-
-    document.querySelectorAll('.nav-btn').forEach(n => n.classList.remove('active'));
-    if(element) element.classList.add('active');
-
-    if(pageId === 'inventory') renderInventory();
-    
-    // Top-up sahifalari uchun
-    if(pageId === 'topup-uzs') renderTopup('uzs');
-    if(pageId === 'topup-usd') renderTopup('usd');
-
-    updateUIBalance();
-}
-
+// ==========================================
+// 1. GLOBAL SOZLAMALAR VA DATA
+// ==========================================
 if (typeof window.appData === 'undefined') {
     window.appData = {
         currentWinningSkin: null,
@@ -27,7 +11,6 @@ if (typeof window.appData === 'undefined') {
 }
 
 const p = (usd) => Math.round(usd * 19500);
-
 // Keyslar ro'yxati
 const cases = [
     { id: "tactical", name: {uz: "Tactical", ru: "Тактический", en: "Tactical"}, price: 4000, img: "case1.png" },
@@ -141,60 +124,6 @@ const skinsDatabase = [
     { name: "Zeus x27 | Tosai (WW)", price: 10000, file: "Zeus x27 _ Tosai (Well-Worn).webp" }
 ];
 
-function getSkinImg(skin) {
-    return `img/Tactical/${skin.file}`;
-}
-
-function showPage(pageId, element) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(`page-${pageId}`).classList.add('active');
-    
-    const header = document.getElementById('main-header');
-    if(header) header.style.display = (pageId === 'cases') ? 'flex' : 'none';
-
-    document.querySelectorAll('.nav-btn').forEach(n => n.classList.remove('active'));
-    if(element) element.classList.add('active');
-
-    if(pageId === 'inventory') renderInventory();
-    if(pageId === 'topup-uzs') renderTopup('uzs');
-    if(pageId === 'topup-usd') renderTopup('usd');
-
-    updateUIBalance();
-}
-
-function updateUIBalance() {
-    const tg = window.Telegram.WebApp;
-    tg.CloudStorage.getItem('userBalance', (err, val) => {
-        let bal = val ? val : "10000";
-        if(document.getElementById('balance')) document.getElementById('balance').innerText = bal;
-        if(document.getElementById('balance-large')) document.getElementById('balance-large').innerText = bal;
-    });
-}
-
-function updateBalance(amount) {
-    const tg = window.Telegram.WebApp;
-    tg.CloudStorage.getItem('userBalance', (err, val) => {
-        let bal = val ? parseInt(val) : 10000;
-        let newBal = bal + amount;
-        tg.CloudStorage.setItem('userBalance', newBal.toString());
-        updateUIBalance();
-    });
-}
-
-function addToInventory(item) {
-    const tg = window.Telegram.WebApp;
-    tg.CloudStorage.getItem('inventory', (err, val) => {
-        let inv = val ? JSON.parse(val) : [];
-        inv.push(item);
-        tg.CloudStorage.setItem('inventory', JSON.stringify(inv));
-    });
-}
-
-let tasks = [
-    { id: 'tg', name: {uz: "Telegram Obuna", ru: "Подписка Telegram", en: "Join Telegram"}, reward: 250, done: false, link: 'https://t.me/community' },
-    { id: 'insta', name: {uz: "Instagram Obuna", ru: "Подписка Instagram", en: "Follow Instagram"}, reward: 250, done: false, link: 'https://instagram.com/' }
-];
-
 const topupPackages = {
     uzs: [
         { amount: 25000, price: "22 500 UZS" },
@@ -302,132 +231,58 @@ const translations = {
     }
 };
 
-function setLanguage(lang) {
-    localStorage.setItem('lang', lang);
-    document.querySelectorAll('[data-lang]').forEach(el => {
-        const key = el.getAttribute('data-lang');
-        if (translations[lang] && translations[lang][key]) el.innerText = translations[lang][key];
-    });
-    renderCases();
-    renderTasks();
+let tasks = [
+    { id: 'tg', name: {uz: "Telegram Obuna", ru: "Подписка Telegram", en: "Join Telegram"}, reward: 250, done: false, link: 'https://t.me/community' },
+    { id: 'insta', name: {uz: "Instagram Obuna", ru: "Подписка Instagram", en: "Follow Instagram"}, reward: 250, done: false, link: 'https://instagram.com/' }
+];
+
+function getSkinImg(skin) {
+    return `img/Tactical/${skin.file}`;
 }
 
-function startRoulette(caseId) {
-    if (!window.appData) {
-        window.appData = { currentWinningSkin: null, currentCaseId: null };
-    }
+function showPage(pageId, element) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const targetPage = document.getElementById(`page-${pageId}`);
+    if(targetPage) targetPage.classList.add('active');
     
-    window.appData.currentCaseId = caseId;
-    const selectedCase = cases.find(c => c.id === caseId);
-    
-    if (!selectedCase) {
-        console.error("Keys topilmadi!");
-        return;
-    }
+    const header = document.getElementById('main-header');
+    if(header) header.style.display = (pageId === 'cases') ? 'flex' : 'none';
 
+    document.querySelectorAll('.nav-btn').forEach(n => n.classList.remove('active'));
+    if(element) element.classList.add('active');
+
+    if(pageId === 'inventory') renderInventory();
+    if(pageId === 'topup-uzs') renderTopup('uzs');
+    if(pageId === 'topup-usd') renderTopup('usd');
+
+    updateUIBalance();
+}
+
+function updateUIBalance() {
+    const tg = window.Telegram.WebApp;
+    tg.CloudStorage.getItem('userBalance', (err, val) => {
+        let bal = val ? val : "10000";
+        if(document.getElementById('balance')) document.getElementById('balance').innerText = bal;
+        if(document.getElementById('balance-large')) document.getElementById('balance-large').innerText = bal;
+    });
+}
+
+function updateBalance(amount) {
     const tg = window.Telegram.WebApp;
     tg.CloudStorage.getItem('userBalance', (err, val) => {
         let bal = val ? parseInt(val) : 10000;
-        
-        if (bal < selectedCase.price) { 
-            alert("Balans yetarli emas!"); 
-            return; 
-        }
-        
-        updateBalance(-selectedCase.price);
-        if(typeof playSound === 'function') playSound('spin');
-
-        const modal = document.getElementById('roulette-modal');
-        const track = document.getElementById('roulette-track');
-        const viewport = document.getElementById('roulette-viewport');
-        const resultDisplay = document.getElementById('result-display');
-        
-        if (!modal || !track || !viewport || !resultDisplay) return;
-
-        modal.style.display = 'flex';
-        viewport.style.display = 'block';
-        resultDisplay.style.display = 'none';
-        
-        track.innerHTML = "";
-        track.style.transition = "none";
-        track.style.top = "0px";
-
-        for (let i = 0; i < 50; i++) {
-            let s = skinsDatabase[Math.floor(Math.random() * skinsDatabase.length)];
-            const imgSrc = getSkinImg(s);
-            
-            track.innerHTML += `
-                <div class="roulette-item">
-                    <img src="${imgSrc}" onerror="this.src='img/nav_diamond.png'">
-                </div>`;
-            
-            if (i === 40) window.appData.currentWinningSkin = s;
-        }
-
-        setTimeout(() => {
-            track.style.transition = "top 5s cubic-bezier(0.15, 0, 0.15, 1)";
-            track.style.top = `-${40 * 160 - 80}px`; 
-        }, 500);
-
-        setTimeout(() => {
-            viewport.style.display = 'none';
-            resultDisplay.style.display = 'block';
-            
-            const winningSkin = window.appData.currentWinningSkin;
-            document.getElementById('won-skin-img').src = getSkinImg(winningSkin);
-            document.getElementById('won-skin-name').innerText = winningSkin.name;
-            
-            const priceEl = document.getElementById('won-skin-price');
-            if (priceEl) {
-                priceEl.innerHTML = `<img src="img/nav_diamond.png" style="width:16px; vertical-align:middle;"> ${winningSkin.price} COIN`;
-            }
-            
-            addToInventory(winningSkin);
-            if(typeof playSound === 'function') playSound('win');
-        }, 5700);
+        let newBal = bal + amount;
+        tg.CloudStorage.setItem('userBalance', newBal.toString());
+        updateUIBalance();
     });
 }
 
-function sellWonSkin() {
-    const win = window.appData.currentWinningSkin;
-    if (!win) return;
-    updateBalance(win.price);
-    
+function addToInventory(item) {
     const tg = window.Telegram.WebApp;
     tg.CloudStorage.getItem('inventory', (err, val) => {
         let inv = val ? JSON.parse(val) : [];
-        inv.pop(); // Oxirgi qo'shilgan elementni o'chirish
+        inv.push(item);
         tg.CloudStorage.setItem('inventory', JSON.stringify(inv));
-    });
-    document.getElementById('roulette-modal').style.display = 'none';
-}
-
-function spinAgainAndSave() {
-    document.getElementById('roulette-modal').style.display = 'none';
-    setTimeout(() => {
-        startRoulette(window.appData.currentCaseId); 
-    }, 500);
-}
-
-function exitAndSave() {
-    document.getElementById('roulette-modal').style.display = 'none';
-    showPage('cases', document.querySelector('[onclick*="cases"]'));
-}
-
-function renderInventory() {
-    const grid = document.getElementById('inventory-grid');
-    if(!grid) return;
-    grid.innerHTML = "";
-    window.Telegram.WebApp.CloudStorage.getItem('inventory', (err, val) => {
-        let inv = val ? JSON.parse(val) : [];
-        inv.forEach((item, index) => {
-            grid.innerHTML += `
-                <div class="case-card">
-                    <img src="${getSkinImg(item)}" style="width:60px">
-                    <p style="font-size:10px">${item.name}</p>
-                    <button onclick="withdrawItem(${index})" style="font-size:10px;">Steam</button>
-                </div>`;
-        });
     });
 }
 
@@ -449,10 +304,136 @@ function renderCases() {
     });
 }
 
+function renderTasks() {
+    const lang = localStorage.getItem('lang') || 'uz';
+    const activeList = document.getElementById('active-tasks-list');
+    const doneList = document.getElementById('done-tasks-list');
+    if(!activeList || !doneList) return;
+    activeList.innerHTML = ""; doneList.innerHTML = "";
+    tasks.forEach(t => {
+        const btnText = t.done ? translations[lang].done_btn : translations[lang].claim_btn;
+        const card = `<div class="task-card-pro"><h4>${t.name[lang]}</h4><button onclick="completeTask('${t.id}')">${btnText}</button></div>`;
+        t.done ? doneList.innerHTML += card : activeList.innerHTML += card;
+    });
+}
+
+function renderTopup(currency) {
+    const container = document.getElementById(`${currency}-list`);
+    if (!container) return;
+    container.innerHTML = "";
+    topupPackages[currency].forEach(pkg => {
+        container.innerHTML += `<div class="topup-row" onclick="alert('To\\'lov: ${pkg.price}')"><span>${pkg.amount} COIN</span><span>${pkg.price}</span></div>`;
+    });
+}
+
+function renderInventory() {
+    const grid = document.getElementById('inventory-grid');
+    if(!grid) return;
+    grid.innerHTML = "";
+    window.Telegram.WebApp.CloudStorage.getItem('inventory', (err, val) => {
+        let inv = val ? JSON.parse(val) : [];
+        inv.forEach((item, index) => {
+            grid.innerHTML += `
+                <div class="case-card">
+                    <img src="${getSkinImg(item)}" style="width:60px">
+                    <p style="font-size:10px">${item.name}</p>
+                    <button onclick="withdrawItem(${index})" style="font-size:10px;">Steam</button>
+                </div>`;
+        });
+    });
+}
+
+function withdrawItem(index) {
+    alert("Steam profilingizga yuborildi!");
+    // Inventardan o'chirish kodi shu yerga
+}
+
+function completeTask(id) {
+    const t = tasks.find(x => x.id === id);
+    if (t && !t.done) {
+        t.done = true;
+        updateBalance(t.reward);
+        if(t.link) window.open(t.link, '_blank');
+        renderTasks();
+    }
+}
+
+function toggleSettings() {
+    const settings = document.getElementById('settings-content');
+    if (settings) {
+        settings.style.display = (settings.style.display === 'none' || settings.style.display === '') ? 'block' : 'none';
+    }
+}
+
+function startRoulette(caseId) {
+    const selectedCase = cases.find(c => c.id === caseId);
+    if (!selectedCase) return;
+
+    const tg = window.Telegram.WebApp;
+    tg.CloudStorage.getItem('userBalance', (err, val) => {
+        let bal = val ? parseInt(val) : 10000;
+        if (bal < selectedCase.price) { alert("Balans yetarli emas!"); return; }
+        
+        updateBalance(-selectedCase.price);
+
+        const modal = document.getElementById('roulette-modal');
+        const track = document.getElementById('roulette-track');
+        const viewport = document.getElementById('roulette-viewport');
+        const resultDisplay = document.getElementById('result-display');
+        
+        modal.style.display = 'flex';
+        viewport.style.display = 'block';
+        resultDisplay.style.display = 'none';
+        
+        track.innerHTML = "";
+        track.style.transition = "none";
+        track.style.top = "0px";
+
+        for (let i = 0; i < 50; i++) {
+            let s = skinsDatabase[Math.floor(Math.random() * skinsDatabase.length)];
+            track.innerHTML += `<div class="roulette-item"><img src="${getSkinImg(s)}" onerror="this.src='img/nav_diamond.png'"></div>`;
+            if (i === 40) window.appData.currentWinningSkin = s;
+        }
+
+        setTimeout(() => {
+            track.style.transition = "top 5s cubic-bezier(0.15, 0, 0.15, 1)";
+            track.style.top = `-${40 * 160 - 80}px`; 
+        }, 500);
+
+        setTimeout(() => {
+            viewport.style.display = 'none';
+            resultDisplay.style.display = 'block';
+            const winningSkin = window.appData.currentWinningSkin;
+            document.getElementById('won-skin-img').src = getSkinImg(winningSkin);
+            document.getElementById('won-skin-name').innerText = winningSkin.name;
+            addToInventory(winningSkin);
+        }, 5700);
+    });
+}
+
+function sellWonSkin() {
+    const win = window.appData.currentWinningSkin;
+    if (!win) return;
+    updateBalance(win.price);
+    document.getElementById('roulette-modal').style.display = 'none';
+}
+
+function spinAgainAndSave() {
+    document.getElementById('roulette-modal').style.display = 'none';
+    setTimeout(() => startRoulette(window.appData.currentCaseId), 500);
+}
+
+function exitAndSave() {
+    document.getElementById('roulette-modal').style.display = 'none';
+    showPage('cases', document.querySelector('[onclick*="cases"]'));
+}
+
 // Boshlang'ich yuklash
 document.addEventListener("DOMContentLoaded", () => {
     const tg = window.Telegram.WebApp;
     tg.expand();
+    const lang = localStorage.getItem('lang') || 'uz';
+    setLanguage(lang);
     updateUIBalance();
     renderCases();
 });
