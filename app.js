@@ -141,9 +141,6 @@ const skinsDatabase = [
     { name: "Zeus x27 | Tosai (WW)", price: 10000, file: "Zeus x27 _ Tosai (Well-Worn).webp" }
 ];
 
-// ==========================================
-// 2. YORDAMCHI FUNKSIYALAR
-// ==========================================
 function getSkinImg(skin) {
     return `img/Tactical/${skin.file}`;
 }
@@ -193,13 +190,11 @@ function addToInventory(item) {
     });
 }
 
-// 2. Vazifalar
 let tasks = [
     { id: 'tg', name: {uz: "Telegram Obuna", ru: "Подписка Telegram", en: "Join Telegram"}, reward: 250, done: false, link: 'https://t.me/community' },
     { id: 'insta', name: {uz: "Instagram Obuna", ru: "Подписка Instagram", en: "Follow Instagram"}, reward: 250, done: false, link: 'https://instagram.com/' }
 ];
 
-// 3. Top-up Paketlari
 const topupPackages = {
     uzs: [
         { amount: 25000, price: "22 500 UZS" },
@@ -316,9 +311,7 @@ function setLanguage(lang) {
     renderCases();
     renderTasks();
 }
-// ==========================================
-// 3. ASOSIY RULETKA FUNKSIYASI (Integrated)
-// ==========================================
+
 function startRoulette(caseId) {
     if (!window.appData) {
         window.appData = { currentWinningSkin: null, currentCaseId: null };
@@ -395,9 +388,6 @@ function startRoulette(caseId) {
     });
 }
 
-// ==========================================
-// 4. BOSHQA FUNKSIYALAR (Bonus, Inventory, etc.)
-// ==========================================
 function sellWonSkin() {
     const win = window.appData.currentWinningSkin;
     if (!win) return;
