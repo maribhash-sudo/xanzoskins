@@ -10,8 +10,9 @@ function addToInventory(item) {
 }
 
 function startRoulette(caseId) {
-    currentCaseId = caseId;
+    window.appData.currentCaseId = caseId;
     const selectedCase = cases.find(c => c.id === caseId);
+    
     if (!selectedCase) {
         console.error("Keys topilmadi!");
         return;
@@ -21,12 +22,10 @@ function startRoulette(caseId) {
     tg.CloudStorage.getItem('userBalance', (err, val) => {
         let bal = val ? parseInt(val) : 10000;
         
-        // 2. Dinamik narx bilan tekshiramiz
         if (bal < selectedCase.price) { 
             alert("Balans yetarli emas!"); 
             return; 
         }
-        
         // 3. Dinamik narxni ayiramiz
         updateBalance(-selectedCase.price); 
         
