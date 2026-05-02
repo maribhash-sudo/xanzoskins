@@ -305,9 +305,13 @@ function startRoulette(caseId) {
 
     window.Telegram.WebApp.CloudStorage.getItem('userBalance', (err, val) => {
         let bal = val ? parseInt(val) : 10000;
-        if (bal < selectedCase.price) return alert("Mablag' yetarli emas!");
+        if (bal < selectedCase.price) {
+            alert(`Mablag' yetarli emas! Sizga yana ${selectedCase.price - bal} COIN kerak.`);
+            return;
+        }
 
         updateBalance(-selectedCase.price);
+        
         const modal = document.getElementById('roulette-modal');
         const track = document.getElementById('roulette-track');
         const viewport = document.getElementById('roulette-viewport');
@@ -321,23 +325,43 @@ function startRoulette(caseId) {
         track.style.transition = "none";
         track.style.top = "0px";
 
+        // Ruletka uchun 50 ta skinni tayyorlash
         for (let i = 0; i < 50; i++) {
             let s = skinsDatabase[Math.floor(Math.random() * skinsDatabase.length)];
-            track.innerHTML += `<div class="roulette-item"><img src="${getSkinImg(s)}"></div>`;
+            
+            // MUHIM: Rasm manzilini tanlangan keysning papkasidan olamiz
+            // Manzil formati: img/Papkanomi/rasm.webp
+            const skinImgPath = `img/${selectedCase.folder}/${s.file}`;
+            
+            track.innerHTML += `
+                <div class="roulette-item">
+                    <img src="${skinImgPath}" onerror="this.src='img/no-image.png'">
+                </div>`;
+            
             if (i === 40) window.appData.currentWinningSkin = s;
         }
 
+        // Spin animatsiyasi (5 soniya)
         setTimeout(() => {
             track.style.transition = "top 5s cubic-bezier(0.15, 0, 0.15, 1)";
             track.style.top = `-${40 * 160 - 80}px`; 
         }, 500);
 
+        // Yutuqni ko'rsatish
         setTimeout(() => {
             viewport.style.display = 'none';
             resultDisplay.style.display = 'block';
+            
             const win = window.appData.currentWinningSkin;
-            document.getElementById('won-skin-img').src = getSkinImg(win);
+            const finalImgPath = `img/${selectedCase.folder}/${win.file}`;
+            
+            document.getElementById('won-skin-img').src = finalImgPath;
             document.getElementById('won-skin-name').innerText = win.name;
+            
+            // Narxni RFL modeliga mos ko'rsatish
+            const priceElement = document.getElementById('won-skin-price');
+            if (priceElement) priceElement.innerText = win.price + " COIN";
+            
             addToInventory(win);
         }, 5700);
     });
