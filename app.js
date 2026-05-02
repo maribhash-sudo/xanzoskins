@@ -353,3 +353,10 @@ function toggleSettings() {
     const s = document.getElementById('settings-content');
     if(s) s.style.display = (s.style.display === 'none') ? 'block' : 'none';
 }
+
+function toggleTradeSection() {
+    const section = document.getElementById('trade-input-section');
+    if(section) {
+        section.style.display = (section.style.display === 'none') ? 'block' : 'none';
+    }
+}
