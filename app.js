@@ -122,9 +122,133 @@ const skinsDatabase = [
     { name: "UMP-45 | Roadblock (BS)", price: 2000, file: "UMP-45 _ Roadblock (Battle-Scarred).webp" },
     { name: "Zeus x27 | Electric Blue (FT)", price: 30000, file: "Zeus x27 _ Electric Blue (Field-Tested).webp" },
     { name: "Zeus x27 | Electric Blue (MW)", price: 35000, file: "Zeus x27 _ Electric Blue (Minimal Wear).webp" },
-    { name: "Zeus x27 | Tosai (WW)", price: 10000, file: "Zeus x27 _ Tosai (Well-Worn).webp" }
-];
+    { name: "Zeus x27 | Tosai (WW)", price: 10000, file: "Zeus x27 _ Tosai (Well-Worn).webp" },
+    
+    { name: "AK-47 | Olive Polycam (MW)", price: 10200, file: "AK-47 _ Olive Polycam (Minimal Wear).webp" },
+    { name: "AK-47 | Safari Mesh (MW)", price: 12750, file: "AK-47 _ Safari Mesh (Minimal Wear).webp" },
+    { name: "AK-47 | VariCamo Grey (MW)", price: 9180, file: "AK-47 _ VariCamo Grey (Minimal Wear).webp" },
+    { name: "AK-47 | Slate (WW)", price: 145350, file: "AK-47 _ Slate (Well-Worn).webp" },
 
+    // --- AWP ---
+    { name: "AWP | Safari Mesh (FT)", price: 8670, file: "AWP _ Safari Mesh (Field-Tested).webp" },
+
+    // --- AUG ---
+    { name: "AUG | Momentum (WW)", price: 56100, file: "AUG _ Momentum (Well-Worn).webp" },
+    { name: "AUG | Trigger Discipline (WW)", price: 25500, file: "AUG _ Trigger Discipline (Well-Worn).webp" },
+
+    // --- Desert Eagle ---
+    { name: "Desert Eagle | Calligraffiti (WW)", price: 15300, file: "Desert Eagle _ Calligraffiti (Well-Worn).webp" },
+    { name: "Desert Eagle | Heat Treated (WW)", price: 459000, file: "Desert Eagle _ Heat Treated (Well-Worn).webp" },
+    { name: "Desert Eagle | Mudder (MW)", price: 5100, file: "Desert Eagle _ Mudder (Minimal Wear).webp" },
+    { name: "Desert Eagle | Serpent Strike (FT)", price: 2142000, file: "Desert Eagle _ Serpent Strike (Field-Tested).webp" },
+
+    // --- M4A1-S / M4A4 ---
+    { name: "M4A1-S | Boreal Forest (BS)", price: 24480, file: "M4A1-S _ Boreal Forest (Battle-Scarred).webp" },
+    { name: "M4A1-S | Boreal Forest (FT)", price: 25500, file: "M4A1-S _ Boreal Forest (Field-Tested).webp" },
+    { name: "M4A1-S | Mud-Spec (FT)", price: 14280, file: "M4A1-S _ Mud-Spec (Field-Tested).webp" },
+    { name: "M4A1-S | Night Terror (FT)", price: 66300, file: "M4A1-S _ Night Terror (Field-Tested).webp" },
+    { name: "M4A1-S | Wash me plz (BS)", price: 23460, file: "M4A1-S _ Wash me plz (Battle-Scarred).webp" },
+    { name: "M4A1-S | Wash me plz (FT)", price: 25500, file: "M4A1-S _ Wash me plz (Field-Tested).webp" },
+    { name: "M4A4 | Naval Shred Camo (MW)", price: 7140, file: "M4A4 _ Naval Shred Camo (Minimal Wear).webp" },
+    { name: "M4A4 | Steel Work (BS)", price: 48450, file: "M4A4 _ Steel Work (Battle-Scarred).webp" },
+    { name: "M4A4 | Steel Work (FT)", price: 51000, file: "M4A4 _ Steel Work (Field-Tested).webp" },
+    { name: "M4A4 | Steel Work (MW)", price: 53550, file: "M4A4 _ Steel Work (Minimal Wear).webp" },
+    { name: "M4A4 | Urban DDPAT (FT) ", price: 4080, file: "M4A4 _ Urban DDPAT (Field-Tested).webp" },
+
+    // --- Glock-18 / USP-S ---
+    { name: "Glock-18 | Ocean Topo (MW)", price: 22950, file: "Glock-18 _ Ocean Topo (Minimal Wear).webp" },
+    { name: "Glock-18 | Sacrifice (WW)", price: 5100, file: "Glock-18 _ Sacrifice (Well-Worn).webp" },
+    { name: "USP-S | Alpine Camo (FT)", price: 15300, file: "USP-S _ Alpine Camo (Field-Tested).webp" },
+    { name: "USP-S | Ticket to Hell (FT)", price: 30600, file: "USP-S _ Ticket to Hell (Field-Tested).webp" },
+    { name: "USP-S | Torque (FT)", price: 51000, file: "USP-S _ Torque (Field-Tested).webp" },
+
+    // --- Galil AR / FAMAS ---
+    { name: "Galil AR | Acid Dart (FT)", price: 5610, file: "Galil AR _ Acid Dart (Field-Tested).webp" },
+    { name: "Galil AR | Acid Dart (MW)", price: 6120, file: "Galil AR _ Acid Dart (Minimal Wear).webp" },
+    { name: "Galil AR | Cold Fusion (BS)", price: 4590, file: "Galil AR _ Cold Fusion (Battle-Scarred).webp" },
+    { name: "Galil AR | Firefight (FT)", price: 7140, file: "Galil AR _ Firefight (Field-Tested).webp" },
+    { name: "Galil AR | Green Apple (MW)", price: 9180, file: "Galil AR _ Green Apple (Minimal Wear).webp" },
+    { name: "Galil AR | Grey Smoke (FN)", price: 10200, file: "Galil AR _ Grey Smoke (Factory New).webp" },
+    { name: "Galil AR | Robin's Egg (FT)", price: 5100, file: "Galil AR _ Robin's Egg (Field-Tested).webp" },
+    { name: "Galil AR | Tuxedo (FT)", price: 12750, file: "Galil AR _ Tuxedo (Field-Tested).webp" },
+    { name: "FAMAS | Cyanospatter (FT)", price: 4080, file: "FAMAS _ Cyanospatter (Field-Tested).webp" },
+    { name: "FAMAS | Survivor Z (FT)", price: 7650, file: "FAMAS _ Survivor Z (Field-Tested).webp" },
+    { name: "FAMAS | Teardown (FT)", price: 15300, file: "FAMAS _ Teardown (Field-Tested).webp" },
+
+    // --- Five-SeveN / CZ75 / Dual Berettas ---
+    { name: "Five-SeveN | Coolant (FN)", price: 6120, file: "Five-SeveN _ Coolant (Factory New).webp" },
+    { name: "Five-SeveN | Hybrid (WW)", price: 7650, file: "Five-SeveN _ Hybrid (Well-Worn).webp" },
+    { name: "Five-SeveN | Silver Quartz (MW)", price: 15300, file: "Five-SeveN _ Silver Quartz (Minimal Wear).webp" },
+    { name: "Five-SeveN | Sky Blue (FT)", price: 84150, file: "Five-SeveN _ Sky Blue (Field-Tested).webp" },
+    { name: "CZ75-Auto | Eco (WW)", price: 35700, file: "CZ75-Auto _ Eco (Well-Worn).webp" },
+    { name: "Dual Berettas | Polished Malachite (FT)", price: 10200, file: "Dual Berettas _ Polished Malachite (Field-Tested).webp" },
+    { name: "Dual Berettas | Rose Nacre (FT)", price: 7650, file: "Dual Berettas _ Rose Nacre (Field-Tested).webp" },
+
+    // --- MAC-10 / MP5 / MP7 / MP9 ---
+    { name: "MAC-10 | Allure (BS)", price: 15300, file: "MAC-10 _ Allure (Battle-Scarred).webp" },
+    { name: "MAC-10 | Calf Skin (FT)", price: 7140, file: "MAC-10 _ Calf Skin (Field-Tested).webp" },
+    { name: "MAC-10 | Candy Apple (MW)", price: 4080, file: "MAC-10 _ Candy Apple (Minimal Wear).webp" },
+    { name: "MAC-10 | Pipsqueak (BS)", price: 6120, file: "MAC-10 _ Pipsqueak (Battle-Scarred).webp" },
+    { name: "MAC-10 | Pipsqueak (FT)", price: 7140, file: "MAC-10 _ Pipsqueak (Field-Tested).webp" },
+    { name: "MAC-10 | Sakkaku (FT)", price: 17850, file: "MAC-10 _ Sakkaku (Field-Tested).webp" },
+    { name: "MAC-10 | Storm Camo (WW)", price: 3060, file: "MAC-10 _ Storm Camo (Well-Worn).webp" },
+    { name: "MP5-SD | Neon Squeezer (FT)", price: 8160, file: "MP5-SD _ Neon Squeezer (Field-Tested).webp" },
+    { name: "MP5-SD | Neon Squeezer (WW)", price: 7650, file: "MP5-SD _ Neon Squeezer (Well-Worn).webp" },
+    { name: "MP7 | Motherboard (MW)", price: 5100, file: "MP7 _ Motherboard (Minimal Wear).webp" },
+    { name: "MP9 | Bioleak (MW)", price: 4080, file: "MP9 _ Bioleak (Minimal Wear).webp" },
+
+    // --- P90 / PP-Bizon / Negev ---
+    { name: "P90 | Blue Tac (FN)", price: 12750, file: "P90 _ Blue Tac (Factory New).webp" },
+    { name: "P90 | Freight (FT)", price: 10200, file: "P90 _ Freight (Field-Tested).webp" },
+    { name: "P90 | Mustard Gas (FT)", price: 20400, file: "P90 _ Mustard Gas (Field-Tested).webp" },
+    { name: "P90 | Neoqueen (BS)", price: 14280, file: "P90 _ Neoqueen (Battle-Scarred).webp" },
+    { name: "P90 | Wash me (FT)", price: 10200, file: "P90 _ Wash me (Field-Tested).webp" },
+    { name: "PP-Bizon | Candy Apple (FT)", price: 3570, file: "PP-Bizon _ Candy Apple (Field-Tested).webp" },
+    { name: "PP-Bizon | Space Cat (MW)", price: 12750, file: "PP-Bizon _ Space Cat (Minimal Wear).webp" },
+    { name: "Negev | Bulkhead (BS)", price: 3060, file: "Negev _ Bulkhead (Battle-Scarred).webp" },
+    { name: "Negev | Sour Grapes (FT)", price: 4080, file: "Negev _ Sour Grapes (Field-Tested).webp" },
+
+    // --- Shotguns / M249 ---
+    { name: "MAG-7 | Insomnia (MW)", price: 28050, file: "MAG-7 _ Insomnia (Minimal Wear).webp" },
+    { name: "MAG-7 | Monster Call (WW)", price: 15300, file: "MAG-7 _ Monster Call (Well-Worn).webp" },
+    { name: "MAG-7 | Wildwood (FT)", price: 5100, file: "MAG-7 _ Wildwood (Field-Tested).webp" },
+    { name: "Nova | Candy Apple (MW)", price: 4080, file: "Nova _ Candy Apple (Minimal Wear).webp" },
+    { name: "XM1014 | Blue Steel (BS)", price: 15300, file: "XM1014 _ Blue Steel (Battle-Scarred).webp" },
+    { name: "XM1014 | Slipstream (FT)", price: 3060, file: "XM1014 _ Slipstream (Field-Tested).webp" },
+    { name: "XM1014 | Ziggy (FT)", price: 7140, file: "XM1014 _ Ziggy (Field-Tested).webp" },
+    { name: "M249 | Sage Camo (FN)", price: 6120, file: "M249 _ Sage Camo (Factory New).webp" },
+
+    // --- SG 553 / SSG 08 / R8 ---
+    { name: "SG 553 | Basket Halftone (FT)", price: 2040, file: "SG 553 _ Basket Halftone (Field-Tested).webp" },
+    { name: "SG 553 | Cyberforce (FT)", price: 20400, file: "SG 553 _ Cyberforce (Field-Tested).webp" },
+    { name: "SG 553 | Danger Close (FT)", price: 10200, file: "SG 553 _ Danger Close (Field-Tested).webp" },
+    { name: "SG 553 | Integrale (WW)", price: 4845000, file: "SG 553 _ Integrale (Well-Worn).webp" },
+    { name: "SG 553 | Ol' Rusty (FT)", price: 7140, file: "SG 553 _ Ol' Rusty (Field-Tested).webp" },
+    { name: "SSG 08 | Fever Dream (FT)", price: 40800, file: "SSG 08 _ Fever Dream (Field-Tested).webp" },
+    { name: "R8 Revolver | Crazy 8 (WW)", price: 15300, file: "R8 Revolver _ Crazy 8 (Well-Worn).webp" },
+    { name: "R8 Revolver | Leafhopper (FT)", price: 3060, file: "R8 Revolver _ Leafhopper (Field-Tested).webp" },
+    { name: "SCAR-20 | Poultrygeist (FT)", price: 2550, file: "SCAR-20 _ Poultrygeist (Field-Tested).webp" },
+
+    // --- StatTrak™ / Souvenirs ---
+    { name: "StatTrak™ Dual Berettas | Melondrama (BS)", price: 127500, file: "StatTrak™ Dual Berettas _ Melondrama (Battle-Scarred).webp" },
+    { name: "StatTrak™ Galil AR | Connexion (FT)", price: 25500, file: "StatTrak™ Galil AR _ Connexion (Field-Tested).webp" },
+    { name: "StatTrak™ Glock-18 | Off World (WW)", price: 45900, file: "StatTrak™ Glock-18 _ Off World (Well-Worn).webp" },
+    { name: "StatTrak™ Negev | Drop Me (FT)", price: 15300, file: "StatTrak™ Negev _ Drop Me (Field-Tested).webp" },
+    { name: "StatTrak™ P90 | Neoqueen (FT)", price: 20400, file: "StatTrak™ P90 _ Neoqueen (Field-Tested).webp" },
+    { name: "Souvenir M249 | Midnight Palm (FT)", price: 10200, file: "Souvenir M249 _ Midnight Palm (Field-Tested).webp" },
+    { name: "Souvenir MAC-10 | Strats (FT)", price: 7140, file: "Souvenir MAC-10 _ Strats (Field-Tested).webp" },
+    { name: "Souvenir MAG-7 | Navy Sheen (MW)", price: 12750, file: "Souvenir MAG-7 _ Navy Sheen (Minimal Wear).webp" },
+    { name: "Souvenir MP5-SD | Neon Squeezer (BS)", price: 10200, file: "Souvenir MP5-SD _ Neon Squeezer (Battle-Scarred).webp" },
+    { name: "Souvenir MP7 | Prey (WW)", price: 5100, file: "Souvenir MP7 _ Prey (Well-Worn).webp" },
+    { name: "Souvenir SSG 08 | Prey (FN)", price: 15300, file: "Souvenir SSG 08 _ Prey (Factory New).webp" },
+
+    // --- Others ---
+    { name: "Tec-9 | Flash Out (FT)", price: 4080, file: "Tec-9 _ Flash Out (Field-Tested).webp" },
+    { name: "UMP-45 | Green Swirl (FN)", price: 15300, file: "UMP-45 _ Green Swirl (Factory New).webp" },
+    { name: "UMP-45 | Late Night Transit (BS)", price: 7650, file: "UMP-45 _ Late Night Transit (Battle-Scarred).webp" },
+    { name: "Zeus x27 | Electric Blue (FT)", price: 6460, file: "Zeus x27 _ Electric Blue (Field-Tested).webp" },
+    { name: "Zeus x27 | Olympus (MW)", price: 229500, file: "Zeus x27 _ Olympus (Minimal Wear).webp" }
+];
 const topupPackages = {
     uzs: [
         { amount: 25000, price: "22 500 UZS" },
