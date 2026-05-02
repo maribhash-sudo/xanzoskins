@@ -201,16 +201,23 @@ function setLanguage(lang) {
 
 function showPage(pageId, element) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    const target = document.getElementById(`page-${pageId}`);
-    if(target) target.classList.add('active');
+    const targetPage = document.getElementById(`page-${pageId}`);
+    if(targetPage) targetPage.classList.add('active');
     
+    // Header nazorati
     const header = document.getElementById('main-header');
     if(header) header.style.display = (pageId === 'cases') ? 'flex' : 'none';
 
+    // Navigatsiya tugmalari faolligi
     document.querySelectorAll('.nav-btn').forEach(n => n.classList.remove('active'));
     if(element) element.classList.add('active');
 
+    // Sahifaga mos funksiyalarni yuritish
+    if(pageId === 'bonus') renderTasks(); // Bonus sahifasida vazifalarni chizish
     if(pageId === 'inventory') renderInventory();
+    if(pageId === 'topup-uzs') renderTopup('uzs');
+    if(pageId === 'topup-usd') renderTopup('usd');
+
     updateUIBalance();
 }
 
