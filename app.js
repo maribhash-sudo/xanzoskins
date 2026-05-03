@@ -516,50 +516,60 @@ function setLanguage(lang) {
 }
 
 function showPage(pageId, element) {
-    
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    
     const targetPage = document.getElementById(`page-${pageId}`);
-    if (targetPage) {
-        targetPage.classList.add('active');
-    }
+    if (targetPage) targetPage.classList.add('active');
     
-    if (typeof closePreview === 'function') {
-        closePreview();
-    }
+    closePreview(); // Preview ochiq bo'lsa yopish
 
     const header = document.getElementById('main-header');
     if (header) {
-        // Balans faqat kerakli sahifalarda ko'rinishi uchun
         header.style.display = (pageId === 'cases' || pageId === 'bonus' || pageId === 'profile') ? 'flex' : 'none';
     }
 
     document.querySelectorAll('.nav-btn').forEach(n => n.classList.remove('active'));
-    if (element) {
-        element.classList.add('active');
-    }
+    if (element) element.classList.add('active');
 
-    switch (pageId) {
-        case 'cases':
-            if (typeof renderCases === 'function') renderCases();
-            break;
-        case 'bonus':
-            if (typeof renderTasks === 'function') renderTasks();
-            break;
-        case 'inventory':
-            if (typeof renderInventory === 'function') renderInventory();
-            break;
-        case 'topup-uzs':
-            if (typeof renderTopup === 'function') renderTopup('uzs');
-            break;
-        case 'topup-usd':
-            if (typeof renderTopup === 'function') renderTopup('usd');
-            break;
-    }
+    if (pageId === 'cases') renderCases();
+    if (pageId === 'inventory') renderInventory();
+    if (pageId === 'bonus') renderTasks();
+    
+    updateUIBalance();
+}
 
-    if (typeof updateUIBalance === 'function') {
-        updateUIBalance();
-    }
+function showCasePreview(caseId) {
+    const selectedCase = cases.find(c => c.id === caseId);
+    const skins = caseInventory[caseId];
+    const lang = localStorage.getItem('lang') || 'uz';
+    
+    if (!selectedCase || !skins) return;
+
+    document.getElementById('preview-case-img').src = selectedCase.img;
+    document.getElementById('preview-case-name').innerText = selectedCase.name[lang];
+    
+    const openBtn = document.getElementById('preview-open-btn');
+    openBtn.onclick = () => {
+        closePreview();
+        startRoulette(caseId);
+    };
+    openBtn.innerText = lang === 'uz' ? `OCHISH - ${selectedCase.price}` : `ОТКРЫТЬ - ${selectedCase.price}`;
+
+    const skinsGrid = document.getElementById('preview-skins-grid');
+    skinsGrid.innerHTML = "";
+    skins.forEach(skin => {
+        skinsGrid.innerHTML += `
+            <div class="preview-skin-item">
+                <img src="${selectedCase.folder}/${skin.file}" style="width:60px;" onerror="this.src='img/case1.png'">
+                <p style="font-size:9px;">${skin.name}</p>
+            </div>`;
+    });
+
+    document.getElementById('preview-modal').style.display = 'flex';
+}
+
+function closePreview() {
+    const modal = document.getElementById('preview-modal');
+    if (modal) modal.style.display = 'none';
 }
 
 function updateUIBalance() {
@@ -599,8 +609,6 @@ function renderCases() {
     const grid = document.getElementById('cases-grid');
     if(!grid) return;
     grid.innerHTML = "";
-    
-    // Tilni aniqlash (currentLang global o'zgaruvchi bo'lmasa, shu yerda olamiz)
     const lang = localStorage.getItem('lang') || 'uz';
     
     cases.forEach(c => {
@@ -653,19 +661,14 @@ function sellAllInventory() {
 function startRoulette(caseId) {
     window.appData.currentCaseId = caseId;
     const selectedCase = cases.find(c => c.id === caseId);
-    
-    // 1. Skinlarni umumiy bazadan emas, aynan shu keysning guruhidan olamiz
     const skins = caseInventory[caseId]; 
 
-    if (!selectedCase || !skins) {
-        alert("Xato: Keys yoki skinlar bazasi topilmadi!");
-        return;
-    }
+    if (!selectedCase || !skins) return;
 
     window.Telegram.WebApp.CloudStorage.getItem('userBalance', (err, val) => {
         let bal = val ? parseInt(val) : 10000;
         if (bal < selectedCase.price) {
-            alert(`Mablag' yetarli emas! Sizga yana ${selectedCase.price - bal} COIN kerak.`);
+            alert(`Mablag' yetarli emas!`);
             return;
         }
 
@@ -684,47 +687,30 @@ function startRoulette(caseId) {
         track.style.transition = "none";
         track.style.top = "0px";
 
-        // Ruletka uchun 50 ta skinni tayyorlash
-for (let i = 0; i < 50; i++) {
-    let s = skins[Math.floor(Math.random() * skins.length)];
-    
-    // selectedCase.folder katta-kichik harfiga GitHub'dagi bilan bir xil bo'lishi shart!
-    const skinImgPath = `${selectedCase.folder}/${s.file}`;
-    
-    track.innerHTML += `
-        <div class="roulette-item">
-            <img src="${skinImgPath}" onerror="this.src='case1.png'">
-        </div>`;
-    
-    if (i === 40) window.appData.currentWinningSkin = s;
-}
-        // Spin animatsiyasi (5 soniya)
+        for (let i = 0; i < 50; i++) {
+            let s = skins[Math.floor(Math.random() * skins.length)];
+            const skinImgPath = `${selectedCase.folder}/${s.file}`;
+            track.innerHTML += `<div class="roulette-item"><img src="${skinImgPath}" onerror="this.src='img/case1.png'"></div>`;
+            if (i === 40) window.appData.currentWinningSkin = s;
+        }
+
         setTimeout(() => {
             track.style.transition = "top 5s cubic-bezier(0.15, 0, 0.15, 1)";
             track.style.top = `-${40 * 160 - 80}px`; 
-        }, 100); // 500ms juda ko'p, 100ms yaxshi
+        }, 100);
 
-    // Yutuqni ko'rsatish
-     setTimeout(() => {
-    viewport.style.display = 'none';
-    resultDisplay.style.display = 'block';
-    
-    const win = window.appData.currentWinningSkin;
-    
-    // MUHIM: win obyektiga folder ma'lumotini qo'shamiz
-    // Agar bu qator bo'lmasa, inventarda rasm qaysi papkadaligini bilmaydi
-    win.folder = selectedCase.folder; 
-    
-    const finalImgPath = `${win.folder}/${win.file}`;
-    
-    document.getElementById('won-skin-img').src = finalImgPath;
-    document.getElementById('won-skin-name').innerText = win.name;
-    
-    const priceElement = document.getElementById('won-skin-price');
-    if (priceElement) priceElement.innerText = win.price.toLocaleString() + " COIN";
-    
-    addToInventory(win); // Endi win ichida folder bor!
-      }, 5300);
+        setTimeout(() => {
+            viewport.style.display = 'none';
+            resultDisplay.style.display = 'block';
+            const win = window.appData.currentWinningSkin;
+            win.folder = selectedCase.folder; // Inventar uchun papka nomini biriktirish
+            
+            document.getElementById('won-skin-img').src = `${win.folder}/${win.file}`;
+            document.getElementById('won-skin-name').innerText = win.name;
+            document.getElementById('won-skin-price').innerText = win.price.toLocaleString() + " COIN";
+            
+            addToInventory(win);
+        }, 5300);
     });
 }
 
