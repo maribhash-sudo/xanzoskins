@@ -26,7 +26,7 @@ const cases = [
     { id: "stattrack", name: {uz: "StatTrak", ru: "StatTrak", en: "StatTrak"}, price: 50000, img: "case10.png" }
 ];
 
-const tacticalSkins = [
+const TacticalSkins = [
     { name: "AK-47 | Olive Polycam (FT)", price: 7650, file: "AK-47 _ Olive Polycam (Field-Tested).webp" },
     { name: "AK-47 | Safari Mesh (FT)", price: 8670, file: "AK-47 _ Safari Mesh (Field-Tested).webp" },
     { name: "AK-47 | Safari Mesh (WW)", price: 8160, file: "AK-47 _ Safari Mesh (Well-Worn).webp" },
@@ -119,7 +119,7 @@ const tacticalSkins = [
     { name: "Zeus x27 | Tosai (WW)", price: 10200, file: "Zeus x27 _ Tosai (Well-Worn).webp" }
 ];
 
-const spectrumSkins = [
+const SpectrumSkins = [
     { name: "AK-47 | Olive Polycam (MW)", price: 10200, file: "AK-47 _ Olive Polycam (Minimal Wear).webp" },
     { name: "AK-47 | Safari Mesh (MW)", price: 12750, file: "AK-47 _ Safari Mesh (Minimal Wear).webp" },
     { name: "AK-47 | VariCamo Grey (MW)", price: 9180, file: "AK-47 _ VariCamo Grey (Minimal Wear).webp" },
@@ -222,7 +222,7 @@ const spectrumSkins = [
     { name: "Zeus x27 | Olympus (MW)", price: 229500, file: "Zeus x27 _ Olympus (Minimal Wear).webp" }
 ];
 
-const clutchSkins = [
+const ClutchSkins = [
     { name: "AK-47 | Ice Coaled (BS)", price: 204000, file: "AK-47 _ Ice Coaled (Battle-Scarred).webp" },
     { name: "AK-47 | Olive Polycam (WW)", price: 9180, file: "AK-47 _ Olive Polycam (Well-Worn).webp" },
     { name: "AK-47 | Safari Mesh (WW)", price: 8160, file: "AK-47 _ Safari Mesh (Well-Worn).webp" },
@@ -325,7 +325,7 @@ const clutchSkins = [
     { name: "XM1014 | Teclu Burner (BS)", price: 15300, file: "XM1014 _ Teclu Burner (Battle-Scarred).webp" }
 ];
 
-const urbanSkins = [
+const UrbanSkins = [
     { name: "AK-47 | Elite Build (BS)", price: 45900, file: "AK-47 _ Elite Build (Battle-Scarred).webp" },
     { name: "AK-47 | VariCamo Grey (MW)", price: 9180, file: "AK-47 _ VariCamo Grey (Minimal Wear).webp" },
     { name: "AK-47 | VariCamo Grey (WW)", price: 8160, file: "AK-47 _ VariCamo Grey (Well-Worn).webp" },
@@ -428,10 +428,10 @@ const urbanSkins = [
 ];
 
 const caseInventory = {
-    "tactical": tacticalSkins,
-    "spectrum": spectrumSkins,
-    "clutch": clutchSkins,
-    "urban": urbanSkins
+    "Tactical": TacticalSkins,
+    "Spectrum": SpectrumSkins,
+    "Clutch": ClutchSkins,
+    "Urban": UrbanSkins
 };
 
 const topupPackages = {
