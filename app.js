@@ -524,7 +524,7 @@ function showPage(pageId, element) {
 
     const header = document.getElementById('main-header');
     if (header) {
-        header.style.display = (pageId === 'cases' || pageId === 'bonus' || pageId === 'profile') ? 'flex' : 'none';
+        header.style.display = ( pageId === 'bonus' ) ? 'flex' : 'none';
     }
 
     document.querySelectorAll('.nav-btn').forEach(n => n.classList.remove('active'));
