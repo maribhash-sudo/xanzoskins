@@ -887,13 +887,6 @@ function spinAgainAndSave() {
         }
     }, 300);
 }
-
-// 4. Chiqish tugmasi
-function exitAndSave() {
-    document.getElementById('roulette-modal').style.display = 'none';
-    showPage('cases');
-}
-
 // Buni app.js ning ochiq joyiga qo'ying
 window.showCasePreview = function(caseId) {
     console.log("Bosilgan keys ID:", caseId);
