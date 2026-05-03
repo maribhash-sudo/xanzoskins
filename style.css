@@ -1,7 +1,7 @@
 :root { 
     --fire: #8A2BE2; /* Neon Purple */
     --bg: #000; 
-    --card: rgba(30, 20, 40, 0.6); 
+    --card: rgba(30, 20, 40, 0.6);  
     --border: rgba(138, 43, 226, 0.3); 
     --green: #2ecc71; 
 }
