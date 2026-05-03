@@ -14,9 +14,20 @@ body {
     font-family: 'Montserrat', sans-serif; 
     margin: 0; 
     padding-bottom: 100px; 
+    overflow-x: hidden;
 }
 
 .app-container { max-width: 600px; margin: auto; padding: 15px; }
+
+/* SAHIFALARNI BOSHQARISH (MUHIM!) */
+.page { 
+    display: none; /* Dastlab hamma sahifa yopiq */
+    width: 100%;
+}
+
+.page.active { 
+    display: block !important; /* Faqat aktiv sahifa ko'rinadi */
+}
 
 /* HEADER */
 .header { 
@@ -33,10 +44,10 @@ body {
 .nav-btn img { width: 36px; height: 36px; object-fit: contain; }
 .nav-btn.active { color: var(--fire); text-shadow: 0 0 8px var(--fire); }
 
-/* GRID VA KARTALAR */
+/* GRID */
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
 
-/* KEYS KARTASI - RFL PRO VERTIKAL USLUB */
+/* KEYS KARTASI */
 .case-card { 
     background: linear-gradient(180deg, rgba(44, 44, 44, 0.4) 0%, rgba(20, 20, 20, 0.8) 100%) !important; 
     border: 1px solid var(--border) !important; 
@@ -44,7 +55,7 @@ body {
     padding: 20px 15px; 
     text-align: center;
     backdrop-filter: blur(10px);
-    transition: transform 0.3s ease, border-color 0.3s ease;
+    transition: 0.3s;
     animation: floatEffect 4s ease-in-out infinite;
     display: flex;
     flex-direction: column;
@@ -52,64 +63,48 @@ body {
     cursor: pointer;
 }
 
-.case-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--fire);
-}
-
 .case-card img.case-img { 
     width: 100%; 
     max-width: 120px;
     margin-bottom: 15px; 
-    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
 }
 
-.case-name {
-    font-weight: 700;
-    font-size: 14px;
-    margin-bottom: 12px;
-    color: #fff;
-    text-transform: uppercase;
-}
+.case-name { font-weight: 700; font-size: 14px; margin-bottom: 12px; text-transform: uppercase; }
 
-/* KEYS TUGMASI VA TANGA (COIN) O'LCHAMI TO'G'RILANDI */
+/* TANGA (COIN) VA TUGMA */
 .case-buy-btn {
     background: rgba(138, 43, 226, 0.1) !important;
     border: 1px solid var(--border) !important;
     border-radius: 12px !important;
     padding: 8px 15px !important;
     display: flex !important;
-    justify-content: center;
     align-items: center;
     gap: 8px; 
     font-size: 14px !important;
-    width: auto !important;
     color: #fff !important;
-    transition: 0.3s;
-    pointer-events: auto !important;
-    cursor: pointer !important;
 }
 
 .case-buy-btn img {
-    width: 18px !important;    /* Tanga o'lchami normal holga keltirildi */
-    height: 18px !important;   /* Tanga o'lchami normal holga keltirildi */
+    width: 18px !important;    /* Kichraytirilgan o'lcham */
+    height: 18px !important;   
     object-fit: contain !important; 
     margin-bottom: 0 !important;
     vertical-align: middle;
-    filter: drop-shadow(0 0 5px var(--fire));
 }
 
-/* PREVIEW MODAL (Keys ichini ko'rish) */
+/* PREVIEW MODAL */
 .modal {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.9); z-index: 2000;
-    display: none; justify-content: center; align-items: center;
+    display: none; /* JS orqali 'flex' qilinadi */
+    justify-content: center; align-items: center;
+    backdrop-filter: blur(10px);
 }
 
 .modal-content {
     background: #121212; width: 90%; max-width: 400px;
     border-radius: 25px; border: 1px solid var(--border);
-    padding: 25px; position: relative; text-align: center;
+    padding: 25px; text-align: center;
     box-shadow: 0 0 30px rgba(138, 43, 226, 0.3);
 }
 
@@ -127,65 +122,26 @@ body {
     border-bottom: 2px solid rgba(138, 43, 226, 0.5);
 }
 
-/* QOLGAN KARTALAR */
+/* PROFIL VA BOSHQA KARTALAR */
 .card, .task-card, .task-card-pro { 
     background: var(--card); 
     border: 1px solid var(--border); 
     padding: 15px; 
     border-radius: 15px; 
-    text-align: center;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 15px rgba(138, 43, 226, 0.2);
+    margin-bottom: 15px;
 }
-
-.task-card-pro {
-    display: flex; justify-content: space-between; align-items: center;
-    text-align: left; margin-bottom: 15px;
-}
-.task-info-main { display: flex; align-items: center; gap: 15px; }
-.task-icon-circle {
-    width: 40px; height: 40px;
-    background: rgba(138, 43, 226, 0.15);
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px; border: 1px solid var(--border);
-}
-.task-text-content h4 { margin: 0; font-size: 14px; color: #fff; }
-.task-text-content p { margin: 3px 0 0; font-size: 12px; color: var(--fire); font-weight: 600; }
-
-/* KICHIKROQ TUGMALAR */
-.btn-action-pro {
-    background: var(--fire) !important;
-    color: white !important;
-    border: none !important;
-    padding: 6px 14px !important;
-    font-size: 11px !important;
-    border-radius: 6px !important;
-    text-transform: uppercase;
-    font-weight: 800 !important;
-    cursor: pointer;
-    box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
-    width: auto !important;
-}
-.btn-action-pro:active { transform: scale(0.95); }
-
-/* INVENTAR */
-#inventory-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; }
-.inventory-card { background: rgba(30, 20, 40, 0.7); border-radius: 8px; padding: 10px; position: relative; text-align: center; border: 1px solid rgba(138, 43, 226, 0.2); overflow: hidden; }
 
 /* ANIMATSIYA */
 @keyframes floatEffect { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
 
-/* Profil */
+/* PROFIL ELEMENTLARI */
 .avatar-glow-large {
-    width: 90px; height: 90px; margin: 0 auto; border: 3px solid var(--fire); border-radius: 50%; padding: 3px;
+    width: 90px; height: 90px; margin: 0 auto 15px; border: 3px solid var(--fire); border-radius: 50%;
     box-shadow: 0 0 20px rgba(138, 43, 226, 0.6);
 }
-.profile-menu { display: flex; flex-direction: column; gap: 12px; padding: 10px; }
+
 .menu-item-card {
     display: flex; align-items: center; background: rgba(20, 20, 30, 0.8);
-    border: 1px solid var(--border); border-radius: 15px; padding: 15px 20px; cursor: pointer; transition: 0.3s;
+    border: 1px solid var(--border); border-radius: 15px; padding: 15px 20px; 
+    margin-bottom: 10px; cursor: pointer;
 }
-
-.topup-row { background: #1a1a1a; border-radius: 12px; padding: 15px 20px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #333; cursor: pointer; }
-.hit-badge { background: #ff4500; color: white; font-size: 10px; padding: 2px 6px; border-radius: 4px; margin-left: 8px; }
