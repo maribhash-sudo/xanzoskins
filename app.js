@@ -499,8 +499,10 @@ let tasks = [
 // ==========================================
 
 function getSkinImg(skin) {
-    // Agar skin.folder bo'lsa o'shani ishlatadi, bo'lmasa Tactical (xato bermasligi uchun)
-    return `${skin.folder || 'Tactical'}/${skin.file}`;
+    // Agar skin obyektida folder bo'lsa, o'shani ishlatadi. 
+    // Faqat u umuman bo'lmagan holatdagina xato bermasligi uchun birorta papkani ko'rsatish kerak.
+    const folder = skin.folder || 'Tactical'; 
+    return `${folder}/${skin.file}`;
 }
 
 function setLanguage(lang) {
@@ -594,9 +596,11 @@ function renderInventory() {
     window.Telegram.WebApp.CloudStorage.getItem('inventory', (err, val) => {
         let inv = val ? JSON.parse(val) : [];
         inv.forEach((item, index) => {
-            // Rasm manzilini yasash: Agar itemda folder bo'lsa o'shani, bo'lmasa Tactical'ni ishlatadi
-            const folder = item.folder || 'Tactical';
-            const imgPath = `${folder}/${item.file}`;
+            
+            // MUHIM: Har bir skinning o'z folder ma'lumotini ishlatamiz. 
+            // Agar folder saqlanmagan bo'lsa, xato chiqmasligi uchun 'Tactical' zaxira sifatida turadi.
+            const skinFolder = item.folder || 'Tactical';
+            const imgPath = `${skinFolder}/${item.file}`;
             
             grid.innerHTML += `
                 <div class="case-card">
@@ -607,6 +611,7 @@ function renderInventory() {
         });
     });
 }
+
 function sellAllInventory() {
     window.Telegram.WebApp.CloudStorage.getItem('inventory', (err, val) => {
         let inv = val ? JSON.parse(val) : [];
