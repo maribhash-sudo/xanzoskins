@@ -144,13 +144,32 @@ body {
     position: relative; overflow: hidden;
 }
 
+/* Yurakcha belgisi (Wishlist) */
+.wishlist-heart {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: 0.3s;
+    z-index: 5;
+}
+
+.wishlist-heart:hover {
+    color: #ff4b4b;
+    transform: scale(1.2);
+}
+
 /* KRISTALL VA NARX KAPSULASI (IMAGE_1968FF.JPG USLUBIDA) */
 .skin-price-tag {
-    background: rgba(0, 0, 0, 0.6);
-    border-radius: 12px;
-    padding: 4px 8px;
+    background: rgba(0, 0, 0, 0.5) !important;
+    border-radius: 8px !important;
+    padding: 5px 12px !important;
+    min-width: 80px;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 5px;
     margin-top: 5px;
     border: 1px solid rgba(255,255,255,0.1);
@@ -158,6 +177,7 @@ body {
 
 .crystal-icon {
     width: 14px; height: 14px;
+    filter: drop-shadow(0 0 5px var(--fire));
     animation: crystal-glow 2s infinite alternate;
 }
 
@@ -167,6 +187,19 @@ body {
 }
 
 .price-value { font-size: 10px; font-weight: 800; color: #fff; }
+
+/* Skin rasmini kattalashtirish va soya berish */
+.preview-skin-item img {
+    width: 90% !important;
+    height: auto;
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
+    margin-bottom: 5px;
+    transition: 0.3s;
+}
+
+.preview-skin-item:hover img {
+    transform: translateY(-5px) scale(1.05);
+}
 
 /* SKIN NOMI */
 .skin-name-text {
