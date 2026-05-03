@@ -1122,18 +1122,20 @@ function addToInventory(item) {
 
 function renderCases() {
     const grid = document.getElementById('cases-grid');
-    if(!grid) return;
+    if (!grid) return;
     grid.innerHTML = "";
     const lang = localStorage.getItem('lang') || 'uz';
-    
+
     cases.forEach(c => {
         grid.innerHTML += `
-            <div class="case-card" onclick="showCasePreview('${c.id}')" style="cursor:pointer;">
-                <img src="${c.img}" class="case-img">
-                <p class="case-name">${c.name[lang]}</p>
-                <div class="case-buy-btn">
-                    <img src="img/nav_diamond.png" alt="coin">
-                    <span>${c.price}</span>
+            <div class="case-card" onclick="showCasePreview('${c.id}')">
+                <img src="${c.img}" class="case-img" onerror="this.src='img/case1.jpg'">
+                <div class="case-info-overlay">
+                    <p class="case-name">${c.name[lang]}</p>
+                    <div class="case-buy-btn">
+                        <img src="img/nav_diamond.png" alt="coin">
+                        <span>${c.price.toLocaleString()}</span>
+                    </div>
                 </div>
             </div>`;
     });
