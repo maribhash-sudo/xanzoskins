@@ -19,14 +19,14 @@ body {
 
 .app-container { max-width: 600px; margin: auto; padding: 15px; }
 
-/* SAHIFALARNI BOSHQARISH (MUHIM!) */
+/* SAHIFALARNI BOSHQARISH */
 .page { 
-    display: none; /* Dastlab hamma sahifa yopiq */
+    display: none; 
     width: 100%;
 }
 
 .page.active { 
-    display: block !important; /* Faqat aktiv sahifa ko'rinadi */
+    display: block !important; 
 }
 
 /* HEADER */
@@ -38,11 +38,43 @@ body {
 }
 #balance { color: var(--fire); font-size: 22px; font-weight: 800; text-shadow: 0 0 10px var(--fire); }
 
-/* NAVIGATSIYA */
-.bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 85px; background: #000; border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index: 1000; }
-.nav-btn { background: none; border: none; color: #777; display: flex; flex-direction: column; align-items: center; width: 25%; gap: 5px; cursor: pointer; }
-.nav-btn img { width: 36px; height: 36px; object-fit: contain; }
-.nav-btn.active { color: var(--fire); text-shadow: 0 0 8px var(--fire); }
+/* TO'LDIRISH TUGMASI (NEON) */
+.topup-btn-header {
+    background: linear-gradient(135deg, #8A2BE2 0%, #4B0082 100%) !important;
+    color: #fff !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 10px !important;
+    padding: 8px 15px !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+    box-shadow: 0 0 10px var(--fire) !important;
+    cursor: pointer;
+}
+
+/* NAVIGATSIYA (RASMLAR BILAN) */
+.bottom-nav { 
+    position: fixed; bottom: 0; left: 0; width: 100%; height: 85px; 
+    background: #050505; border-top: 1px solid var(--border); 
+    display: flex; justify-content: space-around; align-items: center; z-index: 1000; 
+}
+
+.nav-btn { 
+    background: none; border: none; color: #777; 
+    display: flex; flex-direction: column; align-items: center; width: 25%; gap: 5px; cursor: pointer; 
+}
+
+.nav-btn img { 
+    width: 28px !important; height: 28px !important; 
+    object-fit: contain; opacity: 0.5; transition: 0.3s;
+}
+
+.nav-btn.active img { 
+    opacity: 1; filter: drop-shadow(0 0 8px var(--fire)) brightness(1.2); 
+}
+
+.nav-btn span { font-size: 10px; font-weight: 600; text-transform: uppercase; }
+.nav-btn.active span { color: var(--fire); text-shadow: 0 0 5px var(--fire); }
 
 /* GRID */
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
@@ -51,53 +83,35 @@ body {
 .case-card { 
     background: linear-gradient(180deg, rgba(44, 44, 44, 0.4) 0%, rgba(20, 20, 20, 0.8) 100%) !important; 
     border: 1px solid var(--border) !important; 
-    border-radius: 20px;
-    padding: 20px 15px; 
-    text-align: center;
-    backdrop-filter: blur(10px);
-    transition: 0.3s;
+    border-radius: 20px; padding: 20px 15px; text-align: center;
+    backdrop-filter: blur(10px); transition: 0.3s;
     animation: floatEffect 4s ease-in-out infinite;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; cursor: pointer;
 }
 
-.case-card img.case-img { 
-    width: 100%; 
-    max-width: 120px;
-    margin-bottom: 15px; 
-}
-
+.case-card img.case-img { width: 100%; max-width: 120px; margin-bottom: 15px; }
 .case-name { font-weight: 700; font-size: 14px; margin-bottom: 12px; text-transform: uppercase; }
 
-/* TANGA (COIN) VA TUGMA */
+/* KEYS TUGMASI VA TANGA */
 .case-buy-btn {
     background: rgba(138, 43, 226, 0.1) !important;
     border: 1px solid var(--border) !important;
     border-radius: 12px !important;
     padding: 8px 15px !important;
-    display: flex !important;
-    align-items: center;
-    gap: 8px; 
-    font-size: 14px !important;
-    color: #fff !important;
+    display: flex !important; align-items: center; gap: 8px; 
+    font-size: 14px !important; color: #fff !important;
 }
 
 .case-buy-btn img {
-    width: 18px !important;    /* Kichraytirilgan o'lcham */
-    height: 18px !important;   
-    object-fit: contain !important; 
-    margin-bottom: 0 !important;
-    vertical-align: middle;
+    width: 18px !important; height: 18px !important; 
+    object-fit: contain !important; vertical-align: middle;
 }
 
-/* PREVIEW MODAL */
+/* MODALLAR VA SKINLAR */
 .modal {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.9); z-index: 2000;
-    display: none; /* JS orqali 'flex' qilinadi */
-    justify-content: center; align-items: center;
+    display: none; justify-content: center; align-items: center;
     backdrop-filter: blur(10px);
 }
 
@@ -112,8 +126,7 @@ body {
     display: grid; grid-template-columns: repeat(3, 1fr);
     gap: 10px; max-height: 250px; overflow-y: auto;
     margin-top: 15px; padding: 10px;
-    background: rgba(255,255,255,0.03);
-    border-radius: 15px;
+    background: rgba(255,255,255,0.03); border-radius: 15px;
 }
 
 .preview-skin-item {
@@ -122,13 +135,21 @@ body {
     border-bottom: 2px solid rgba(138, 43, 226, 0.5);
 }
 
-/* PROFIL VA BOSHQA KARTALAR */
+/* ASOSIY TUGMALAR (NEON BINAFAHSA) */
+button, .btn-action-pro { 
+    background: linear-gradient(135deg, #8A2BE2 0%, #4B0082 100%) !important; 
+    color: #fff !important; border: none !important;
+    border-radius: 12px !important; padding: 12px !important; 
+    font-weight: 800 !important; cursor: pointer; transition: 0.3s;
+    box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4) !important;
+}
+
+button:active { transform: scale(0.96); }
+
+/* QOLGAN KARTALAR */
 .card, .task-card, .task-card-pro { 
-    background: var(--card); 
-    border: 1px solid var(--border); 
-    padding: 15px; 
-    border-radius: 15px; 
-    margin-bottom: 15px;
+    background: var(--card); border: 1px solid var(--border); 
+    padding: 15px; border-radius: 15px; margin-bottom: 15px;
 }
 
 /* ANIMATSIYA */
@@ -143,5 +164,13 @@ body {
 .menu-item-card {
     display: flex; align-items: center; background: rgba(20, 20, 30, 0.8);
     border: 1px solid var(--border); border-radius: 15px; padding: 15px 20px; 
-    margin-bottom: 10px; cursor: pointer;
+    margin-bottom: 10px; cursor: pointer; transition: 0.3s;
+}
+
+.menu-item-card:hover { background: rgba(138, 43, 226, 0.1); transform: translateX(5px); }
+
+.topup-row { 
+    background: #1a1a1a; border-radius: 12px; padding: 15px 20px; 
+    margin-bottom: 10px; display: flex; justify-content: space-between; 
+    align-items: center; border: 1px solid #333; cursor: pointer; 
 }
