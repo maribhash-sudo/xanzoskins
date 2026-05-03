@@ -499,7 +499,8 @@ let tasks = [
 // ==========================================
 
 function getSkinImg(skin) {
-    return `img/Tactical/${skin.file}`;
+    // Agar skin.folder bo'lsa o'shani ishlatadi, bo'lmasa Tactical (xato bermasligi uchun)
+    return `${skin.folder || 'Tactical'}/${skin.file}`;
 }
 
 function setLanguage(lang) {
@@ -555,8 +556,15 @@ function addToInventory(item) {
     const tg = window.Telegram.WebApp;
     tg.CloudStorage.getItem('inventory', (err, val) => {
         let inv = val ? JSON.parse(val) : [];
+        
+        // Skin obyektiga rasm manzili to'g'ri chiqishi uchun folder ma'lumotini qo'shamiz
+        // Agar item ichida folder bo'lmasa, demak u joriy ochilgan keysdan olinadi
         inv.push(item);
-        tg.CloudStorage.setItem('inventory', JSON.stringify(inv));
+        
+        tg.CloudStorage.setItem('inventory', JSON.stringify(inv), (err) => {
+            if (err) console.error("Inventarga saqlashda xato:", err);
+            else console.log("Skin inventarga saqlandi:", item.name);
+        });
     });
 }
 
@@ -663,14 +671,17 @@ function startRoulette(caseId) {
             track.style.top = `-${40 * 160 - 80}px`; 
         }, 100); // 500ms juda ko'p, 100ms yaxshi
 
-        // Yutuqni ko'rsatish
+    // Yutuqni ko'rsatish
         setTimeout(() => {
             viewport.style.display = 'none';
             resultDisplay.style.display = 'block';
             
             const win = window.appData.currentWinningSkin;
             
-            // 3. Yutuq rasmida ham img/ prefiksini olib tashlaymiz
+            // MANA BU QATORNI QO'SHING:
+            win.folder = selectedCase.folder; 
+            
+            // Yutuq rasmida ham img/ prefiksini olib tashlaymiz
             const finalImgPath = `${selectedCase.folder}/${win.file}`;
             
             document.getElementById('won-skin-img').src = finalImgPath;
@@ -679,8 +690,9 @@ function startRoulette(caseId) {
             const priceElement = document.getElementById('won-skin-price');
             if (priceElement) priceElement.innerText = win.price.toLocaleString() + " COIN";
             
+            // Endi win obyekti ichida folder bor, addToInventory uni to'g'ri saqlaydi
             addToInventory(win);
-        }, 5300); // Animatsiya tugagach biroz kutib ko'rsatadi
+        }, 5300);
     });
 }
 
