@@ -1141,23 +1141,43 @@ function renderCases() {
 
 function renderInventory() {
     const grid = document.getElementById('inventory-grid');
-    if(!grid) return;
-    grid.innerHTML = "";
+    if (!grid) {
+        console.error("Xato: inventory-grid elementi topilmadi!");
+        return;
+    }
+    grid.innerHTML = '<p style="text-align:center; width:100%;">Yuklanmoqda...</p>';
     
+    // Telegram CloudStorage-dan ma'lumot olish
     window.Telegram.WebApp.CloudStorage.getItem('inventory', (err, val) => {
+        if (err) {
+            console.error("CloudStorage xatosi:", err);
+            grid.innerHTML = '<p>Ma'lumotni yuklab bo'lmadi.</p>';
+            return;
+        }
+
         let inv = val ? JSON.parse(val) : [];
+        console.log("Inventar ma'lumotlari keldi:", inv); // Konsolda tekshirish uchun
+
+        if (inv.length === 0) {
+            grid.innerHTML = '<p style="text-align:center; width:100%; color:#777;">Inventar bo'sh</p>';
+            return;
+        }
+
+        grid.innerHTML = ""; // Tozalash
         inv.forEach((item, index) => {
-            const skinFolder = item.folder || 'Tactical'; 
+            // Xatolikni oldini olish uchun tekshiruvlar
+            const skinFolder = item.folder || 'Tactical';
             const imgPath = `${skinFolder}/${item.file}`;
-            
-            // getRarityClass va getPriceTagHTML funksiyalaridan foydalanamiz
+            const rarity = typeof getRarityClass === 'function' ? getRarityClass(item.price) : 'rarity-common';
+            const priceTag = typeof getPriceTagHTML === 'function' ? getPriceTagHTML(item.price) : item.price;
+
             grid.innerHTML += `
-                <div class="preview-skin-item ${getRarityClass(item.price)}">
+                <div class="preview-skin-item ${rarity}">
                     <span class="wishlist-heart">♡</span>
                     <img src="${imgPath}" onerror="this.src='img/case1.png'">
                     <p class="skin-name-text">${item.name}</p>
-                    ${getPriceTagHTML(item.price)}
-                    <button onclick="withdrawItem(${index})" style="margin-top:10px; width:100%; font-size:10px;">STEAM</button>
+                    ${priceTag}
+                    <button onclick="withdrawItem(${index})" style="margin-top:10px; width:100%; font-size:10px; background:#2ecc71 !important;">STEAM</button>
                 </div>`;
         });
     });
