@@ -596,17 +596,15 @@ function renderInventory() {
     window.Telegram.WebApp.CloudStorage.getItem('inventory', (err, val) => {
         let inv = val ? JSON.parse(val) : [];
         inv.forEach((item, index) => {
-            
-            // MUHIM: Har bir skinning o'z folder ma'lumotini ishlatamiz. 
-            // Agar folder saqlanmagan bo'lsa, xato chiqmasligi uchun 'Tactical' zaxira sifatida turadi.
-            const skinFolder = item.folder || 'Tactical';
+            // Har bir skinning o'z papkasidan olish
+            const skinFolder = item.folder || 'Tactical'; 
             const imgPath = `${skinFolder}/${item.file}`;
             
             grid.innerHTML += `
                 <div class="case-card">
-                    <img src="${imgPath}" style="width:60px" onerror="this.src='case1.png'">
-                    <p style="font-size:10px">${item.name}</p>
-                    <button onclick="withdrawItem(${index})" style="font-size:10px;">STEAM</button>
+                    <img src="${imgPath}" style="width:60px; margin-bottom:10px;" onerror="this.src='case1.png'">
+                    <p style="font-size:10px; height:30px; overflow:hidden;">${item.name}</p>
+                    <button onclick="withdrawItem(${index})" style="font-size:10px; background:#2ecc71; border:none; color:white; border-radius:3px; padding:5px; cursor:pointer;">STEAM</button>
                 </div>`;
         });
     });
