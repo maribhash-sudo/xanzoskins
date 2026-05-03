@@ -680,13 +680,15 @@ function sellAllInventory() {
     });
 }
 
+// Eski startRoulette funksiyasini mana bu openCase funksiyasi bilan almashtiring
 function startRoulette(caseId) {
     window.appData.currentCaseId = caseId;
     const selectedCase = cases.find(c => c.id === caseId);
-    const skins = caseInventory[caseId]; 
+    const possibleSkins = caseInventory[caseId];
 
-    if (!selectedCase || !skins) return;
+    if (!selectedCase || !possibleSkins) return;
 
+    // Balansni tekshirish (CloudStorage dan)
     window.Telegram.WebApp.CloudStorage.getItem('userBalance', (err, val) => {
         let bal = val ? parseInt(val) : 10000;
         if (bal < selectedCase.price) {
@@ -694,45 +696,64 @@ function startRoulette(caseId) {
             return;
         }
 
+        // Balansni ayirish
         updateBalance(-selectedCase.price);
-        
+
         const modal = document.getElementById('roulette-modal');
         const track = document.getElementById('roulette-track');
         const viewport = document.getElementById('roulette-viewport');
         const resultDisplay = document.getElementById('result-display');
         
+        // 1. Ruletkani tozalash va tayyorlash
         modal.style.display = 'flex';
         viewport.style.display = 'block';
         resultDisplay.style.display = 'none';
-        
-        track.innerHTML = "";
-        track.style.transition = "none";
-        track.style.top = "0px";
+        track.style.transition = 'none';
+        track.style.transform = 'translateY(0)';
 
-        for (let i = 0; i < 50; i++) {
-            let s = skins[Math.floor(Math.random() * skins.length)];
-            const skinImgPath = `${selectedCase.folder}/${s.file}`;
-            track.innerHTML += `<div class="roulette-item"><img src="${skinImgPath}" onerror="this.src='img/case1.png'"></div>`;
-            if (i === 40) window.appData.currentWinningSkin = s;
+        // 2. Skinlarni generatsiya qilish (60 ta)
+        let rouletteSkins = [];
+        for (let i = 0; i < 60; i++) {
+            const randomSkin = possibleSkins[Math.floor(Math.random() * possibleSkins.length)];
+            rouletteSkins.push(randomSkin);
         }
 
+        // 3. HTML ga chiqarish
+        track.innerHTML = rouletteSkins.map(skin => `
+            <div class="roulette-item">
+                <img src="${selectedCase.folder}/${skin.file}" onerror="this.src='img/case1.png'">
+            </div>
+        `).join('');
+
+        // 4. Hisob-kitob (Vertikal aylanish)
+        const winningIndex = 50; // 50-chi skin yutadi
+        const itemHeight = 150;  // CSS dagi .roulette-item balandligi
+        const viewportHeight = 455; // CSS dagi #roulette-viewport balandligi
+        
+        // Chiziq o'rtasiga tushish formulasi
+        const stopPosition = (winningIndex * itemHeight) + (itemHeight / 2) - (viewportHeight / 2);
+
+        // 5. Animatsiyani boshlash (12 soniya)
         setTimeout(() => {
-            track.style.transition = "top 5s cubic-bezier(0.15, 0, 0.15, 1)";
-            track.style.top = `-${40 * 160 - 80}px`; 
+            track.style.transition = 'transform 12s cubic-bezier(0.15, 0, 0.15, 1)';
+            track.style.transform = `translateY(-${stopPosition}px)`;
         }, 100);
 
+        // 6. Natijani ko'rsatish
         setTimeout(() => {
+            const win = rouletteSkins[winningIndex];
+            win.folder = selectedCase.folder;
+            window.appData.currentWinningSkin = win;
+
             viewport.style.display = 'none';
             resultDisplay.style.display = 'block';
-            const win = window.appData.currentWinningSkin;
-            win.folder = selectedCase.folder; // Inventar uchun papka nomini biriktirish
             
             document.getElementById('won-skin-img').src = `${win.folder}/${win.file}`;
             document.getElementById('won-skin-name').innerText = win.name;
             document.getElementById('won-skin-price').innerText = win.price.toLocaleString() + " COIN";
             
-            addToInventory(win);
-        }, 5300);
+            addToInventory(win); // Avtomatik inventarga qo'shish
+        }, 12100);
     });
 }
 
