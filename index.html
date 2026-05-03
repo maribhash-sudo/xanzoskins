@@ -96,7 +96,6 @@
                 <div class="profile-menu">
                     <div class="menu-item-card"><span class="menu-icon">👤</span> <span class="menu-text" data-lang="profile_title">Mening profilim</span></div>
                     <div class="menu-item-card"><span class="menu-icon">💎</span> <span class="menu-text" data-lang="upgrade_title">Up-grade</span></div>
-                    <!-- toggleTrade o'rniga toggleTradeSection JS funksiyasiga moslandi -->
                     <div class="menu-item-card" onclick="toggleTradeSection()"><span class="menu-icon">🔗</span> <span class="menu-text" data-lang="trade_title">Trade Link</span></div>
                     <div class="menu-item-card"><span class="menu-icon">👥</span> <span class="menu-text" data-lang="community_title">Hamjamiyat</span></div>
                     <div class="menu-item-card" onclick="toggleSettings()"><span class="menu-icon">⚙️</span> <span class="menu-text" data-lang="settings_title">Sozlamalar</span></div>
@@ -141,42 +140,48 @@
         </nav>
     </div>
 
-    <!-- RULETKA MODAL -->
-    <div id="roulette-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:9999; justify-content:center; align-items:center; flex-direction:column;">
-        <div id="roulette-viewport" style="width:100%; overflow:hidden; height:160px;">
-            <div id="roulette-track" style="position:relative; top:0; display:flex; flex-direction:column; align-items:center;"></div>
+    <!-- RULETKA MODAL (Vertikal va Premium dizayn) -->
+    <div id="roulette-modal">
+        <div id="roulette-viewport">
+            <!-- Chiziq (Pointer) CSS orqali After bilan qo'shilgan -->
+            <div id="roulette-track"></div>
         </div>
         
         <!-- NATIJA DISPLAY -->
-        <div id="result-display" style="display:none; text-align:center; color:#fff; padding:20px;">
+        <div id="result-display">
             <h3>YUTUQ!</h3>
-            <img id="won-skin-img" style="width:150px; border-radius:10px; margin-bottom:10px;">
-            <p id="won-skin-name" style="font-size:20px; font-weight:bold; margin-bottom:5px;"></p>
-            <p id="won-skin-price" style="font-size:16px; color:#f1c40f; margin-bottom:20px;"></p>
+            <div class="won-skin-container">
+                <img id="won-skin-img" src="">
+                <h4 id="won-skin-name"></h4>
+                <p id="won-skin-price"></p>
+            </div>
             
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <button onclick="sellWonSkin()" style="padding:10px; background:#e74c3c; border:none; color:white; border-radius:5px; font-weight:bold;">SOTISH</button>
-                <button onclick="withdrawWonSkin()" style="padding:10px; background:#2ecc71; border:none; color:white; border-radius:5px; font-weight:bold;">STEAM</button>
-                <button onclick="spinAgainAndSave()" style="padding:12px; background:#3498db; border:none; color:white; border-radius:8px; font-weight:bold; grid-column: span 2;">YANA AYLANTIRISH</button>
-                <button onclick="exitAndSave()" style="padding:12px; background:#7f8c8d; border:none; color:white; border-radius:8px; font-weight:bold; grid-column: span 2;">CHIQISH</button>
+            <div class="modal-btns">
+                <button onclick="withdrawWonSkin()" class="withdraw-btn">STEAMGA OLISH</button>
+                <button onclick="sellWonSkin()" class="sell-btn">SOTISH</button>
+                <button onclick="spinAgainAndSave()" class="again-btn">YANA AYLANTIRISH</button>
+                <button onclick="exitAndSave()" class="exit-btn">CHIQISH</button>
             </div>
         </div>
     </div>
 
-    <!-- Keys ichini ko'rish modali -->
-<div id="preview-modal" class="modal" style="display:none;">
-    <div class="modal-content">
-        <span class="close-preview" onclick="closePreview()">&times;</span>
-        <div id="preview-case-info">
-            <img id="preview-case-img" src="" style="width:150px;">
-            <h2 id="preview-case-name"></h2>
-            <button id="preview-open-btn" class="btn-main">OCHISH</button>
+    <!-- KEYS PREVIEW MODAL (Rasmga (image_19e100.jpg) asosan premium dizayn) -->
+    <div id="preview-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="preview-case-name"></h2>
+                <span class="close-preview" onclick="closePreview()">&times;</span>
+            </div>
+            <div id="preview-case-info">
+                <img id="preview-case-img" src="">
+                <button id="preview-open-btn" class="btn-main-open">OCHISH</button>
+            </div>
+            <div class="preview-divider">
+                <span>KEYS ICHIDAGI SKINLAR</span>
+            </div>
+            <div id="preview-skins-grid" class="preview-grid"></div>
         </div>
-        <hr>
-        <h4>KEYS ICHIDAGI SKINLAR:</h4>
-        <div id="preview-skins-grid" class="preview-grid"></div>
     </div>
-</div>
     
     <script src="app.js"></script>
 </body>
