@@ -1,4 +1,4 @@
-/* Asosiy Modal - Fonni xiralashtirish (Glassmorphism) */
+/* Asosiy Modal */
 #roulette-modal {
     display: none; 
     position: fixed; 
@@ -8,92 +8,95 @@
     z-index: 9999; 
     justify-content: center; 
     align-items: center;
+    flex-direction: column;
 }
 
-/* Faqat ramka (viewport) uchun */
+/* Faqat ramka (viewport) */
 #roulette-viewport {
-    width: 280px !important;    /* Ramka eni (tor) */
-    height: 455px !important;   /* Ramka bo'yi (uzun) */
+    width: 280px !important;    
+    height: 455px !important;   
     border: 3px solid #ff00ff; 
     border-radius: 30px; 
     overflow: hidden; 
     position: relative;
     background: #000;
+    box-shadow: 0 0 25px rgba(255, 0, 255, 0.3);
 }
 
-/* Rasmlar joylashgan yo'l (faqat bo'yiga) */
+/* Rasmlar yo'li (Bo'yiga aylanish) */
 #roulette-track {
     display: flex !important;
-    flex-direction: column !important; /* MAJBURAN BO'YIGA */
+    flex-direction: column !important; 
     align-items: center;
     width: 100%;
+    /* 12 soniyali silliq animatsiya */
+    transition: transform 12s cubic-bezier(0.15, 0, 0.15, 1);
+    will-change: transform;
 }
 
-/* Har bir rasm uchun */
+/* Har bir skin bloki */
 .roulette-item {
     width: 100%;
-    height: 150px; /* Rasmlar bo'yiga qator bo'lib tushadi */
+    height: 150px; 
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: 1px solid #333;
-}
-.roulette-item img {
-    width: 105px; 
-    height: 105px; 
-    object-fit: contain;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    flex-shrink: 0;
 }
 
-/* O'rtadagi markaziy chiziq (Reels'dagi "safe area" kabi) */
+.roulette-item img {
+    width: 110px; 
+    height: 110px; 
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+}
+
+/* O'rtadagi ko'rsatkich chiziq */
 #roulette-viewport::after {
     content: "";
     position: absolute;
     top: 50%;
-    left: 10%;
-    width: 80%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #ff00ff, transparent);
+    left: 5%;
+    width: 90%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #ff00ff, #00ffff, transparent);
     z-index: 10;
     transform: translateY(-50%);
+    box-shadow: 0 0 15px #ff00ff;
 }
+
 /* Natija oynasi */
 #result-display {
-    background: transparent;
+    display: none;
     text-align: center;
     color: #fff;
     padding: 20px;
+    animation: zoomIn 0.5s ease-out;
 }
+
 @keyframes zoomIn {
     from { opacity: 0; transform: scale(0.5); }
     to { opacity: 1; transform: scale(1); }
 }
 
-.result-display img { 
-    width: 200px; 
+#won-skin-img { 
+    width: 180px; 
     filter: drop-shadow(0 0 25px #FFD700);
     margin-bottom: 15px; 
 }
 
-.result-display h3 { 
-    color: #FFD700; 
-    font-size: 28px; 
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin: 0; 
-    text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
-}
-
-/* Tugmalar - Premium ko'rinish */
+/* Tugmalar */
 .modal-btns { 
     display: flex; 
     flex-direction: column; 
     gap: 12px; 
     margin-top: 20px; 
-    width: 80%;
+    width: 280px;
 }
 
 .modal-btns button { 
-    padding: 15px; 
+    padding: 14px; 
     border: none; 
     border-radius: 12px; 
     color: white; 
@@ -101,28 +104,11 @@
     font-weight: 800; 
     text-transform: uppercase;
     background: linear-gradient(45deg, #FF4500, #FF8C00); 
-    box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
     transition: 0.2s;
-}
-
-.modal-btns button:active {
-    transform: scale(0.95);
 }
 
 .withdraw-btn {
     background: linear-gradient(45deg, #32CD32, #228B22) !important;
 }
 
-/* Keys titrash animatsiyasi */
-.case-shake {
-    animation: shake 0.2s infinite;
-}
-
-@keyframes shake {
-    0% { transform: translate(1px, 1px) rotate(0deg); }
-    20% { transform: translate(-1px, -2px) rotate(-1deg); }
-    40% { transform: translate(-3px, 0px) rotate(1deg); }
-    60% { transform: translate(3px, 2px) rotate(0deg); }
-    80% { transform: translate(1px, -1px) rotate(1deg); }
-    100% { transform: translate(-1px, 2px) rotate(-1deg); }
-}
+.modal-btns button:active { transform: scale(0.95); }
