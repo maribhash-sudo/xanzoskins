@@ -13,7 +13,7 @@ body {
     color: #fff; 
     font-family: 'Montserrat', sans-serif; 
     margin: 0; 
-    padding-bottom: 100px; 
+    padding-bottom: 120px; /* Pastki menyu uchun ko'proq joy */
     overflow-x: hidden;
 }
 
@@ -80,16 +80,16 @@ body {
 .grid { 
     display: grid; 
     grid-template-columns: 1fr 1fr; 
-    gap: 12px; 
+    gap: 15px; 
     margin-top: 20px; 
 }
 
-/* KEYS KARTOCHKASI - YANGI DIZAYN */
+/* KEYS KARTOCHKASI - YANGI OPTIMALLASHGAN DIZAYN */
 .case-card { 
     background: #121212 !important; 
-    border: 1px solid rgba(255, 255, 255, 0.05) !important; 
+    border: 1px solid rgba(255, 255, 255, 0.1) !important; 
     border-radius: 20px; 
-    padding: 0 0 12px 0 !important; 
+    padding: 0 0 15px 0 !important; 
     text-align: center;
     backdrop-filter: blur(10px); 
     transition: 0.3s;
@@ -99,23 +99,26 @@ body {
     align-items: center; 
     cursor: pointer;
     overflow: hidden;
+    height: auto; /* Balandlik avtomatik moslashadi */
+    min-height: 280px; /* Kesilib qolmasligi uchun minimal balandlik */
 }
 
-/* KEYS RASMI - TO'LIQ VA KATTA */
+/* KEYS RASMI - TO'LIQ VA SIG'ADIGAN */
 .case-card img.case-img { 
     width: 100% !important; 
     max-width: 100% !important; 
-    height: 220px !important; 
+    height: 180px !important; /* Rasm balandligi sig'ishi uchun moslandi */
     object-fit: cover; 
     margin-bottom: 8px;
+    display: block;
 }
 
 .case-name { 
     font-weight: 600; 
-    font-size: 11px; 
-    margin: 5px 0 8px 0; 
+    font-size: 12px; 
+    margin: 8px 0; 
     text-transform: none; 
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.9);
 }
 
 /* KEYS NARX KAPSULASI */
@@ -123,14 +126,14 @@ body {
     background: rgba(0, 0, 0, 0.6) !important; 
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     border-radius: 20px !important; 
-    padding: 4px 12px !important; 
+    padding: 5px 15px !important; 
     display: inline-flex !important; 
     align-items: center; 
     gap: 6px; 
-    font-size: 12px !important; 
+    font-size: 13px !important; 
     color: #fff !important;
     width: fit-content;
-    margin: 0 auto;
+    margin: auto auto 0 auto; /* Har doim pastda turishi uchun */
 }
 
 .case-buy-btn img {
@@ -161,7 +164,7 @@ body {
     margin-top: 15px; padding: 10px;
 }
 
-/* SKIN NODIRLIGI (AVTOMATIK RASMLAR UCHUN TAYYORLANGAN) */
+/* SKIN NODIRLIGI */
 .rarity-common { background: url('img/bg_gray.jpg') no-repeat center; background-size: cover; }
 .rarity-uncommon { background: url('img/bg_light_blue.jpg') no-repeat center; background-size: cover; }
 .rarity-rare { background: url('img/bg_blue.jpg') no-repeat center; background-size: cover; }
