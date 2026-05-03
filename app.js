@@ -516,24 +516,45 @@ function setLanguage(lang) {
 }
 
 function showPage(pageId, element) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    const targetPage = document.getElementById(`page-${pageId}`);
-    if (targetPage) targetPage.classList.add('active');
-    
-    closePreview(); // Preview ochiq bo'lsa yopish
+    // 1. Barcha sahifalarni yashirish
+    document.querySelectorAll('.page').forEach(p => {
+        p.classList.remove('active');
+    });
 
-    const header = document.getElementById('main-header');
-    if (header) {
-        header.style.display = ( pageId === 'bonus' ) ? 'flex' : 'none';
+    // 2. Tanlangan sahifani ko'rsatish
+    const targetPage = document.getElementById(`page-${pageId}`);
+    if (targetPage) {
+        targetPage.classList.add('active');
     }
 
-    document.querySelectorAll('.nav-btn').forEach(n => n.classList.remove('active'));
-    if (element) element.classList.add('active');
+    // 3. --- TO'LDIRISH TUGMASI NAZORATI ---
+    // Header ichidagi Popolnit tugmasini topamiz
+    const topupBtn = document.querySelector('.topup-btn-header');
+    if (topupBtn) {
+        // Agar sahifa 'bonus' bo'lsa ko'rsatamiz, aks holda yashiramiz
+        if (pageId === 'bonus') {
+            topupBtn.style.display = 'block';
+        } else {
+            topupBtn.style.display = 'none';
+        }
+    }
 
+    // 4. Navigatsiya tugmalarini yangilash
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    if (element) {
+        element.classList.add('active');
+    }
+
+    // 5. Preview modalni yopish
+    if (typeof closePreview === 'function') closePreview();
+
+    // 6. Sahifaga mos render funksiyalari
     if (pageId === 'cases') renderCases();
-    if (pageId === 'inventory') renderInventory();
     if (pageId === 'bonus') renderTasks();
-    
+    if (pageId === 'inventory') renderInventory();
+
     updateUIBalance();
 }
 
