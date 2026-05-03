@@ -176,3 +176,38 @@ input { width: 100%; padding: 12px; background: #000; border: 1px solid var(--bo
 .topup-left { display: flex; align-items: center; font-weight: bold; color: #fff; }
 .topup-right { color: #fff; font-weight: bold; }
 .hit-badge { background: #ff4500; color: white; font-size: 10px; padding: 2px 6px; border-radius: 4px; margin-left: 8px; }
+
+/* KEYS ICHIDAGI SKINLAR UCHUN STILLAR */
+.preview-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    max-height: 250px;
+    overflow-y: auto;
+    margin-top: 15px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 15px;
+}
+
+.preview-skin-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 8px;
+    text-align: center;
+    border-bottom: 2px solid rgba(138, 43, 226, 0.5);
+}
+
+.preview-skin-item img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* COINNI KICHRAYTIRISH (Siz xohlagandek) */
+.case-card button img, .case-buy-btn img {
+    width: 16px !important;
+    height: 16px !important;
+    margin-bottom: 0 !important;
+    vertical-align: middle;
+}
