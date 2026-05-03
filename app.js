@@ -797,29 +797,30 @@ function renderTasks() {
         }
     });
 }
-
 // To'ldirish (Top-up) qismida narxlarni ko'rsatish
 function renderTopup(currency) {
     const container = document.getElementById(`${currency}-list`);
     if (!container) return;
     
-    container.innerHTML = "";
-    topupPackages[currency].forEach(pkg => {
-        let badgeHtml = pkg.badge ? `<span class="hit-badge" style="background:red; color:white; padding:2px 5px; border-radius:4px; font-size:10px; margin-left:5px;">${pkg.badge}</span>` : '';
+    container.innerHTML = ""; 
+    const packages = topupPackages[currency];
+
+    packages.forEach(pkg => {
+        let badgeHtml = pkg.badge ? `<span class="hit-badge">${pkg.badge}</span>` : '';
         
+        // onclick qismi o'zgartirildi: endi u buyPackage funksiyasini chaqiradi
         container.innerHTML += `
-            <div class="topup-row" onclick="alert('To\\'lov ulanmoqda: ${pkg.price}')" style="display:flex; justify-content:space-between; align-items:center; padding:15px; background:rgba(255,255,255,0.05); margin-bottom:8px; border-radius:10px; border: 1px solid #333;">
-                <div style="display:flex; align-items:center;">
-                    <img src="img/nav_diamond.png" style="width:20px; margin-right:8px;">
+            <div class="topup-row" onclick="buyPackage(${pkg.amount}, '${pkg.price}')">
+                <div class="topup-left">
+                    <img src="img/nav_diamond.png" class="topup-coin" style="width:18px; margin-right:10px;">
                     <span style="font-weight:bold;">${pkg.amount.toLocaleString()} COIN</span>
                     ${badgeHtml}
                 </div>
-                <div style="color:#2ecc71; font-weight:800;">${pkg.price}</div>
+                <div class="topup-right" style="color: #ffd700; font-weight:800;">${pkg.price}</div>
             </div>
         `;
     });
 }
-
 // Vazifani bajarish funksiyasi (Telegram/Instagram tugmasi bosilganda)
 function completeTask(id) {
     const t = tasks.find(x => x.id === id);
