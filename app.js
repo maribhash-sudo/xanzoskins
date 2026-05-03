@@ -516,23 +516,52 @@ function setLanguage(lang) {
 }
 
 function showPage(pageId, element) {
+    // Barcha sahifalarni yopish
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    
     const targetPage = document.getElementById(`page-${pageId}`);
     if(targetPage) targetPage.classList.add('active');
     
-    // Header nazorati
+    // YANGI: Agar keys ko'rish oynasi ochiq bo'lsa, sahifa almashganda uni yopamiz
+    closePreview();
+
+    // Header nazorati (Faqat Cases va Bonus sahifasida balans ko'rinsin desangiz)
     const header = document.getElementById('main-header');
-    if(header) header.style.display = (pageId === 'cases') ? 'flex' : 'none';
+    if(header) {
+        // RFL PRO uslubida balans ko'pincha asosiy sahifalarda ko'rinadi
+        header.style.display = (pageId === 'cases' || pageId === 'bonus' || pageId === 'profile') ? 'flex' : 'none';
+    }
 
     // Navigatsiya tugmalari faolligi
     document.querySelectorAll('.nav-btn').forEach(n => n.classList.remove('active'));
-    if(element) element.classList.add('active');
+    
+    // Agar element navigatsiya tugmasi bo'lsa, uni faollashtiramiz
+    if(element && element.classList.contains('nav-btn')) {
+        element.classList.add('active');
+    }
 
     // Sahifaga mos funksiyalarni yuritish
-    if(pageId === 'bonus') renderTasks(); // Bonus sahifasida vazifalarni chizish
-    if(pageId === 'inventory') renderInventory();
-    if(pageId === 'topup-uzs') renderTopup('uzs');
-    if(pageId === 'topup-usd') renderTopup('usd');
+    switch(pageId) {
+        case 'cases':
+            renderCases(); // Keyslar ro'yxatini yangilash
+            break;
+        case 'bonus':
+            renderTasks();
+            break;
+        case 'inventory':
+            renderInventory();
+            break;
+        case 'topup-uzs':
+            renderTopup('uzs');
+            break;
+        case 'topup-usd':
+            renderTopup('usd');
+            break;
+        case 'profile':
+            // Profil sahifasi uchun kerakli ma'lumotlarni yuklash
+            if(typeof updateProfileUI === 'function') updateProfileUI();
+            break;
+    }
 
     updateUIBalance();
 }
@@ -574,18 +603,19 @@ function renderCases() {
     const grid = document.getElementById('cases-grid');
     if(!grid) return;
     grid.innerHTML = "";
+    
+    // Tilni aniqlash (currentLang global o'zgaruvchi bo'lmasa, shu yerda olamiz)
     const lang = localStorage.getItem('lang') || 'uz';
     
     cases.forEach(c => {
         grid.innerHTML += `
-            <div class="case-card">
-                <img src="${c.img}" class="case-img coin-glow" onerror="this.src='img/case1.png'">
-                
+            <div class="case-card" onclick="showCasePreview('${c.id}')">
+                <img src="${c.img}" class="case-img">
                 <p class="case-name">${c.name[lang]}</p>
-                <button class="case-buy-btn" onclick="startRoulette('${c.id}')">
+                <div class="case-buy-btn">
+                    <img src="img/nav_diamond.png" alt="coin">
                     <span>${c.price}</span>
-                    <img src="img/nav_diamond.png" style="width:20px;">
-                </button>
+                </div>
             </div>`;
     });
 }
