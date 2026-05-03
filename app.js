@@ -516,35 +516,48 @@ function setLanguage(lang) {
 }
 
 function showPage(pageId, element) {
-    // 1. Barcha sahifalarni yashirish
+    // 1. Hamma sahifalarni yashiramiz
     document.querySelectorAll('.page').forEach(p => {
         p.classList.remove('active');
     });
 
-    // 2. Tanlangan sahifani ko'rsatish
+    // 2. Tanlangan sahifani yoqamiz
     const targetPage = document.getElementById(`page-${pageId}`);
     if (targetPage) {
         targetPage.classList.add('active');
     }
 
-    // 3. To'ldirish tugmasi nazorati (faqat Bonusda chiqishi uchun)
-    const topupBtn = document.querySelector('.topup-btn-header');
+    // 3. --- TO'LOV TUGMASINI FAQAT BONUSDA KO'RSATISH ---
+    // HTML-dagi 'btn-topup' yoki 'topup-btn-header' klassli tugmani topamiz
+    const topupBtn = document.querySelector('.btn-topup') || document.querySelector('.topup-btn-header');
+    
     if (topupBtn) {
-        topupBtn.style.display = (pageId === 'bonus') ? 'block' : 'none';
+        if (pageId === 'bonus') {
+            topupBtn.style.setProperty('display', 'block', 'important');
+        } else {
+            topupBtn.style.setProperty('display', 'none', 'important');
+        }
     }
 
-    // 4. --- TO'LOV NARXLARINI CHIQARISH ---
+    // 4. Pastki navigatsiya tugmalarini yangilash
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    if (element && element.classList.contains('nav-btn')) {
+        element.classList.add('active');
+    }
+
+    // 5. To'lov paketlarini chizish (Topup)
     if (pageId === 'topup-uzs') {
         renderTopup('uzs');
     } else if (pageId === 'topup-usd') {
         renderTopup('usd');
     }
 
-    // 5. Navigatsiya tugmalari effektini yangilash
-    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-    if (element && element.classList.contains('nav-btn')) {
-        element.classList.add('active');
-    }
+    // 6. Boshqa render funksiyalari
+    if (pageId === 'cases') renderCases();
+    if (pageId === 'bonus') renderTasks();
+    if (pageId === 'inventory') renderInventory();
 
     updateUIBalance();
 }
