@@ -52,7 +52,7 @@ body {
     cursor: pointer;
 }
 
-/* NAVIGATSIYA (RASMLAR BILAN) */
+/* NAVIGATSIYA */
 .bottom-nav { 
     position: fixed; bottom: 0; left: 0; width: 100%; height: 85px; 
     background: #050505; border-top: 1px solid var(--border); 
@@ -76,35 +76,67 @@ body {
 .nav-btn span { font-size: 10px; font-weight: 600; text-transform: uppercase; }
 .nav-btn.active span { color: var(--fire); text-shadow: 0 0 5px var(--fire); }
 
-/* GRID */
-.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-
-/* KEYS KARTASI */
-.case-card { 
-    background: linear-gradient(180deg, rgba(44, 44, 44, 0.4) 0%, rgba(20, 20, 20, 0.8) 100%) !important; 
-    border: 1px solid var(--border) !important; 
-    border-radius: 20px; padding: 20px 15px; text-align: center;
-    backdrop-filter: blur(10px); transition: 0.3s;
-    animation: floatEffect 4s ease-in-out infinite;
-    display: flex; flex-direction: column; align-items: center; cursor: pointer;
+/* GRID - RFL USLUBIDA */
+.grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 12px; 
+    margin-top: 20px; 
 }
 
-.case-card img.case-img { width: 100%; max-width: 120px; margin-bottom: 15px; }
-.case-name { font-weight: 700; font-size: 14px; margin-bottom: 12px; text-transform: uppercase; }
+/* KEYS KARTOCHKASI - YANGI DIZAYN */
+.case-card { 
+    background: #121212 !important; 
+    border: 1px solid rgba(255, 255, 255, 0.05) !important; 
+    border-radius: 20px; 
+    padding: 0 0 12px 0 !important; 
+    text-align: center;
+    backdrop-filter: blur(10px); 
+    transition: 0.3s;
+    animation: floatEffect 4s ease-in-out infinite;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    cursor: pointer;
+    overflow: hidden;
+}
 
-/* KEYS TUGMASI VA TANGA */
+/* KEYS RASMI - TO'LIQ VA KATTA */
+.case-card img.case-img { 
+    width: 100% !important; 
+    max-width: 100% !important; 
+    height: 220px !important; 
+    object-fit: cover; 
+    margin-bottom: 8px;
+}
+
+.case-name { 
+    font-weight: 600; 
+    font-size: 11px; 
+    margin: 5px 0 8px 0; 
+    text-transform: none; 
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* KEYS NARX KAPSULASI */
 .case-buy-btn {
-    background: rgba(138, 43, 226, 0.1) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: 12px !important;
-    padding: 8px 15px !important;
-    display: flex !important; align-items: center; gap: 8px; 
-    font-size: 14px !important; color: #fff !important;
+    background: rgba(0, 0, 0, 0.6) !important; 
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 20px !important; 
+    padding: 4px 12px !important; 
+    display: inline-flex !important; 
+    align-items: center; 
+    gap: 6px; 
+    font-size: 12px !important; 
+    color: #fff !important;
+    width: fit-content;
+    margin: 0 auto;
 }
 
 .case-buy-btn img {
-    width: 18px !important; height: 18px !important; 
-    object-fit: contain !important; vertical-align: middle;
+    width: 14px !important; 
+    height: 14px !important; 
+    object-fit: contain !important;
 }
 
 /* MODALLAR VA SKINLAR */
@@ -122,56 +154,45 @@ body {
     box-shadow: 0 0 30px rgba(138, 43, 226, 0.3);
 }
 
-/* PREVIEW GRID - IMAGE_1968FF.JPG GA MOS */
+/* PREVIEW GRID */
 .preview-grid {
     display: grid; grid-template-columns: repeat(3, 1fr);
     gap: 8px; max-height: 350px; overflow-y: auto;
     margin-top: 15px; padding: 10px;
 }
 
-/* SKIN NODIRLIGI UCHUN FONLAR (IMAGE_19E100.JPG GA ASOSAN) */
-.rarity-common { background: linear-gradient(180deg, #4b69ff 0%, #000 100%); }
-.rarity-uncommon { background: linear-gradient(180deg, #8847ff 0%, #000 100%); }
-.rarity-rare { background: linear-gradient(180deg, #d32ce6 0%, #000 100%); }
-.rarity-mythical { background: linear-gradient(180deg, #eb4b4b 0%, #000 100%); }
-.rarity-legendary { background: linear-gradient(180deg, #caab05 0%, #000 100%); }
+/* SKIN NODIRLIGI (AVTOMATIK RASMLAR UCHUN TAYYORLANGAN) */
+.rarity-common { background: url('img/bg_gray.jpg') no-repeat center; background-size: cover; }
+.rarity-uncommon { background: url('img/bg_light_blue.jpg') no-repeat center; background-size: cover; }
+.rarity-rare { background: url('img/bg_blue.jpg') no-repeat center; background-size: cover; }
+.rarity-mythical { background: url('img/bg_pink.jpg') no-repeat center; background-size: cover; }
+.rarity-legendary { background: url('img/bg_red.jpg') no-repeat center; background-size: cover; }
 
-/* PREVIEW SKIN ELEMENTI */
 .preview-skin-item {
     border-radius: 12px; padding: 8px;
     display: flex; flex-direction: column; align-items: center;
     border: 1px solid rgba(255,255,255,0.1);
     position: relative; overflow: hidden;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
 }
 
-/* Yurakcha belgisi (Wishlist) */
 .wishlist-heart {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.3);
-    cursor: pointer;
-    transition: 0.3s;
-    z-index: 5;
+    position: absolute; top: 8px; right: 8px;
+    font-size: 14px; color: rgba(255, 255, 255, 0.3);
+    cursor: pointer; transition: 0.3s; z-index: 5;
 }
+.wishlist-heart:hover { color: #ff4b4b; transform: scale(1.2); }
 
-.wishlist-heart:hover {
-    color: #ff4b4b;
-    transform: scale(1.2);
-}
-
-/* KRISTALL VA NARX KAPSULASI (IMAGE_1968FF.JPG USLUBIDA) */
 .skin-price-tag {
-    background: rgba(0, 0, 0, 0.5) !important;
-    border-radius: 8px !important;
-    padding: 5px 12px !important;
-    min-width: 80px;
+    background: rgba(0, 0, 0, 0.6) !important;
+    border-radius: 20px !important;
+    padding: 3px 10px !important;
+    min-width: 75px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 5px;
-    margin-top: 5px;
+    gap: 4px;
+    margin-top: auto;
     border: 1px solid rgba(255,255,255,0.1);
 }
 
@@ -188,7 +209,6 @@ body {
 
 .price-value { font-size: 10px; font-weight: 800; color: #fff; }
 
-/* Skin rasmini kattalashtirish va soya berish */
 .preview-skin-item img {
     width: 90% !important;
     height: auto;
@@ -197,21 +217,14 @@ body {
     transition: 0.3s;
 }
 
-.preview-skin-item:hover img {
-    transform: translateY(-5px) scale(1.05);
-}
+.preview-skin-item:hover img { transform: translateY(-5px) scale(1.05); }
 
-/* SKIN NOMI */
 .skin-name-text {
-    font-size: 9px;
-    color: rgba(255,255,255,0.9);
-    margin: 5px 0;
-    height: 20px;
-    line-height: 10px;
-    overflow: hidden;
+    font-size: 9px; color: rgba(255,255,255,0.9);
+    margin: 5px 0; height: 20px; line-height: 10px; overflow: hidden;
 }
 
-/* ASOSIY TUGMALAR (NEON BINAFAHSA) */
+/* ASOSIY TUGMALAR */
 button, .btn-action-pro { 
     background: linear-gradient(135deg, #8A2BE2 0%, #4B0082 100%) !important; 
     color: #fff !important; border: none !important;
@@ -219,17 +232,6 @@ button, .btn-action-pro {
     font-weight: 800 !important; cursor: pointer; transition: 0.3s;
     box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4) !important;
 }
-
-button:active { transform: scale(0.96); }
-
-/* QOLGAN KARTALAR */
-.card, .task-card, .task-card-pro { 
-    background: var(--card); border: 1px solid var(--border); 
-    padding: 15px; border-radius: 15px; margin-bottom: 15px;
-}
-
-/* ANIMATSIYA */
-@keyframes floatEffect { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
 
 /* PROFIL ELEMENTLARI */
 .avatar-glow-large {
@@ -243,16 +245,9 @@ button:active { transform: scale(0.96); }
     margin-bottom: 10px; cursor: pointer; transition: 0.3s;
 }
 
-.menu-item-card:hover { background: rgba(138, 43, 226, 0.1); transform: translateX(5px); }
-
-.topup-row { 
-    background: #1a1a1a; border-radius: 12px; padding: 15px 20px; 
-    margin-bottom: 10px; display: flex; justify-content: space-between; 
-    align-items: center; border: 1px solid #333; cursor: pointer; 
-}
-
-/* KEYS RASMI SIZE TUZATISH */
 #preview-case-img {
     width: 100%; max-width: 180px;
     margin: 10px auto; display: block;
 }
+
+@keyframes floatEffect { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
