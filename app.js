@@ -1145,32 +1145,38 @@ function renderInventory() {
         console.error("Xato: inventory-grid elementi topilmadi!");
         return;
     }
+    
+    // Yuklanish holati
     grid.innerHTML = '<p style="text-align:center; width:100%;">Yuklanmoqda...</p>';
     
     // Telegram CloudStorage-dan ma'lumot olish
     window.Telegram.WebApp.CloudStorage.getItem('inventory', (err, val) => {
         if (err) {
             console.error("CloudStorage xatosi:", err);
-            grid.innerHTML = '<p>Ma'lumotni yuklab bo'lmadi.</p>';
+            grid.innerHTML = '<p style="text-align:center; width:100%;">Maʼlumotni yuklab boʻlmadi.</p>';
             return;
         }
 
         let inv = val ? JSON.parse(val) : [];
-        console.log("Inventar ma'lumotlari keldi:", inv); // Konsolda tekshirish uchun
+        console.log("Inventar ma'lumotlari yuklandi:", inv);
 
         if (inv.length === 0) {
-            grid.innerHTML = '<p style="text-align:center; width:100%; color:#777;">Inventar bo'sh</p>';
+            grid.innerHTML = '<p style="text-align:center; width:100%; color:#777;">Inventar boʻsh</p>';
             return;
         }
 
-        grid.innerHTML = ""; // Tozalash
+        grid.innerHTML = ""; // Yuklanmoqda yozuvini tozalash
+        
         inv.forEach((item, index) => {
-            // Xatolikni oldini olish uchun tekshiruvlar
+            // Sokin papkasi va rasm yo'li
             const skinFolder = item.folder || 'Tactical';
             const imgPath = `${skinFolder}/${item.file}`;
-            const rarity = typeof getRarityClass === 'function' ? getRarityClass(item.price) : 'rarity-common';
-            const priceTag = typeof getPriceTagHTML === 'function' ? getPriceTagHTML(item.price) : item.price;
+            
+            // Yordamchi funksiyalar mavjudligini tekshirish (ReferenceError oldini olish)
+            const rarity = (typeof getRarityClass === 'function') ? getRarityClass(item.price) : 'rarity-common';
+            const priceTag = (typeof getPriceTagHTML === 'function') ? getPriceTagHTML(item.price) : `<span>${item.price}</span>`;
 
+            // HTML yaratish
             grid.innerHTML += `
                 <div class="preview-skin-item ${rarity}">
                     <span class="wishlist-heart">♡</span>
