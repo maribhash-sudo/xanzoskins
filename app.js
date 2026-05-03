@@ -1063,15 +1063,19 @@ function showCasePreview(caseId) {
         closePreview();
         startRoulette(caseId);
     };
-    openBtn.innerText = lang === 'uz' ? `OCHISH - ${selectedCase.price}` : `ОТКРЫТЬ - ${selectedCase.price}`;
+    
+    // Tugma ichiga ham kristall belgisini qo'shish mumkin
+    openBtn.innerHTML = lang === 'uz' ? `OCHISH - ${selectedCase.price} 💎` : `ОТКРЫТЬ - ${selectedCase.price} 💎`;
 
     const skinsGrid = document.getElementById('preview-skins-grid');
     skinsGrid.innerHTML = "";
+    
     skins.forEach(skin => {
         skinsGrid.innerHTML += `
-            <div class="preview-skin-item">
-                <img src="${selectedCase.folder}/${skin.file}" style="width:60px;" onerror="this.src='img/case1.png'">
-                <p style="font-size:9px;">${skin.name}</p>
+            <div class="preview-skin-item ${getRarityClass(skin.price)}">
+                <img src="${selectedCase.folder}/${skin.file}" onerror="this.src='img/case1.png'">
+                <p class="skin-name-text">${skin.name}</p>
+                ${getPriceTagHTML(skin.price)}
             </div>`;
     });
 
@@ -1143,15 +1147,17 @@ function renderInventory() {
     window.Telegram.WebApp.CloudStorage.getItem('inventory', (err, val) => {
         let inv = val ? JSON.parse(val) : [];
         inv.forEach((item, index) => {
-            // Har bir skinning o'z papkasidan olish
             const skinFolder = item.folder || 'Tactical'; 
             const imgPath = `${skinFolder}/${item.file}`;
             
+            // getRarityClass va getPriceTagHTML funksiyalaridan foydalanamiz
             grid.innerHTML += `
-                <div class="case-card">
-                    <img src="${imgPath}" style="width:60px; margin-bottom:10px;" onerror="this.src='case1.png'">
-                    <p style="font-size:10px; height:30px; overflow:hidden;">${item.name}</p>
-                    <button onclick="withdrawItem(${index})" style="font-size:10px; background:#2ecc71; border:none; color:white; border-radius:3px; padding:5px; cursor:pointer;">STEAM</button>
+                <div class="preview-skin-item ${getRarityClass(item.price)}">
+                    <span class="wishlist-heart">♡</span>
+                    <img src="${imgPath}" onerror="this.src='img/case1.png'">
+                    <p class="skin-name-text">${item.name}</p>
+                    ${getPriceTagHTML(item.price)}
+                    <button onclick="withdrawItem(${index})" style="margin-top:10px; width:100%; font-size:10px;">STEAM</button>
                 </div>`;
         });
     });
