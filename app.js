@@ -575,10 +575,12 @@ function renderCases() {
     if(!grid) return;
     grid.innerHTML = "";
     const lang = localStorage.getItem('lang') || 'uz';
+    
     cases.forEach(c => {
         grid.innerHTML += `
             <div class="case-card">
-                <img src="img/${c.img}" class="case-img coin-glow">
+                <img src="${c.img}" class="case-img coin-glow" onerror="this.src='img/case1.png'">
+                
                 <p class="case-name">${c.name[lang]}</p>
                 <button class="case-buy-btn" onclick="startRoulette('${c.id}')">
                     <span>${c.price}</span>
