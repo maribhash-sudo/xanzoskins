@@ -1438,11 +1438,3 @@ window.showCasePreview = function(caseId) {
         modal.style.display = 'flex';
     }
 };
-
-function getRarityClass(price) {
-    if (price >= 500000) return 'rarity-legendary'; // Pichoqlar va juda qimmat skinlar
-    if (price >= 100000) return 'rarity-mythical';  // Qizil skinlar
-    if (price >= 50000) return 'rarity-rare';       // Pushti skinlar
-    if (price >= 15000) return 'rarity-uncommon';   // Binafsha skinlar
-    return 'rarity-common';                         // Ko'k (arzon) skinlar
-}
