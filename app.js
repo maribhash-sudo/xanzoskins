@@ -590,19 +590,23 @@ function renderInventory() {
     const grid = document.getElementById('inventory-grid');
     if(!grid) return;
     grid.innerHTML = "";
+    
     window.Telegram.WebApp.CloudStorage.getItem('inventory', (err, val) => {
         let inv = val ? JSON.parse(val) : [];
         inv.forEach((item, index) => {
+            // Rasm manzilini yasash: Agar itemda folder bo'lsa o'shani, bo'lmasa Tactical'ni ishlatadi
+            const folder = item.folder || 'Tactical';
+            const imgPath = `${folder}/${item.file}`;
+            
             grid.innerHTML += `
                 <div class="case-card">
-                    <img src="${getSkinImg(item)}" style="width:60px">
+                    <img src="${imgPath}" style="width:60px" onerror="this.src='case1.png'">
                     <p style="font-size:10px">${item.name}</p>
-                    <button onclick="withdrawItem(${index})" style="font-size:10px;">Steam</button>
+                    <button onclick="withdrawItem(${index})" style="font-size:10px;">STEAM</button>
                 </div>`;
         });
     });
 }
-
 function sellAllInventory() {
     window.Telegram.WebApp.CloudStorage.getItem('inventory', (err, val) => {
         let inv = val ? JSON.parse(val) : [];
@@ -650,21 +654,19 @@ function startRoulette(caseId) {
         track.style.top = "0px";
 
         // Ruletka uchun 50 ta skinni tayyorlash
-        for (let i = 0; i < 50; i++) {
-            let s = skins[Math.floor(Math.random() * skins.length)];
-            
-            // 2. MUHIM: img/ prefiksini olib tashladik. 
-            // Manzil formati: Tactical/rasm.webp
-            const skinImgPath = `${selectedCase.folder}/${s.file}`;
-            
-            track.innerHTML += `
-                <div class="roulette-item">
-                    <img src="${skinImgPath}" onerror="this.src='case1.png'">
-                </div>`;
-            
-            if (i === 40) window.appData.currentWinningSkin = s;
-        }
-
+for (let i = 0; i < 50; i++) {
+    let s = skins[Math.floor(Math.random() * skins.length)];
+    
+    // selectedCase.folder katta-kichik harfiga GitHub'dagi bilan bir xil bo'lishi shart!
+    const skinImgPath = `${selectedCase.folder}/${s.file}`;
+    
+    track.innerHTML += `
+        <div class="roulette-item">
+            <img src="${skinImgPath}" onerror="this.src='case1.png'">
+        </div>`;
+    
+    if (i === 40) window.appData.currentWinningSkin = s;
+}
         // Spin animatsiyasi (5 soniya)
         setTimeout(() => {
             track.style.transition = "top 5s cubic-bezier(0.15, 0, 0.15, 1)";
@@ -672,27 +674,26 @@ function startRoulette(caseId) {
         }, 100); // 500ms juda ko'p, 100ms yaxshi
 
     // Yutuqni ko'rsatish
-        setTimeout(() => {
-            viewport.style.display = 'none';
-            resultDisplay.style.display = 'block';
-            
-            const win = window.appData.currentWinningSkin;
-            
-            // MANA BU QATORNI QO'SHING:
-            win.folder = selectedCase.folder; 
-            
-            // Yutuq rasmida ham img/ prefiksini olib tashlaymiz
-            const finalImgPath = `${selectedCase.folder}/${win.file}`;
-            
-            document.getElementById('won-skin-img').src = finalImgPath;
-            document.getElementById('won-skin-name').innerText = win.name;
-            
-            const priceElement = document.getElementById('won-skin-price');
-            if (priceElement) priceElement.innerText = win.price.toLocaleString() + " COIN";
-            
-            // Endi win obyekti ichida folder bor, addToInventory uni to'g'ri saqlaydi
-            addToInventory(win);
-        }, 5300);
+     setTimeout(() => {
+    viewport.style.display = 'none';
+    resultDisplay.style.display = 'block';
+    
+    const win = window.appData.currentWinningSkin;
+    
+    // MUHIM: win obyektiga folder ma'lumotini qo'shamiz
+    // Agar bu qator bo'lmasa, inventarda rasm qaysi papkadaligini bilmaydi
+    win.folder = selectedCase.folder; 
+    
+    const finalImgPath = `${win.folder}/${win.file}`;
+    
+    document.getElementById('won-skin-img').src = finalImgPath;
+    document.getElementById('won-skin-name').innerText = win.name;
+    
+    const priceElement = document.getElementById('won-skin-price');
+    if (priceElement) priceElement.innerText = win.price.toLocaleString() + " COIN";
+    
+    addToInventory(win); // Endi win ichida folder bor!
+      }, 5300);
     });
 }
 
