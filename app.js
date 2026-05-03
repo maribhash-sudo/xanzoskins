@@ -613,7 +613,7 @@ function renderCases() {
     
     cases.forEach(c => {
         grid.innerHTML += `
-            <div class="case-card" onclick="showCasePreview('${c.id}')">
+            <div class="case-card" onclick="showCasePreview('${c.id}')" style="cursor:pointer;">
                 <img src="${c.img}" class="case-img">
                 <p class="case-name">${c.name[lang]}</p>
                 <div class="case-buy-btn">
@@ -870,3 +870,38 @@ function exitAndSave() {
     document.getElementById('roulette-modal').style.display = 'none';
     showPage('cases');
 }
+
+// Buni app.js ning ochiq joyiga qo'ying
+window.showCasePreview = function(caseId) {
+    console.log("Bosilgan keys ID:", caseId);
+    const selectedCase = cases.find(c => c.id === caseId);
+    const skins = caseInventory[caseId];
+    const lang = localStorage.getItem('lang') || 'uz';
+    
+    if (!selectedCase || !skins) return;
+
+    const modal = document.getElementById('preview-modal');
+    if (modal) {
+        document.getElementById('preview-case-img').src = selectedCase.img;
+        document.getElementById('preview-case-name').innerText = selectedCase.name[lang];
+        
+        const openBtn = document.getElementById('preview-open-btn');
+        openBtn.onclick = () => {
+            closePreview();
+            startRoulette(caseId);
+        };
+        
+        // Skinlarni chiqarish qismi...
+        const skinsGrid = document.getElementById('preview-skins-grid');
+        skinsGrid.innerHTML = "";
+        skins.forEach(skin => {
+            skinsGrid.innerHTML += `
+                <div class="preview-skin-item">
+                    <img src="${selectedCase.folder}/${skin.file}" style="width:60px;" onerror="this.src='img/case1.png'">
+                    <p style="font-size:9px;">${skin.name}</p>
+                </div>`;
+        });
+
+        modal.style.display = 'flex';
+    }
+};
