@@ -174,3 +174,27 @@ button:active { transform: scale(0.96); }
     margin-bottom: 10px; display: flex; justify-content: space-between; 
     align-items: center; border: 1px solid #333; cursor: pointer; 
 }
+/* Skin sifatiga qarab orqa fon ranglari */
+.rarity-common { background: linear-gradient(180deg, #4b69ff 0%, #000000 100%); }      /* Mil-Spec (Ko'k) */
+.rarity-uncommon { background: linear-gradient(180deg, #8847ff 0%, #000000 100%); }    /* Restricted (Binafsha) */
+.rarity-rare { background: linear-gradient(180deg, #d32ce6 0%, #000000 100%); }        /* Classified (Pushti) */
+.rarity-mythical { background: linear-gradient(180deg, #eb4b4b 0%, #000000 100%); }    /* Covert (Qizil) */
+.rarity-legendary { background: linear-gradient(180deg, #caab05 0%, #000000 100%); }   /* Gold (Oltin/Pichoq) */
+
+/* Kartochka dizaynini rasmga moslash */
+.preview-skin-item, .inventory-item, .roulette-item {
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.preview-skin-item img, .roulette-item img {
+    z-index: 2;
+    filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
+}
