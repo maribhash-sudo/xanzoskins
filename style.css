@@ -13,21 +13,11 @@ body {
     color: #fff; 
     font-family: 'Montserrat', sans-serif; 
     margin: 0; 
-    padding-bottom: 120px; /* Pastki menyu uchun ko'proq joy */
+    padding-bottom: 120px; 
     overflow-x: hidden;
 }
 
 .app-container { max-width: 600px; margin: auto; padding: 15px; }
-
-/* SAHIFALARNI BOSHQARISH */
-.page { 
-    display: none; 
-    width: 100%;
-}
-
-.page.active { 
-    display: block !important; 
-}
 
 /* HEADER */
 .header { 
@@ -38,7 +28,7 @@ body {
 }
 #balance { color: var(--fire); font-size: 22px; font-weight: 800; text-shadow: 0 0 10px var(--fire); }
 
-/* TO'LDIRISH TUGMASI (NEON) */
+/* TO'LDIRISH TUGMASI */
 .topup-btn-header {
     background: linear-gradient(135deg, #8A2BE2 0%, #4B0082 100%) !important;
     color: #fff !important;
@@ -52,125 +42,95 @@ body {
     cursor: pointer;
 }
 
-/* NAVIGATSIYA */
-.bottom-nav { 
-    position: fixed; bottom: 0; left: 0; width: 100%; height: 85px; 
-    background: #050505; border-top: 1px solid var(--border); 
-    display: flex; justify-content: space-around; align-items: center; z-index: 1000; 
-}
-
-.nav-btn { 
-    background: none; border: none; color: #777; 
-    display: flex; flex-direction: column; align-items: center; width: 25%; gap: 5px; cursor: pointer; 
-}
-
-.nav-btn img { 
-    width: 28px !important; height: 28px !important; 
-    object-fit: contain; opacity: 0.5; transition: 0.3s;
-}
-
-.nav-btn.active img { 
-    opacity: 1; filter: drop-shadow(0 0 8px var(--fire)) brightness(1.2); 
-}
-
-.nav-btn span { font-size: 10px; font-weight: 600; text-transform: uppercase; }
-.nav-btn.active span { color: var(--fire); text-shadow: 0 0 5px var(--fire); }
-
-/* GRID - RFL USLUBIDA */
+/* GRID */
 .grid { 
     display: grid; 
     grid-template-columns: 1fr 1fr; 
-    gap: 15px; 
+    gap: 12px; 
     margin-top: 20px; 
 }
 
-/* KEYS KARTOCHKASI - YANGI OPTIMALLASHGAN DIZAYN */
+/* KEYS KARTOCHKASI (FULL IMAGE STYLE) */
 .case-card { 
-    background: #121212 !important; 
-    border: 1px solid rgba(255, 255, 255, 0.1) !important; 
+    position: relative; 
+    height: 250px; 
+    background: #121212;
+    border: 1px solid var(--border); 
     border-radius: 20px; 
-    padding: 0 0 15px 0 !important; 
-    text-align: center;
-    backdrop-filter: blur(10px); 
+    overflow: hidden;
+    cursor: pointer;
     transition: 0.3s;
     animation: floatEffect 4s ease-in-out infinite;
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    cursor: pointer;
-    overflow: hidden;
-    height: auto; /* Balandlik avtomatik moslashadi */
-    min-height: 280px; /* Kesilib qolmasligi uchun minimal balandlik */
 }
 
-/* KEYS RASMI - TO'LIQ VA SIG'ADIGAN */
 .case-card img.case-img { 
     width: 100% !important; 
-    max-width: 100% !important; 
-    height: 180px !important; /* Rasm balandligi sig'ishi uchun moslandi */
+    height: 100% !important; 
     object-fit: cover; 
-    margin-bottom: 8px;
     display: block;
+}
+
+/* RASM USTIDAGI MA'LUMOTLAR KONTEYNERI */
+.case-info-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 10px 15px 10px;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
 }
 
 .case-name { 
     font-weight: 600; 
-    font-size: 12px; 
-    margin: 8px 0; 
-    text-transform: none; 
-    color: rgba(255, 255, 255, 0.9);
+    font-size: 13px; 
+    margin: 0 0 8px 0; 
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
-/* KEYS NARX KAPSULASI */
+/* NARX KAPSULASI */
 .case-buy-btn {
-    background: rgba(0, 0, 0, 0.6) !important; 
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background: rgba(138, 43, 226, 0.2) !important; 
+    border: 1px solid var(--fire) !important;
     border-radius: 20px !important; 
-    padding: 5px 15px !important; 
-    display: inline-flex !important; 
+    padding: 4px 12px !important; 
+    display: flex !important; 
     align-items: center; 
     gap: 6px; 
-    font-size: 13px !important; 
+    font-size: 12px !important; 
     color: #fff !important;
-    width: fit-content;
-    margin: auto auto 0 auto; /* Har doim pastda turishi uchun */
+    backdrop-filter: blur(5px);
 }
 
 .case-buy-btn img {
     width: 14px !important; 
-    height: 14px !important; 
-    object-fit: contain !important;
+    height: 14px !important;
 }
 
-/* MODALLAR VA SKINLAR */
-.modal {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.9); z-index: 2000;
-    display: none; justify-content: center; align-items: center;
-    backdrop-filter: blur(10px);
-}
+/* NAVIGATSIYA */
+.bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 85px; background: #050505; border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index: 1000; }
+.nav-btn { background: none; border: none; display: flex; flex-direction: column; align-items: center; width: 25%; gap: 5px; cursor: pointer; }
+.nav-btn img { width: 28px !important; opacity: 0.5; }
+.nav-btn.active img { opacity: 1; filter: drop-shadow(0 0 8px var(--fire)); }
+.nav-btn span { font-size: 10px; font-weight: 600; text-transform: uppercase; color: #777; }
+.nav-btn.active span { color: var(--fire); }
 
-.modal-content {
-    background: #121212; width: 95%; max-width: 450px;
-    border-radius: 25px; border: 1px solid var(--border);
-    padding: 20px; text-align: center;
-    box-shadow: 0 0 30px rgba(138, 43, 226, 0.3);
-}
-
-/* PREVIEW GRID */
-.preview-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 8px; max-height: 350px; overflow-y: auto;
-    margin-top: 15px; padding: 10px;
-}
-
-/* SKIN NODIRLIGI */
+/* SKIN RARITY FONLARI */
 .rarity-common { background: url('img/bg_gray.jpg') no-repeat center; background-size: cover; }
 .rarity-uncommon { background: url('img/bg_light_blue.jpg') no-repeat center; background-size: cover; }
 .rarity-rare { background: url('img/bg_blue.jpg') no-repeat center; background-size: cover; }
 .rarity-mythical { background: url('img/bg_pink.jpg') no-repeat center; background-size: cover; }
 .rarity-legendary { background: url('img/bg_red.jpg') no-repeat center; background-size: cover; }
 
+/* MODALLAR VA SKINLAR */
+.modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
+.modal-content { background: #121212; width: 95%; max-width: 450px; border-radius: 25px; border: 1px solid var(--border); padding: 20px; text-align: center; box-shadow: 0 0 30px rgba(138, 43, 226, 0.3); }
+
+/* PREVIEW SKIN ELEMENTLARI */
 .preview-skin-item {
     border-radius: 12px; padding: 8px;
     display: flex; flex-direction: column; align-items: center;
@@ -178,13 +138,6 @@ body {
     position: relative; overflow: hidden;
     box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
 }
-
-.wishlist-heart {
-    position: absolute; top: 8px; right: 8px;
-    font-size: 14px; color: rgba(255, 255, 255, 0.3);
-    cursor: pointer; transition: 0.3s; z-index: 5;
-}
-.wishlist-heart:hover { color: #ff4b4b; transform: scale(1.2); }
 
 .skin-price-tag {
     background: rgba(0, 0, 0, 0.6) !important;
@@ -220,14 +173,12 @@ body {
     transition: 0.3s;
 }
 
-.preview-skin-item:hover img { transform: translateY(-5px) scale(1.05); }
-
 .skin-name-text {
     font-size: 9px; color: rgba(255,255,255,0.9);
     margin: 5px 0; height: 20px; line-height: 10px; overflow: hidden;
 }
 
-/* ASOSIY TUGMALAR */
+/* ASOSIY TUGMALAR (BINAFAHSA NEON) */
 button, .btn-action-pro { 
     background: linear-gradient(135deg, #8A2BE2 0%, #4B0082 100%) !important; 
     color: #fff !important; border: none !important;
@@ -236,21 +187,11 @@ button, .btn-action-pro {
     box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4) !important;
 }
 
-/* PROFIL ELEMENTLARI */
-.avatar-glow-large {
-    width: 90px; height: 90px; margin: 0 auto 15px; border: 3px solid var(--fire); border-radius: 50%;
-    box-shadow: 0 0 20px rgba(138, 43, 226, 0.6);
-}
+/* ANIMATSIYA */
+@keyframes floatEffect { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
 
-.menu-item-card {
-    display: flex; align-items: center; background: rgba(20, 20, 30, 0.8);
-    border: 1px solid var(--border); border-radius: 15px; padding: 15px 20px; 
-    margin-bottom: 10px; cursor: pointer; transition: 0.3s;
-}
-
+/* KEYS PREVIEW RASMI TUZATISH */
 #preview-case-img {
     width: 100%; max-width: 180px;
     margin: 10px auto; display: block;
 }
-
-@keyframes floatEffect { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
