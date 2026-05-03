@@ -928,3 +928,97 @@ window.showCasePreview = function(caseId) {
         modal.style.display = 'flex';
     }
 };
+
+function openCase(caseId) {
+    const caseData = cases.find(c => c.id === caseId);
+    
+    // 1. Balansni tekshirish
+    if (!caseData || userBalance < caseData.price) {
+        alert("Mablag' yetarli emas!");
+        return;
+    }
+
+    // 2. Balansni ayirish va yangilash
+    userBalance -= caseData.price;
+    updateUIBalance();
+
+    const modal = document.getElementById('roulette-modal');
+    const track = document.getElementById('roulette-track');
+    const viewport = document.getElementById('roulette-viewport');
+    const resultDisplay = document.getElementById('result-display');
+    
+    // 3. Ruletkani tayyorlash (reset)
+    modal.style.display = 'flex';
+    viewport.style.display = 'block';
+    resultDisplay.style.display = 'none';
+    track.style.transition = 'none';
+    track.style.transform = 'translateY(0)';
+
+    // 4. Skinlarni generatsiya qilish (60 ta tasodifiy skin)
+    const possibleSkins = caseInventory[caseId];
+    let rouletteSkins = [];
+    for (let i = 0; i < 60; i++) {
+        const randomSkin = possibleSkins[Math.floor(Math.random() * possibleSkins.length)];
+        rouletteSkins.push(randomSkin);
+    }
+
+    // 5. HTMLga chiqarish
+    track.innerHTML = rouletteSkins.map(skin => `
+        <div class="roulette-item">
+            <img src="img/skins/${skin.file}" alt="${skin.name}">
+        </div>
+    `).join('');
+
+    // 6. Animatsiya hisob-kitobi (Vertikal aylanish)
+    const winningIndex = 50; // 50-chi skin yutuq bo'ladi
+    const itemHeight = 150;  // roulette-item balandligi
+    const viewportHeight = 455; // ko'rinish oynasi balandligi
+    
+    // Markaziy chiziqqa tushish formulasi
+    const stopPosition = (winningIndex * itemHeight) + (itemHeight / 2) - (viewportHeight / 2);
+
+    // 7. Animatsiyani boshlash (12 sekund)
+    setTimeout(() => {
+        track.style.transition = 'transform 12s cubic-bezier(0.15, 0, 0.15, 1)';
+        track.style.transform = `translateY(-${stopPosition}px)`;
+    }, 100);
+
+    // 8. 12 sekunddan keyin natijani ko'rsatish
+    setTimeout(() => {
+        const wonSkin = rouletteSkins[winningIndex];
+        showResult(wonSkin);
+    }, 12100);
+}
+
+function showResult(skin) {
+    // Ruletka oynasini yopib, natija oynasini ochish
+    document.getElementById('roulette-viewport').style.display = 'none';
+    const resultDisplay = document.getElementById('result-display');
+    resultDisplay.style.display = 'block';
+    
+    // Ma'lumotlarni to'ldirish
+    document.getElementById('won-skin-img').src = `img/skins/${skin.file}`;
+    document.getElementById('won-skin-name').innerText = skin.name;
+    document.getElementById('won-skin-price').innerText = skin.price + " COIN";
+    
+    // G'olib skinni global saqlash (keyinchalik sotish funksiyasi ishlashi uchun)
+    window.currentWonSkin = skin;
+}
+
+// QO'SHIMCHA: Yutilgan skinni sotish funksiyasi (agar sizda bo'lmasa)
+function sellWonSkin() {
+    if (!window.currentWonSkin) return;
+    
+    const price = window.currentWonSkin.price;
+    userBalance += price;
+    updateUIBalance();
+    
+    alert(`Skin ${price} COINga sotildi!`);
+    exitAndSave(); // Modalni yopish
+}
+
+// Modalni yopish funksiyasi
+function exitAndSave() {
+    document.getElementById('roulette-modal').style.display = 'none';
+    window.currentWonSkin = null;
+}
