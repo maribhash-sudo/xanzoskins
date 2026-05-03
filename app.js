@@ -527,33 +527,24 @@ function showPage(pageId, element) {
         targetPage.classList.add('active');
     }
 
-    // 3. --- TO'LDIRISH TUGMASI NAZORATI ---
-    // Header ichidagi Popolnit tugmasini topamiz
+    // 3. To'ldirish tugmasi nazorati (faqat Bonusda chiqishi uchun)
     const topupBtn = document.querySelector('.topup-btn-header');
     if (topupBtn) {
-        // Agar sahifa 'bonus' bo'lsa ko'rsatamiz, aks holda yashiramiz
-        if (pageId === 'bonus') {
-            topupBtn.style.display = 'block';
-        } else {
-            topupBtn.style.display = 'none';
-        }
+        topupBtn.style.display = (pageId === 'bonus') ? 'block' : 'none';
     }
 
-    // 4. Navigatsiya tugmalarini yangilash
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    if (element) {
+    // 4. --- TO'LOV NARXLARINI CHIQARISH ---
+    if (pageId === 'topup-uzs') {
+        renderTopup('uzs');
+    } else if (pageId === 'topup-usd') {
+        renderTopup('usd');
+    }
+
+    // 5. Navigatsiya tugmalari effektini yangilash
+    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+    if (element && element.classList.contains('nav-btn')) {
         element.classList.add('active');
     }
-
-    // 5. Preview modalni yopish
-    if (typeof closePreview === 'function') closePreview();
-
-    // 6. Sahifaga mos render funksiyalari
-    if (pageId === 'cases') renderCases();
-    if (pageId === 'bonus') renderTasks();
-    if (pageId === 'inventory') renderInventory();
 
     updateUIBalance();
 }
