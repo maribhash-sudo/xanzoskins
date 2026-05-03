@@ -71,14 +71,16 @@ body {
     font-size: 14px !important;
 }
 
+/* --- TANGANI KICHIKLASHTIRISH QISMI --- */
 .case-card button img {
-    width: 24px !important;    
-    height: 24px !important;   
+    width: 16px !important;    /* 24px dan 16px ga tushirildi */
+    height: 16px !important;   /* 24px dan 16px ga tushirildi */
     object-fit: contain !important; 
     aspect-ratio: 1 / 1 !important; 
     margin-bottom: 0 !important;
     vertical-align: middle;
 }
+/* -------------------------------------- */
 
 /* TASK CARD PRO */
 .task-card-pro {
