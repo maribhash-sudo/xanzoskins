@@ -516,54 +516,50 @@ function setLanguage(lang) {
 }
 
 function showPage(pageId, element) {
-    // Barcha sahifalarni yopish
+    
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     
     const targetPage = document.getElementById(`page-${pageId}`);
-    if(targetPage) targetPage.classList.add('active');
+    if (targetPage) {
+        targetPage.classList.add('active');
+    }
     
-    // YANGI: Agar keys ko'rish oynasi ochiq bo'lsa, sahifa almashganda uni yopamiz
-    closePreview();
+    if (typeof closePreview === 'function') {
+        closePreview();
+    }
 
-    // Header nazorati (Faqat Cases va Bonus sahifasida balans ko'rinsin desangiz)
     const header = document.getElementById('main-header');
-    if(header) {
-        // RFL PRO uslubida balans ko'pincha asosiy sahifalarda ko'rinadi
+    if (header) {
+        // Balans faqat kerakli sahifalarda ko'rinishi uchun
         header.style.display = (pageId === 'cases' || pageId === 'bonus' || pageId === 'profile') ? 'flex' : 'none';
     }
 
-    // Navigatsiya tugmalari faolligi
     document.querySelectorAll('.nav-btn').forEach(n => n.classList.remove('active'));
-    
-    // Agar element navigatsiya tugmasi bo'lsa, uni faollashtiramiz
-    if(element && element.classList.contains('nav-btn')) {
+    if (element) {
         element.classList.add('active');
     }
 
-    // Sahifaga mos funksiyalarni yuritish
-    switch(pageId) {
+    switch (pageId) {
         case 'cases':
-            renderCases(); // Keyslar ro'yxatini yangilash
+            if (typeof renderCases === 'function') renderCases();
             break;
         case 'bonus':
-            renderTasks();
+            if (typeof renderTasks === 'function') renderTasks();
             break;
         case 'inventory':
-            renderInventory();
+            if (typeof renderInventory === 'function') renderInventory();
             break;
         case 'topup-uzs':
-            renderTopup('uzs');
+            if (typeof renderTopup === 'function') renderTopup('uzs');
             break;
         case 'topup-usd':
-            renderTopup('usd');
-            break;
-        case 'profile':
-            // Profil sahifasi uchun kerakli ma'lumotlarni yuklash
-            if(typeof updateProfileUI === 'function') updateProfileUI();
+            if (typeof renderTopup === 'function') renderTopup('usd');
             break;
     }
 
-    updateUIBalance();
+    if (typeof updateUIBalance === 'function') {
+        updateUIBalance();
+    }
 }
 
 function updateUIBalance() {
