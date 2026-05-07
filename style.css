@@ -83,12 +83,10 @@ body {
 .nav-btn span { font-size: 10px; font-weight: 600; text-transform: uppercase; }
 .nav-btn.active span { color: var(--fire); text-shadow: 0 0 5px var(--fire); }
 
-/* GRID */
-
 /* KEYS KARTASI */
 .case-card { 
     position: relative; 
-    height: 240px; /* Portret ko'rinish uchun balandlik */
+    height: 240px; 
     background: #121212;
     border-radius: 18px; 
     overflow: hidden;
@@ -100,8 +98,22 @@ body {
 .case-card img.case-img { 
     width: 100% !important; 
     height: 100% !important; 
-    object-fit: cover; /* Rasmni buzmasdan to'liq yoyish */
+    object-fit: cover; 
     display: block;
+}
+
+/* KEYS INFO OVERLAY */
+.case-info-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 8px 12px 8px;
+    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
 }
 
 .case-name { 
@@ -112,68 +124,8 @@ body {
     text-shadow: 0 2px 4px rgba(0,0,0,0.5);
     text-align: center;
 }
-/* KEYS TUGMASI VA TANGA */
-.case-buy-btn {
-    background: rgba(0, 0, 0, 0.8) !important;
-    border: 2px solid var(--fire) !important; /* Binafsha neon chegara */
-    border-radius: 12px !important;
-    padding: 6px 15px !important;
-    display: flex !important;
-    align-items: center;
-    gap: 8px;
-    width: 100%;
-    justify-content: center;
-    box-shadow: inset 0 0 10px rgba(138, 43, 226, 0.2);
-}
 
-.case-buy-btn img {
-    width: 16px !important;
-    height: 16px !important;
-    filter: drop-shadow(0 0 5px var(--fire));
-}
-
-.case-buy-btn span {
-    font-size: 13px !important;
-    font-weight: 800;
-    color: #fff;
-}
-
-.case-info-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 20px 8px 12px 8px;
-    /* Pastdan yuqoriga qoraygan gradient - matn o'qilishi uchun */
-    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, transparent 100%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    pointer-events: none;
-}
-
-.case-price-tag {
-    background: rgba(255, 255, 255, 0.1); 
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 20px; 
-    padding: 4px 12px; 
-    display: flex; 
-    align-items: center; 
-    gap: 5px; 
-}
-
-.case-price-tag span {
-    font-size: 12px;
-    font-weight: 700;
-    color: #fff;
-}
-
-.case-price-tag img {
-    width: 14px; 
-    height: 14px;
-}
-/* MODALLAR VA SKINLAR */
+/* MODALLAR VA PREVIEW DIZAYNI (SKINFIGHTS STYLE) */
 .modal {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.9); z-index: 2000;
@@ -182,193 +134,38 @@ body {
 }
 
 .modal-content {
-    background: #121212; width: 90%; max-width: 400px;
-    border-radius: 25px; border: 1px solid var(--border);
-    padding: 25px; text-align: center;
+    background: #0d0d0d !important;
+    width: 90%; max-width: 450px;
+    border-radius: 20px !important;
+    border: 1px solid var(--border);
+    padding: 0 !important; /* Rasm chetlarigacha yoyilishi uchun */
+    text-align: center;
     box-shadow: 0 0 30px rgba(138, 43, 226, 0.3);
+    overflow: hidden;
 }
 
-/* SKINLAR GRIDI */
-.preview-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    padding: 20px;
-    max-height: 400px;
-    overflow-y: auto;
-}
-
-.preview-skin-item {
-    border-radius: 12px;
-    padding: 10px;
-    text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    position: relative;
-}
-
-/* NODIRLIK RANGALARI (FONLAR) */
-.rarity-gray { background: linear-gradient(180deg, #4b4b4b 0%, #0d0d0d 100%); }   /* Kulrang */
-.rarity-blue { background: linear-gradient(180deg, #4b69ff 0%, #0d0d0d 100%); }   /* Ko'k */
-.rarity-purple { background: linear-gradient(180deg, #8847ff 0%, #0d0d0d 100%); } /* Siyohrang */
-.rarity-pink { background: linear-gradient(180deg, #d32ce6 0%, #0d0d0d 100%); }   /* Pushti */
-.rarity-red { background: linear-gradient(180deg, #eb4b4b 0%, #0d0d0d 100%); }    /* Qizil */
-
-.preview-skin-item img {
-    width: 100%;
-    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
-}
-
-/* ASOSIY TUGMALAR (NEON BINAFAHSA) */
-button, .btn-action-pro { 
-    background: linear-gradient(135deg, #8A2BE2 0%, #4B0082 100%) !important; 
-    color: #fff !important; border: none !important;
-    border-radius: 12px !important; padding: 12px !important; 
-    font-weight: 800 !important; cursor: pointer; transition: 0.3s;
-    box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4) !important;
-}
-
-button:active { transform: scale(0.96); }
-
-/* QOLGAN KARTALAR */
-.card, .task-card, .task-card-pro { 
-    background: var(--card); border: 1px solid var(--border); 
-    padding: 15px; border-radius: 15px; margin-bottom: 15px;
-}
-
-/* ANIMATSIYA */
-@keyframes floatEffect { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
-
-/* PROFIL ELEMENTLARI */
-.avatar-glow-large {
-    width: 90px; height: 90px; margin: 0 auto 15px; border: 3px solid var(--fire); border-radius: 50%;
-    box-shadow: 0 0 20px rgba(138, 43, 226, 0.6);
-}
-
-.menu-item-card {
-    display: flex; align-items: center; background: rgba(20, 20, 30, 0.8);
-    border: 1px solid var(--border); border-radius: 15px; padding: 15px 20px; 
-    margin-bottom: 10px; cursor: pointer; transition: 0.3s;
-}
-
-.menu-item-card:hover { background: rgba(138, 43, 226, 0.1); transform: translateX(5px); }
-
-.topup-row { 
-    background: #1a1a1a; border-radius: 12px; padding: 15px 20px; 
-    margin-bottom: 10px; display: flex; justify-content: space-between; 
-    align-items: center; border: 1px solid #333; cursor: pointer; 
-}
-
-.case-top-info {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    right: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 10;
-}
-
-.case-opens-count {
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
-    padding: 3px 8px;
-    border-radius: 6px;
-    font-size: 9px;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.rarity-badge {
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    font-size: 10px;
-    font-weight: 800;
-    color: #fff;
-}
-
-.badge-r { background: linear-gradient(135deg, #ff9d00, #ff5e00); } /* Rare */
-.badge-s { background: linear-gradient(135deg, #ff4b4b, #a30000); } /* Superior */
-.badge-b { background: linear-gradient(135deg, #00c6ff, #0072ff); } /* Basic */
-
-/* PASTKI OVERLAY */
-.case-bottom-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 25px 10px 12px 10px;
-    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 60%, transparent 100%);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.skin-price-label {
-    font-size: 8px;
-    color: rgba(255,255,255,0.6);
-    margin-top: 2px;
-}
-
-/* NARX KAPSULASI */
-.case-price-capsule {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 4px 12px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.case-price-capsule span {
-    font-size: 12px;
-    font-weight: 700;
-    color: #fff;
-}
-
-.case-price-capsule img {
-    width: 14px;
-    height: 14px;
-}
-
-/* PREVIEW MODALDA KEYS RASMI KONTEYNERI */
+/* PREVIEW HEADER (GORIZONTAL KATTA RASM) */
 .preview-case-header {
     position: relative;
     width: 100%;
-    height: 350px; /* Rasm balandligi */
+    height: 300px; /* Rasm balandligi gorizontal */
     background-size: cover;
     background-position: center;
+    display: flex;
+    align-items: flex-end;
 }
 
 .preview-case-header::after {
     content: '';
     position: absolute;
-    bottom: 0; left: 0; width: 100%; height: 60%;
-    background: linear-gradient(to top, #0d0d0d 10%, transparent 100%);
+    bottom: 0; left: 0; width: 100%; height: 70%;
+    background: linear-gradient(to top, #0d0d0d 15%, transparent 100%);
 }
 
-/* PREVIEW RASMI */
-#preview-case-img {
-    width: 100% !important;
-    height: 100% !important;
-    max-width: 100% !important; /* Chegarani olib tashlaymiz */
-    object-fit: cover; /* Rasmni to'liq yoyish */
-    margin: 0 !important;
-    display: block;
-}
-
-/* PREVIEW USTIDAGI MATNLAR (OVERLAY) */
 .preview-overlay-content {
-    position: absolute;
-    bottom: 20px;
+    position: relative;
     width: 100%;
+    padding: 20px;
     z-index: 10;
     text-align: center;
     display: flex;
@@ -379,38 +176,79 @@ button:active { transform: scale(0.96); }
 #preview-case-name {
     font-size: 24px;
     font-weight: 800;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     color: #fff;
-}
-/* OCHISH TUGMASI (RASM USTIDA TURISHI UCHUN) */
-.modal-content {
-    background: #0d0d0d !important;
-    padding: 0 !important; /* Rasm chetlarigacha yoyilishi uchun */
-    border-radius: 20px !important;
-    overflow: hidden;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
 }
 
 .btn-open-case-pro {
     background: rgba(255, 255, 255, 0.1) !important;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    padding: 10px 30px !important;
+    padding: 10px 35px !important;
     border-radius: 12px !important;
     color: #fff !important;
-    font-weight: 700 !important;
+    font-weight: 800 !important;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     cursor: pointer;
     transition: 0.3s;
 }
-.btn-open-case-pro:hover {
-    background: rgba(255, 255, 255, 0.2) !important;
-    transform: scale(1.05);
+
+/* SKINLAR GRIDI VA NODIRLIK RANGALARI */
+.preview-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 15px;
+    max-height: 350px;
+    overflow-y: auto;
+    background: #0d0d0d;
+}
+
+.preview-skin-item {
+    border-radius: 12px;
+    padding: 8px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rarity-gray { background: linear-gradient(180deg, #3a3a3a 0%, #0d0d0d 100%); }
+.rarity-blue { background: linear-gradient(180deg, #1d35a6 0%, #0d0d0d 100%); }
+.rarity-purple { background: linear-gradient(180deg, #5e2ca8 0%, #0d0d0d 100%); }
+.rarity-pink { background: linear-gradient(180deg, #a3228d 0%, #0d0d0d 100%); }
+.rarity-red { background: linear-gradient(180deg, #9e1a1a 0%, #0d0d0d 100%); }
+
+.preview-skin-item img {
+    width: 90%;
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
 }
 
 .skin-price-label {
     font-size: 8px;
     color: rgba(255,255,255,0.6);
     margin-top: 2px;
+}
+
+/* ANIMATSIYA VA QOLGANLAR */
+@keyframes floatEffect { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
+
+.card, .task-card { 
+    background: var(--card); border: 1px solid var(--border); 
+    padding: 15px; border-radius: 15px; margin-bottom: 15px;
+}
+
+.close-preview-btn {
+    padding: 10px;
+    color: #444;
+    background: none;
+    border: none;
+    font-size: 12px;
+    cursor: pointer;
+    width: 100%;
 }
