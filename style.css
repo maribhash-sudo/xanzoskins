@@ -188,17 +188,34 @@ body {
     box-shadow: 0 0 30px rgba(138, 43, 226, 0.3);
 }
 
+/* SKINLAR GRIDI */
 .preview-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 10px; max-height: 250px; overflow-y: auto;
-    margin-top: 15px; padding: 10px;
-    background: rgba(255,255,255,0.03); border-radius: 15px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 20px;
+    max-height: 400px;
+    overflow-y: auto;
 }
 
 .preview-skin-item {
-    background: rgba(255,255,255,0.05);
-    border-radius: 10px; padding: 8px;
-    border-bottom: 2px solid rgba(138, 43, 226, 0.5);
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+}
+
+/* NODIRLIK RANGALARI (FONLAR) */
+.rarity-gray { background: linear-gradient(180deg, #4b4b4b 0%, #0d0d0d 100%); }   /* Kulrang */
+.rarity-blue { background: linear-gradient(180deg, #4b69ff 0%, #0d0d0d 100%); }   /* Ko'k */
+.rarity-purple { background: linear-gradient(180deg, #8847ff 0%, #0d0d0d 100%); } /* Siyohrang */
+.rarity-pink { background: linear-gradient(180deg, #d32ce6 0%, #0d0d0d 100%); }   /* Pushti */
+.rarity-red { background: linear-gradient(180deg, #eb4b4b 0%, #0d0d0d 100%); }    /* Qizil */
+
+.preview-skin-item img {
+    width: 100%;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
 }
 
 /* ASOSIY TUGMALAR (NEON BINAFAHSA) */
@@ -292,11 +309,10 @@ button:active { transform: scale(0.96); }
     align-items: center;
 }
 
-.case-name-label {
-    font-size: 11px;
-    font-weight: 600;
-    color: #fff;
-    margin-bottom: 6px;
+.skin-price-label {
+    font-size: 8px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 2px;
 }
 
 /* NARX KAPSULASI */
@@ -326,11 +342,16 @@ button:active { transform: scale(0.96); }
 .preview-case-header {
     position: relative;
     width: 100%;
-    height: 220px; /* Gorizontal ko'rinish uchun balandlik */
-    border-radius: 20px;
-    overflow: hidden;
-    margin-bottom: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    height: 350px; /* Rasm balandligi */
+    background-size: cover;
+    background-position: center;
+}
+
+.preview-case-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; width: 100%; height: 60%;
+    background: linear-gradient(to top, #0d0d0d 10%, transparent 100%);
 }
 
 /* PREVIEW RASMI */
@@ -344,30 +365,52 @@ button:active { transform: scale(0.96); }
 }
 
 /* PREVIEW USTIDAGI MATNLAR (OVERLAY) */
-.preview-overlay {
+.preview-overlay-content {
     position: absolute;
-    bottom: 0;
-    left: 0;
+    bottom: 20px;
     width: 100%;
-    padding: 30px 15px 15px 15px;
-    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    z-index: 10;
+    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    z-index: 5;
 }
 
 #preview-case-name {
-    font-size: 20px !important;
+    font-size: 24px;
     font-weight: 800;
-    margin-bottom: 10px !important;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+/* OCHISH TUGMASI (RASM USTIDA TURISHI UCHUN) */
+.modal-content {
+    background: #0d0d0d !important;
+    padding: 0 !important; /* Rasm chetlarigacha yoyilishi uchun */
+    border-radius: 20px !important;
+    overflow: hidden;
 }
 
-/* OCHISH TUGMASI (RASM USTIDA TURISHI UCHUN) */
-.modal-content .btn-open-case {
-    margin: 0 !important;
-    padding: 8px 30px !important;
-    font-size: 14px !important;
+.btn-open-case-pro {
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    padding: 10px 30px !important;
+    border-radius: 12px !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.btn-open-case-pro:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    transform: scale(1.05);
+}
+
+.skin-price-label {
+    font-size: 8px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 2px;
 }
