@@ -629,18 +629,31 @@ function addToInventory(item) {
 
 function renderCases() {
     const grid = document.getElementById('cases-grid');
-    if(!grid) return;
+    if (!grid) return;
     grid.innerHTML = "";
     const lang = localStorage.getItem('lang') || 'uz';
-    
-    cases.forEach(c => {
+
+    const caseList = [
+        { id: 'clutch', name: { uz: 'Clutch Case', ru: 'Кейс Clutch' }, price: 15000, img: 'img/case1.jpg', opens: '2.4M', label: 'R' },
+        { id: 'urban', name: { uz: 'Urban Case', ru: 'Кейс Urban' }, price: 25000, img: 'img/case2.jpg', opens: '65K', label: 'S' }
+    ];
+
+    caseList.forEach(c => {
         grid.innerHTML += `
-            <div class="case-card" onclick="showCasePreview('${c.id}')" style="cursor:pointer;">
+            <div class="case-card" onclick="showCasePreview('${c.id}')">
                 <img src="${c.img}" class="case-img">
-                <p class="case-name">${c.name[lang]}</p>
-                <div class="case-buy-btn">
-                    <img src="img/nav_diamond.png" alt="coin">
-                    <span>${c.price}</span>
+                
+                <div class="case-top-info">
+                    <span class="case-opens-count" style="background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 4px; font-size: 9px;">${c.opens} opens</span>
+                    <span class="rarity-badge badge-${c.label.toLowerCase()}" style="width:18px; height:18px; background: orange; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px;">${c.label}</span>
+                </div>
+
+                <div class="case-bottom-overlay">
+                    <p class="case-name-label" style="font-size:11px; margin-bottom:5px;">${c.name[lang]}</p>
+                    <div class="case-price-capsule">
+                        <img src="img/nav_diamond.png">
+                        <span>${c.price.toLocaleString()}</span>
+                    </div>
                 </div>
             </div>`;
     });
