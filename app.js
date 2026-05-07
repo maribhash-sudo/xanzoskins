@@ -577,20 +577,18 @@ function showCasePreview(caseId) {
     const modalContent = modal.querySelector('.modal-content');
     
     // Modalni SkinFights uslubida tozalab qayta quramiz
-    modalContent.innerHTML = `
-        <div class="preview-case-header" style="background-image: url('${c.img}')">
-            <div class="preview-overlay-content">
-                <h2 id="preview-case-name">${c.name[lang]}</h2>
-                <button class="btn-open-case-pro" onclick="openCase('${c.id}')">
-                    Ochish ${c.price.toLocaleString()} <img src="img/nav_diamond.png" width="14">
-                </button>
-            </div>
+   modalContent.innerHTML = `
+    <div class="preview-case-header" style="background-image: url('${c.img}')">
+        <div class="preview-overlay-content">
+            <h2 id="preview-case-name">${c.name[lang]}</h2>
+            <button class="btn-open-case-pro" onclick="openCase('${c.id}')">
+                OCHISH
+            </button>
         </div>
-        
-        <div class="preview-grid" id="preview-skins-grid"></div>
-        
-        <button onclick="closeModal()" class="close-modal-btn">Yopish</button>
-    `;
+    </div>
+    <div class="preview-grid" id="preview-skins-grid"></div>
+    <button onclick="closeModal()" class="close-preview-btn">YOPISH</button>
+`;
 
     const skinGrid = document.getElementById('preview-skins-grid');
     const caseSkins = skins.filter(s => s.folder === c.folder);
