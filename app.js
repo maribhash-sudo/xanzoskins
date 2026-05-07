@@ -573,9 +573,10 @@ function showCasePreview(caseId) {
     if (!c) return;
     
     const lang = localStorage.getItem('lang') || 'uz';
-    const modalContent = document.querySelector('.modal-content');
+    const modal = document.getElementById('case-modal');
+    const modalContent = modal.querySelector('.modal-content');
     
-    // Preview HTML
+    // Modalni SkinFights uslubida tozalab qayta quramiz
     modalContent.innerHTML = `
         <div class="preview-case-header" style="background-image: url('${c.img}')">
             <div class="preview-overlay-content">
@@ -586,28 +587,26 @@ function showCasePreview(caseId) {
             </div>
         </div>
         
-        <div class="preview-grid" id="preview-skins-grid">
-            </div>
+        <div class="preview-grid" id="preview-skins-grid"></div>
         
-        <button onclick="closeModal()" style="padding: 15px; background: none; color: #555; border: none; width: 100%; cursor: pointer;">Yopish</button>
+        <button onclick="closeModal()" class="close-modal-btn">Yopish</button>
     `;
 
-    // Skinlarni nodirlik bo'yicha render qilish
     const skinGrid = document.getElementById('preview-skins-grid');
     const caseSkins = skins.filter(s => s.folder === c.folder);
     
     caseSkins.forEach(s => {
-        const rarity = getRarityClass(s.price); // Narxga qarab rang tanlash
+        const rarity = getRarityClass(s.price);
         skinGrid.innerHTML += `
             <div class="preview-skin-item ${rarity}">
                 <img src="${s.img}">
                 <div class="skin-label-info">${s.name}</div>
-                <div class="skin-price-label">${s.price.toLocaleString()} coins</div>
+                <div class="skin-price-label">${s.price.toLocaleString()}</div>
             </div>
         `;
     });
 
-    document.getElementById('case-modal').style.display = 'flex';
+    modal.style.display = 'flex';
 }
 
 function closePreview() {
