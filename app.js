@@ -560,35 +560,53 @@ function showPage(pageId, element) {
     updateUIBalance();
 }
 
+function getRarityClass(price) {
+    if (price < 1000) return 'rarity-gray';
+    if (price < 5000) return 'rarity-blue';
+    if (price < 15000) return 'rarity-purple';
+    if (price < 50000) return 'rarity-pink';
+    return 'rarity-red';
+}
+
 function showCasePreview(caseId) {
     const c = cases.find(x => x.id === caseId);
     if (!c) return;
     
     const lang = localStorage.getItem('lang') || 'uz';
-    
-    // Modal kontentini yangilash
     const modalContent = document.querySelector('.modal-content');
     
-    // Preview strukturasini Overlay uslubida yasaymiz
+    // Preview HTML
     modalContent.innerHTML = `
-        <div class="preview-case-header">
-            <img src="${c.img}" id="preview-case-img">
-            <div class="preview-overlay">
+        <div class="preview-case-header" style="background-image: url('${c.img}')">
+            <div class="preview-overlay-content">
                 <h2 id="preview-case-name">${c.name[lang]}</h2>
-                <button class="btn-open-case" onclick="openCase('${c.id}')">OCHISH</button>
+                <button class="btn-open-case-pro" onclick="openCase('${c.id}')">
+                    Ochish ${c.price.toLocaleString()} <img src="img/nav_diamond.png" width="14">
+                </button>
             </div>
         </div>
-        
-        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 15px 0;">
-        <p style="font-size: 12px; font-weight: 700; color: #777;">KEYS ICHIDAGI SKINLAR:</p>
         
         <div class="preview-grid" id="preview-skins-grid">
             </div>
         
-        <button onclick="closeModal()" style="margin-top: 15px; background: none !important; box-shadow: none !important; color: #555 !important; font-size: 12px;">YOPISH</button>
+        <button onclick="closeModal()" style="padding: 15px; background: none; color: #555; border: none; width: 100%; cursor: pointer;">Yopish</button>
     `;
 
-    renderPreviewSkins(c.id);
+    // Skinlarni nodirlik bo'yicha render qilish
+    const skinGrid = document.getElementById('preview-skins-grid');
+    const caseSkins = skins.filter(s => s.folder === c.folder);
+    
+    caseSkins.forEach(s => {
+        const rarity = getRarityClass(s.price); // Narxga qarab rang tanlash
+        skinGrid.innerHTML += `
+            <div class="preview-skin-item ${rarity}">
+                <img src="${s.img}">
+                <div class="skin-label-info">${s.name}</div>
+                <div class="skin-price-label">${s.price.toLocaleString()} coins</div>
+            </div>
+        `;
+    });
+
     document.getElementById('case-modal').style.display = 'flex';
 }
 
