@@ -573,40 +573,31 @@ function showCasePreview(caseId) {
     if (!c) return;
     
     const lang = localStorage.getItem('lang') || 'uz';
-    const modal = document.getElementById('case-modal');
-    const modalContent = modal.querySelector('.modal-content');
     
-    // Modalni SkinFights uslubida tozalab qayta quramiz
+    // Modal kontentini yangilash
+    const modalContent = document.querySelector('.modal-content');
+    
+    // Preview strukturasini Overlay uslubida yasaymiz
     modalContent.innerHTML = `
-        <div class="preview-case-header" style="background-image: url('${c.img}')">
-            <div class="preview-overlay-content">
+        <div class="preview-case-header">
+            <img src="${c.img}" id="preview-case-img">
+            <div class="preview-overlay">
                 <h2 id="preview-case-name">${c.name[lang]}</h2>
-                <button class="btn-open-case-pro" onclick="openCase('${c.id}')">
-                    Ochish ${c.price.toLocaleString()} <img src="img/nav_diamond.png" width="14">
-                </button>
+                <button class="btn-open-case" onclick="openCase('${c.id}')">OCHISH</button>
             </div>
         </div>
         
-        <div class="preview-grid" id="preview-skins-grid"></div>
+        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 15px 0;">
+        <p style="font-size: 12px; font-weight: 700; color: #777;">KEYS ICHIDAGI SKINLAR:</p>
         
-        <button onclick="closeModal()" class="close-modal-btn">Yopish</button>
+        <div class="preview-grid" id="preview-skins-grid">
+            </div>
+        
+        <button onclick="closeModal()" style="margin-top: 15px; background: none !important; box-shadow: none !important; color: #555 !important; font-size: 12px;">YOPISH</button>
     `;
 
-    const skinGrid = document.getElementById('preview-skins-grid');
-    const caseSkins = skins.filter(s => s.folder === c.folder);
-    
-    caseSkins.forEach(s => {
-        const rarity = getRarityClass(s.price);
-        skinGrid.innerHTML += `
-            <div class="preview-skin-item ${rarity}">
-                <img src="${s.img}">
-                <div class="skin-label-info">${s.name}</div>
-                <div class="skin-price-label">${s.price.toLocaleString()}</div>
-            </div>
-        `;
-    });
-
-    modal.style.display = 'flex';
+    renderPreviewSkins(c.id);
+    document.getElementById('case-modal').style.display = 'flex';
 }
 
 function closePreview() {
