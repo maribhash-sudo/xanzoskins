@@ -69,10 +69,10 @@ body {
     object-fit: contain; opacity: 0.5; transition: 0.3s;
 }
 
-.cases-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
+.grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 12px; 
     padding: 10px;
 }
 
@@ -86,38 +86,32 @@ body {
 /* GRID */
 
 /* KEYS KARTASI */
-.case-card {
-    background: #15151b !important; /* To'q kulrang-qora fon */
-    border: 2px solid #2a2a35 !important; /* Chegara rangi */
-    border-radius: 20px !important;
-    padding: 15px !important;
-    text-align: center;
-    position: relative;
-    transition: 0.3s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.case-card { 
+    position: relative; 
+    height: 240px; /* Portret ko'rinish uchun balandlik */
+    background: #121212;
+    border-radius: 18px; 
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s;
 }
 
-.case-card .case-img {
-    width: 100% !important;
-    height: 110px !important;
-    object-fit: contain;
-    margin-bottom: 10px;
-    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.8));
+.case-card img.case-img { 
+    width: 100% !important; 
+    height: 100% !important; 
+    object-fit: cover; /* Rasmni buzmasdan to'liq yoyish */
+    display: block;
 }
 
-.case-name {
-    font-size: 11px;
-    font-weight: 700;
+.case-name { 
+    font-weight: 600; 
+    font-size: 11px; 
+    margin: 0 0 6px 0; 
     color: #fff;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-    letter-spacing: 0.5px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    text-align: center;
 }
-
 /* KEYS TUGMASI VA TANGA */
 .case-buy-btn {
     background: rgba(0, 0, 0, 0.8) !important;
@@ -142,6 +136,42 @@ body {
     font-size: 13px !important;
     font-weight: 800;
     color: #fff;
+}
+
+.case-info-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 8px 12px 8px;
+    /* Pastdan yuqoriga qoraygan gradient - matn o'qilishi uchun */
+    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+}
+
+.case-price-tag {
+    background: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px; 
+    padding: 4px 12px; 
+    display: flex; 
+    align-items: center; 
+    gap: 5px; 
+}
+
+.case-price-tag span {
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.case-price-tag img {
+    width: 14px; 
+    height: 14px;
 }
 /* MODALLAR VA SKINLAR */
 .modal {
