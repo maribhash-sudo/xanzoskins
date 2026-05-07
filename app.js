@@ -636,13 +636,14 @@ function renderCases() {
     cases.forEach(c => {
         grid.innerHTML += `
             <div class="case-card" onclick="showCasePreview('${c.id}')">
-                <img src="${c.img}" class="case-img" onerror="this.src='img/case1.png'">
+                <img src="${c.img}" class="case-img" onerror="this.src='img/case1.jpg'">
                 
-                <p class="case-name">${c.name[lang]}</p>
-                
-                <div class="case-buy-btn">
-                    <img src="img/nav_diamond.png" alt="coin">
-                    <span>${c.price.toLocaleString()}</span>
+                <div class="case-bottom-overlay">
+                    <p class="case-name-label">${c.name[lang]}</p>
+                    <div class="case-price-capsule">
+                        <img src="img/nav_diamond.png" alt="coin">
+                        <span>${c.price.toLocaleString()}</span>
+                    </div>
                 </div>
             </div>`;
     });
