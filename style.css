@@ -321,3 +321,53 @@ button:active { transform: scale(0.96); }
     width: 14px;
     height: 14px;
 }
+
+/* PREVIEW MODALDA KEYS RASMI KONTEYNERI */
+.preview-case-header {
+    position: relative;
+    width: 100%;
+    height: 220px; /* Gorizontal ko'rinish uchun balandlik */
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* PREVIEW RASMI */
+#preview-case-img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important; /* Chegarani olib tashlaymiz */
+    object-fit: cover; /* Rasmni to'liq yoyish */
+    margin: 0 !important;
+    display: block;
+}
+
+/* PREVIEW USTIDAGI MATNLAR (OVERLAY) */
+.preview-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px 15px 15px 15px;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 5;
+}
+
+#preview-case-name {
+    font-size: 20px !important;
+    font-weight: 800;
+    margin-bottom: 10px !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* OCHISH TUGMASI (RASM USTIDA TURISHI UCHUN) */
+.modal-content .btn-open-case {
+    margin: 0 !important;
+    padding: 8px 30px !important;
+    font-size: 14px !important;
+}
