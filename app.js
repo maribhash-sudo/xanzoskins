@@ -559,34 +559,37 @@ function showPage(pageId, element) {
 
     updateUIBalance();
 }
+
 function showCasePreview(caseId) {
-    const selectedCase = cases.find(c => c.id === caseId);
-    const skins = caseInventory[caseId];
+    const c = cases.find(x => x.id === caseId);
+    if (!c) return;
+    
     const lang = localStorage.getItem('lang') || 'uz';
     
-    if (!selectedCase || !skins) return;
-
-    document.getElementById('preview-case-img').src = selectedCase.img;
-    document.getElementById('preview-case-name').innerText = selectedCase.name[lang];
+    // Modal kontentini yangilash
+    const modalContent = document.querySelector('.modal-content');
     
-    const openBtn = document.getElementById('preview-open-btn');
-    openBtn.onclick = () => {
-        closePreview();
-        startRoulette(caseId);
-    };
-    openBtn.innerText = lang === 'uz' ? `OCHISH - ${selectedCase.price}` : `ОТКРЫТЬ - ${selectedCase.price}`;
+    // Preview strukturasini Overlay uslubida yasaymiz
+    modalContent.innerHTML = `
+        <div class="preview-case-header">
+            <img src="${c.img}" id="preview-case-img">
+            <div class="preview-overlay">
+                <h2 id="preview-case-name">${c.name[lang]}</h2>
+                <button class="btn-open-case" onclick="openCase('${c.id}')">OCHISH</button>
+            </div>
+        </div>
+        
+        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 15px 0;">
+        <p style="font-size: 12px; font-weight: 700; color: #777;">KEYS ICHIDAGI SKINLAR:</p>
+        
+        <div class="preview-grid" id="preview-skins-grid">
+            </div>
+        
+        <button onclick="closeModal()" style="margin-top: 15px; background: none !important; box-shadow: none !important; color: #555 !important; font-size: 12px;">YOPISH</button>
+    `;
 
-    const skinsGrid = document.getElementById('preview-skins-grid');
-    skinsGrid.innerHTML = "";
-    skins.forEach(skin => {
-        skinsGrid.innerHTML += `
-            <div class="preview-skin-item">
-                <img src="${selectedCase.folder}/${skin.file}" style="width:60px;" onerror="this.src='img/case1.png'">
-                <p style="font-size:9px;">${skin.name}</p>
-            </div>`;
-    });
-
-    document.getElementById('preview-modal').style.display = 'flex';
+    renderPreviewSkins(c.id);
+    document.getElementById('case-modal').style.display = 'flex';
 }
 
 function closePreview() {
